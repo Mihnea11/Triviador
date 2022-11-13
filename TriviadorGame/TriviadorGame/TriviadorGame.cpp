@@ -22,6 +22,11 @@ TriviadorGame::~TriviadorGame()
 
 void TriviadorGame::CheckUser(std::string user)
 {
+    if (user == "")
+    {
+        throw std::exception("Username field can't be empty");
+    }
+
     std::ifstream in("user_details.txt");
 
     std::string currentUser;
@@ -29,7 +34,7 @@ void TriviadorGame::CheckUser(std::string user)
     {
         if (user == currentUser)
         {
-            throw std::exception("Username already used!");
+            throw std::exception("Username already used");
         }
 
         in.get();
@@ -38,21 +43,51 @@ void TriviadorGame::CheckUser(std::string user)
 
 void TriviadorGame::CheckEmail(std::string email)
 {
+    if (email == "")
+    {
+        throw std::exception("Email field can't be empty");
+    }
+
     const std::regex emailPattern("^([a-zA-Z0-9_\\ \\.+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$");
     
     if (!std::regex_match(email, emailPattern))
     {
-        throw std::exception("Invalid email!");
+        throw std::exception("Invalid email");
     }
 }
 
 void TriviadorGame::CheckPassword(std::string password)
 {
+    if (password == "")
+    {
+        throw std::exception("Password field can't be empty");
+    }
+
     const std::regex passwordPattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+    
     if (!std::regex_match(password, passwordPattern))
     {
-        throw std::exception("Invalid password! The password must containt at least 8 characters, a number and a special character!");
+        throw std::exception("Invalid password!\nThe password must containt at least:\n-8 characters\n-a number\n-a special character");
     }
+}
+
+void TriviadorGame::CheckLoginCredentials(std::string userName, std::string passWord)
+{
+    std::ifstream in("user_details.txt");
+
+    std::string currentName;
+    std::string currentPassWord;
+    while (in >> currentName >> currentPassWord)
+    {
+        if (currentName == userName && currentPassWord != passWord)
+        {
+            throw std::exception("Invalid password");
+        }
+
+        in.get();
+    }
+
+    throw std::exception("Username not found");
 }
 
 void TriviadorGame::SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword)
@@ -79,41 +114,32 @@ void TriviadorGame::RegisterUser()
     try 
     {
         CheckUser(userName);
-        CheckPassword(password);
         CheckEmail(email);
+        CheckPassword(password);
 
         SaveUserDetails(userName, password, email);
     }
-    catch (std::exception exception) 
+    catch (std::exception exception)
     {
-        ui.ErrorLabel->setText(exception.what());
+        ui.RegisterErrorLabel->setText(exception.what());
     }
 }
 
 void TriviadorGame::LoginUser()
 {
-    std::ifstream in("user_details.txt");
-
     std::string userName = ui.LoginUsernameField->text().toStdString();
     std::string passWord = ui.LoginPasswordField->text().toStdString();
 
-    std::string currentName;
-    std::string currentEmail;
-    std::string currentPassWord;
-    while (in >> currentName >> currentEmail >> currentPassWord)
+    try
     {
-        if (currentName == userName && currentPassWord == passWord)
-        {
-            //TO DO: log in user;
-            break;
-        }
-        else if (currentName == userName && currentPassWord != passWord)
-        {
-            throw std::exception("Invalid password");
-        }
-    }
+        CheckLoginCredentials(userName, passWord);
 
-    throw std::exception("Username not found");
+        //TO DO: login user
+    }
+    catch (std::exception exception)
+    {
+        ui.LoginErrorLabel->setText(exception.what());
+    }
 }
 
 void TriviadorGame::ChangeForm()

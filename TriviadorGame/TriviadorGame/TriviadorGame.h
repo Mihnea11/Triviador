@@ -26,6 +26,8 @@ public:
     void CheckUser(std::string user);
     void CheckEmail(std::string email);
     void CheckPassword(std::string password);
+    void CheckLoginCredentials(std::string userName, std::string passWord);
+
     void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
 
 private slots:
