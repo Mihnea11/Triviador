@@ -467,6 +467,19 @@ font: 700 14pt &quot;Segoe UI&quot;;
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="ErrorLabel">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>750</y>
+      <width>541</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>TextLabel</string>
+    </property>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

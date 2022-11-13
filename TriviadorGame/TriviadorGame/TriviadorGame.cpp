@@ -65,7 +65,7 @@ void TriviadorGame::RegisterUser()
         SaveUserDetails(userName, password, email);
     }
     catch (std::exception exception) {
-
+        ui.ErrorLabel->setText(exception.what());
     }
      
 }
