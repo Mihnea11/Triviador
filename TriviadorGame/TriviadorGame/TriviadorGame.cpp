@@ -1,4 +1,5 @@
 #include "TriviadorGame.h"
+#define _REGEX_MAX_STACK_COUNT 1000
 
 TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 {
@@ -15,7 +16,7 @@ TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 
 bool TriviadorGame::EmailCheck(std::string email)
 {
-    const std::regex emailPattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+    const std::regex emailPattern("^([a-zA-Z0-9_\\ \\.+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$");
     if (!std::regex_match(email, emailPattern))
     {
         throw std::exception("Invalid email!");
@@ -26,7 +27,7 @@ bool TriviadorGame::EmailCheck(std::string email)
 
 bool TriviadorGame::PasswordCheck(std::string password)
 {
-    const std::regex passwordPattern("(? = .*[A - z\d] + )(? = .*[A - z@!? ] + )(? = .*[a - z\d@!? ] + )(? = .*[A - Z\d@!? ] + )[A - z\d@!? ]{8,}");
+    const std::regex passwordPattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
     if (!std::regex_match(password, passwordPattern))
     {
         throw std::exception("Invalid password! The password must containt at least 8 characters, a number and a special character!");
