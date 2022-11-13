@@ -4,14 +4,13 @@
 TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 {
     ui.setupUi(this);
- 
-   
-
+    enableLoginForm = false;
+    ui.LoginForm->setVisible(!enableLoginForm);
+    ui.RegisterForm->setVisible(enableLoginForm);
+    connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
     connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
-  
-
-
-
+    connect(ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(ChangeFormClicked()));
+    connect(ui.RegisterBackButton, SIGNAL(clicked()), this, SLOT(ChangeFormClicked()));
 }
 
 bool TriviadorGame::EmailCheck(std::string email)
@@ -74,5 +73,13 @@ void TriviadorGame::RegisterUser()
 void TriviadorGame::LoginUser()
 {
     //TO DO: check if player exists in database
+}
+
+void TriviadorGame::ChangeForm()
+{
+    ui.LoginForm->setVisible(enableLoginForm);
+    ui.RegisterForm->setVisible(!enableLoginForm);
+    enableLoginForm = !enableLoginForm;
+    update();
 }
 

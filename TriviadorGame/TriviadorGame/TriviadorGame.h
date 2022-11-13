@@ -11,9 +11,12 @@ class TriviadorGame : public QMainWindow
 
 private:
     Ui::TriviadorGameClass ui;
-
+    bool enableLoginForm;
+    
     void RegisterUser();
     void LoginUser();
+    void ChangeForm();
+
 public:
     TriviadorGame(QWidget *parent = nullptr);
     bool EmailCheck(std::string email);
@@ -24,4 +27,6 @@ public:
 
 private slots:
     void RegisterButtonClicked() { RegisterUser(); }
+    void LoginButtonClicked() { LoginUser(); }
+    void ChangeFormClicked() { ChangeForm(); }
 };
