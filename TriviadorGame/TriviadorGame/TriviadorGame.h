@@ -5,6 +5,8 @@
 #include <fstream>
 #include "Player.h"
 
+#define _REGEX_MAX_STACK_COUNT 1000
+
 class TriviadorGame : public QMainWindow
 {
     Q_OBJECT
@@ -19,12 +21,12 @@ private:
 
 public:
     TriviadorGame(QWidget *parent = nullptr);
-    bool EmailCheck(std::string email);
-    bool PasswordCheck(std::string password);
-    bool ValidateInput(std::string user, std::string password);
-    void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
-    bool CheckUserLogIn();
     ~TriviadorGame();
+
+    void CheckUser(std::string user);
+    void CheckEmail(std::string email);
+    void CheckPassword(std::string password);
+    void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
 
 private slots:
     void RegisterButtonClicked() { RegisterUser(); }
