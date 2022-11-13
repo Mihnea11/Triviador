@@ -13,7 +13,7 @@ TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 
 }
 
-bool TriviadorGame::emailCheck(std::string email)
+bool TriviadorGame::EmailCheck(std::string email)
 {
     const std::regex emailPattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
     if (!std::regex_match(email, emailPattern))
@@ -24,7 +24,7 @@ bool TriviadorGame::emailCheck(std::string email)
 }
 
 
-bool TriviadorGame::passwordCheck(std::string password)
+bool TriviadorGame::PasswordCheck(std::string password)
 {
     const std::regex passwordPattern("(? = .*[A - z\d] + )(? = .*[A - z@!? ] + )(? = .*[a - z\d@!? ] + )(? = .*[A - Z\d@!? ] + )[A - z\d@!? ]{8,}");
     if (!std::regex_match(password, passwordPattern))
@@ -36,8 +36,18 @@ bool TriviadorGame::passwordCheck(std::string password)
 
 bool TriviadorGame::ValidateInput(std::string user, std::string password)
 {
-    if (!emailCheck(user) || !passwordCheck(password)) return false;
+    if (!EmailCheck(user) || !PasswordCheck(password)) return false;
     return true;
+}
+
+void TriviadorGame::SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword)
+{
+    std::ofstream out("user_details.txt");
+    Player player;
+    player.SetUserName(userName);
+    player.SetUserEmail(userEmail);
+    player.SetUserPassword(userPassword);
+    out << player;
 }
 
 TriviadorGame::~TriviadorGame()
@@ -51,8 +61,8 @@ void TriviadorGame::RegisterUser()
     std::string password = ui.RegisterPasswordField->text().toStdString();
     std::string email = ui.RegisterEmailField->text().toStdString();
     try {
-        emailCheck(email);
-        passwordCheck(password);
+        ValidateInput(email, password);
+        SaveUserDetails(userName, password, email);
     }
     catch (std::exception exception) {
 

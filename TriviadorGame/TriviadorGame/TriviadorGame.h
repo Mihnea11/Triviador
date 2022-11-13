@@ -2,7 +2,8 @@
 #include <regex>
 #include <QtWidgets/QMainWindow>
 #include "ui_TriviadorGame.h"
-#include <regex>
+#include <fstream>
+#include "Player.h"
 
 class TriviadorGame : public QMainWindow
 {
@@ -15,9 +16,10 @@ private:
     void LoginUser();
 public:
     TriviadorGame(QWidget *parent = nullptr);
-    bool emailCheck(std::string email);
-    bool passwordCheck(std::string password);
+    bool EmailCheck(std::string email);
+    bool PasswordCheck(std::string password);
     bool ValidateInput(std::string user, std::string password);
+    void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
     ~TriviadorGame();
 
 private slots:

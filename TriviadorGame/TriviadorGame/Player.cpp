@@ -16,6 +16,11 @@ void Player::SetUserEmail(const std::string userEmail)
 	this->userEmail = userEmail;
 }
 
+void Player::SetUserPassword(const std::string userPassword)
+{
+	this->userPassword = userPassword;
+}
+
 std::string Player::GetUserName() const
 {
 	return userName;
@@ -24,4 +29,10 @@ std::string Player::GetUserName() const
 std::string Player::GetUserEmail() const
 {
 	return userEmail;
+}
+
+std::ostream& operator<<(std::ostream& out, const Player& player)
+{
+	out << player.userName << " " << player.userEmail << " " << player.userPassword << '\n';
+	return out;
 }
