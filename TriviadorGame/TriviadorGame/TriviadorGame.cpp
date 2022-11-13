@@ -50,6 +50,22 @@ void TriviadorGame::SaveUserDetails(std::string userName, std::string userEmail,
     out << player;
 }
 
+bool TriviadorGame::CheckUserLogIn()
+{
+    std::string loginUserName, userName;
+    std::ifstream fin("user_details.txt");
+    loginUserName = ui.LoginUsernameField->text().toStdString();
+    while (!fin.eof())
+    {
+        fin >> userName;
+        if (loginUserName == userName)
+        {
+            return true;
+        }
+    }
+    throw std::exception("Invalid username!");
+}
+
 TriviadorGame::~TriviadorGame()
 {
 
@@ -72,6 +88,12 @@ void TriviadorGame::RegisterUser()
 
 void TriviadorGame::LoginUser()
 {
+    try {
+        CheckUserLogIn();
+    }
+    catch (std::exception exception) {
+        ui.ErrorLabel->setText(exception.what());
+    }
     //TO DO: check if player exists in database
 }
 

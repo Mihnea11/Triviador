@@ -23,6 +23,7 @@ public:
     bool PasswordCheck(std::string password);
     bool ValidateInput(std::string user, std::string password);
     void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
+    bool CheckUserLogIn();
     ~TriviadorGame();
 
 private slots:
