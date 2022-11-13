@@ -50,8 +50,14 @@ void TriviadorGame::RegisterUser()
     std::string userName = ui.RegisterUsernameField->text().toStdString();
     std::string password = ui.RegisterPasswordField->text().toStdString();
     std::string email = ui.RegisterEmailField->text().toStdString();
-    
-    
+    try {
+        emailCheck(email);
+        passwordCheck(password);
+    }
+    catch (std::exception exception) {
+
+    }
+     
 }
 
 void TriviadorGame::LoginUser()
