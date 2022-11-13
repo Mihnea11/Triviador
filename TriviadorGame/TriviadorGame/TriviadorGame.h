@@ -7,10 +7,16 @@ class TriviadorGame : public QMainWindow
 {
     Q_OBJECT
 
+private:
+    Ui::TriviadorGameClass ui;
+
+    void RegisterUser();
+    void LoginUser();
 public:
     TriviadorGame(QWidget *parent = nullptr);
     ~TriviadorGame();
 
-private:
-    Ui::TriviadorGameClass ui;
+private slots:
+    void RegisterButtonClicked() { RegisterUser(); }
+    void LoginButtonClicked() { LoginUser(); }
 };
