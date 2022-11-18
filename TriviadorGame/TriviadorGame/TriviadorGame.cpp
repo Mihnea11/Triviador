@@ -4,15 +4,13 @@ TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 {
     ui.setupUi(this);
 
-    enableLoginForm = false;
-
-    ui.LoginForm->setVisible(!enableLoginForm);
-    ui.RegisterForm->setVisible(enableLoginForm);
+    ui.LoginForm->setVisible(true);
+    ui.RegisterForm->setVisible(false);
 
     connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
     connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
-    connect(ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(ChangeFormClicked()));
-    connect(ui.RegisterBackButton, SIGNAL(clicked()), this, SLOT(ChangeFormClicked()));
+    connect(ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(LoginRegisterButtonClicked()));
+    connect(ui.RegisterBackButton, SIGNAL(clicked()), this, SLOT(RegisterBackButtonClicked()));
 }
 
 TriviadorGame::~TriviadorGame()
@@ -20,7 +18,7 @@ TriviadorGame::~TriviadorGame()
 
 }
 
-void TriviadorGame::CheckUser(std::string user)
+void TriviadorGame::CheckUser(const std::string& user)
 {
     if (user == "")
     {
@@ -41,7 +39,7 @@ void TriviadorGame::CheckUser(std::string user)
     }
 }
 
-void TriviadorGame::CheckEmail(std::string email)
+void TriviadorGame::CheckEmail(const std::string& email)
 {
     if (email == "")
     {
@@ -56,7 +54,7 @@ void TriviadorGame::CheckEmail(std::string email)
     }
 }
 
-void TriviadorGame::CheckPassword(std::string password)
+void TriviadorGame::CheckPassword(const std::string& password)
 {
     if (password == "")
     {
@@ -71,15 +69,15 @@ void TriviadorGame::CheckPassword(std::string password)
     }
 }
 
-void TriviadorGame::CheckLoginCredentials(std::string userName, std::string passWord)
+void TriviadorGame::CheckLoginCredentials(const std::string& userName, const std::string& password)
 {
     std::ifstream in("user_details.txt");
 
     std::string currentName;
-    std::string currentPassWord;
-    while (in >> currentName >> currentPassWord)
+    std::string currentPassword;
+    while (in >> currentName >> currentPassword)
     {
-        if (currentName == userName && currentPassWord != passWord)
+        if (currentName == userName && currentPassword != password)
         {
             throw std::exception("Invalid password");
         }
@@ -90,17 +88,12 @@ void TriviadorGame::CheckLoginCredentials(std::string userName, std::string pass
     throw std::exception("Username not found");
 }
 
-void TriviadorGame::SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword)
+void TriviadorGame::SaveUserDetails(const std::string& userName, const std::string& userEmail, const std::string& userPassword)
 {
     std::ofstream out;
     out.open("user_details.txt", std::ios::app);
 
-    Player player;
-    player.SetUserName(userName);
-    player.SetUserEmail(userEmail);
-    player.SetUserPassword(userPassword);
-
-    out << player;
+    out << userName << userPassword << userEmail;
 
     out.close();
 }
@@ -118,6 +111,8 @@ void TriviadorGame::RegisterUser()
         CheckPassword(password);
 
         SaveUserDetails(userName, password, email);
+        //display confirmation message
+        ToggleForm(ui.RegisterForm, ui.LoginForm);
     }
     catch (std::exception exception)
     {
@@ -128,11 +123,11 @@ void TriviadorGame::RegisterUser()
 void TriviadorGame::LoginUser()
 {
     std::string userName = ui.LoginUsernameField->text().toStdString();
-    std::string passWord = ui.LoginPasswordField->text().toStdString();
+    std::string password = ui.LoginPasswordField->text().toStdString();
 
     try
     {
-        CheckLoginCredentials(userName, passWord);
+        CheckLoginCredentials(userName, password);
 
         //TO DO: login user
     }
@@ -142,12 +137,9 @@ void TriviadorGame::LoginUser()
     }
 }
 
-void TriviadorGame::ChangeForm()
+void TriviadorGame::ToggleForm(QWidget* disabledForm, QWidget* enabledForm)
 {
-    ui.LoginForm->setVisible(enableLoginForm);
-    ui.RegisterForm->setVisible(!enableLoginForm);
-    enableLoginForm = !enableLoginForm;
-
-    update();
+    disabledForm->setVisible(false);
+    enabledForm->setVisible(true);
 }
 

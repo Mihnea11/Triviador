@@ -13,25 +13,25 @@ class TriviadorGame : public QMainWindow
 
 private:
     Ui::TriviadorGameClass ui;
-    bool enableLoginForm;
     
     void RegisterUser();
     void LoginUser();
-    void ChangeForm();
+    void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
 
 public:
     TriviadorGame(QWidget *parent = nullptr);
     ~TriviadorGame();
 
-    void CheckUser(std::string user);
-    void CheckEmail(std::string email);
-    void CheckPassword(std::string password);
-    void CheckLoginCredentials(std::string userName, std::string passWord);
+    void CheckUser(const std::string& user);
+    void CheckEmail(const std::string& email);
+    void CheckPassword(const std::string& password);
+    void CheckLoginCredentials(const std::string& userName, const std::string& password);
 
-    void SaveUserDetails(std::string userName, std::string userEmail, std::string userPassword);
-
+    void SaveUserDetails(const std::string& userName, const std::string& userEmail, const std::string& userPassword);
+    
 private slots:
     void RegisterButtonClicked() { RegisterUser(); }
     void LoginButtonClicked() { LoginUser(); }
-    void ChangeFormClicked() { ChangeForm(); }
+    void LoginRegisterButtonClicked() { ToggleForm(ui.LoginForm, ui.RegisterForm); }
+    void RegisterBackButtonClicked() { ToggleForm(ui.RegisterForm, ui.LoginForm); }
 };

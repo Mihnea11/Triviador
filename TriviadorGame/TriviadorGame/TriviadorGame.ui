@@ -160,7 +160,7 @@ border-radius: 5px;
      <property name="styleSheet">
       <string notr="true">background-color: rgb(153, 50, 204);
 color: rgb(255, 255, 255);
-font: 11pt &quot;Segoe UI&quot;;
+font: 700 14pt &quot;Segoe UI&quot;;
 border: 1px;
 border-radius: 5px;</string>
      </property>
