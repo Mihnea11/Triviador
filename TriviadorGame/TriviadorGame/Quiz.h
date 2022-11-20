@@ -16,6 +16,8 @@ public:
 	std::string GetQuestionAnswer() const;
 	unsigned int GetQuestionScore() const;
 
+	friend std::istream& operator>>(std::istream&, Quiz&);
+
 private:
 	std::string questionText;
 	std::string questionAnswer;
