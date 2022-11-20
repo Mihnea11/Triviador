@@ -6,6 +6,7 @@ TriviadorGame::TriviadorGame(QWidget *parent): QMainWindow(parent)
 
     ui.LoginForm->setVisible(true);
     ui.RegisterForm->setVisible(false);
+    ui.RegistrationConfirmationForm->setVisible(false);
 
     connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
     connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
@@ -60,6 +61,10 @@ void TriviadorGame::CheckPassword(const std::string& password)
     {
         throw std::exception("Password field can't be empty");
     }
+    if (password != ui.RegisterConfirmPassword->text().toStdString())
+    {
+        throw std::exception("Passwords do not match");
+    }
 
     const std::regex passwordPattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
     
@@ -73,6 +78,8 @@ void TriviadorGame::CheckLoginCredentials(const std::string& userName, const std
 {
     std::ifstream in("user_details.txt");
 
+
+    bool found = false;
     std::string currentName;
     std::string currentPassword;
     while (in >> currentName >> currentPassword)
@@ -82,18 +89,26 @@ void TriviadorGame::CheckLoginCredentials(const std::string& userName, const std
             throw std::exception("Invalid password");
         }
 
+        if (currentName == userName)
+        {
+            found = true;
+        }
+
         in.get();
     }
 
-    throw std::exception("Username not found");
+    if (found == false)
+    {
+        throw std::exception("Username not found");
+    }
 }
 
-void TriviadorGame::SaveUserDetails(const std::string& userName, const std::string& userEmail, const std::string& userPassword)
+void TriviadorGame::SaveUserDetails(const std::string& userName, const std::string& userPassword, const std::string& userEmail)
 {
     std::ofstream out;
     out.open("user_details.txt", std::ios::app);
 
-    out << userName << userPassword << userEmail;
+    out << userName << " " << userPassword << " " << userEmail << "\n";
 
     out.close();
 }
@@ -111,8 +126,9 @@ void TriviadorGame::RegisterUser()
         CheckPassword(password);
 
         SaveUserDetails(userName, password, email);
-        //display confirmation message
-        ToggleForm(ui.RegisterForm, ui.LoginForm);
+        ToggleForm(ui.RegisterForm, ui.RegistrationConfirmationForm);
+        WaitForSeconds(3);
+        ToggleForm(ui.RegistrationConfirmationForm, ui.LoginForm);
     }
     catch (std::exception exception)
     {
@@ -141,5 +157,14 @@ void TriviadorGame::ToggleForm(QWidget* disabledForm, QWidget* enabledForm)
 {
     disabledForm->setVisible(false);
     enabledForm->setVisible(true);
+}
+
+void TriviadorGame::WaitForSeconds(int seconds)
+{
+    QTime delayTime = QTime::currentTime().addSecs(seconds);
+    while (QTime::currentTime() < delayTime)
+    {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
 }
 

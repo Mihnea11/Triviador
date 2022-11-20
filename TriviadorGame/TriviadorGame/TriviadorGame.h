@@ -1,8 +1,10 @@
 #pragma once
 #include <regex>
-#include <QtWidgets/QMainWindow>
-#include "ui_TriviadorGame.h"
 #include <fstream>
+#include <QTime>
+#include <QtWidgets/QMainWindow>
+
+#include "ui_TriviadorGame.h"
 #include "Player.h"
 
 #define _REGEX_MAX_STACK_COUNT 1000
@@ -17,7 +19,7 @@ private:
     void RegisterUser();
     void LoginUser();
     void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
-
+    void WaitForSeconds(int seconds);
 public:
     TriviadorGame(QWidget *parent = nullptr);
     ~TriviadorGame();
