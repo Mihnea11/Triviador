@@ -2,6 +2,7 @@
 
 #include <QDialog>
 
+#include "Player.h"
 #include "ui_GameWindow.h"
 
 class GameWindow : public QDialog
@@ -10,10 +11,12 @@ class GameWindow : public QDialog
 
 private:
 	Ui::GameWindow ui;
+	Player player;
 
 
 public:
 	explicit GameWindow(QWidget* parent = nullptr);
+
 	~GameWindow();
 };
 
