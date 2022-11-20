@@ -12,9 +12,9 @@ public:
 	void SetQuestionAnswer(const std::string& questionAnswer);
 	void SetQuestionScore(const unsigned int& questionScore);
 
-	std::string GetQuestionText();
-	std::string GetQuestionAnswer();
-	unsigned int GetQuestionScore();
+	std::string GetQuestionText() const;
+	std::string GetQuestionAnswer() const;
+	unsigned int GetQuestionScore() const;
 
 private:
 	std::string questionText;

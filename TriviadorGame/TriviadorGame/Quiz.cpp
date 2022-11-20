@@ -31,17 +31,29 @@ void Quiz::SetQuestionScore(const unsigned int& questionScore)
 	this->questionScore = questionScore;
 }
 
-std::string Quiz::GetQuestionText()
+std::string Quiz::GetQuestionText() const
 {
 	return questionText;
 }
 
-std::string Quiz::GetQuestionAnswer()
+std::string Quiz::GetQuestionAnswer() const
 {
 	return questionAnswer;
 }
 
-unsigned int Quiz::GetQuestionScore()
+unsigned int Quiz::GetQuestionScore() const 
 {
 	return questionScore;
+}
+
+std::istream& operator>>(std::istream& in , Quiz& quiz)
+{
+	std::string fileLine;
+	std::getline(in, fileLine);
+	std::string delimiter = "?";
+	std::string question=fileLine.substr(0,fileLine.find(delimiter));
+	std::string answer=fileLine.substr(fileLine.find(delimiter),fileLine.back());
+	quiz.SetQuestionText(question);
+	quiz.SetQuestionAnswer(answer);
+	return in;
 }
