@@ -1,5 +1,7 @@
 #include "Quiz.h"
-
+#include <vector>
+#include <fstream>
+#include <random>
 Quiz::Quiz()
 {
 	questionText = std::string();
@@ -44,6 +46,30 @@ std::string Quiz::GetQuestionAnswer() const
 unsigned int Quiz::GetQuestionScore() const 
 {
 	return questionScore;
+}
+
+Quiz Quiz::RandomQuiz(Quiz randQuiz)
+{
+	std::string line;
+	std::vector<std::string> lines;
+	std::ifstream file("questionsAndAnswers.txt");
+	int totalLines = 0;
+	while (getline(file, line))
+	{
+		totalLines++;
+		lines.push_back(line);
+	}
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<> dis(0, totalLines);
+	int lineNumber=dis(gen);
+	Quiz auxiliary;
+	std::string delimiter = "?";
+	std::string question = lines[lineNumber].substr(0, lines[lineNumber].find(delimiter));
+	std::string answer = lines[lineNumber].substr(lines[lineNumber].find(delimiter), lines[lineNumber].back());
+	auxiliary.SetQuestionText(question);
+	auxiliary.SetQuestionAnswer(answer);
+	return auxiliary;
 }
 
 std::istream& operator>>(std::istream& in , Quiz& quiz)
