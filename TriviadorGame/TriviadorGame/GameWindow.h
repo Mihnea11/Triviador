@@ -11,6 +11,7 @@ class GameWindow : public QDialog
 private:
 	Ui::GameWindow ui;
 
+
 public:
 	explicit GameWindow(QWidget* parent = nullptr);
 	~GameWindow();
