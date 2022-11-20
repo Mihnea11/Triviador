@@ -89,11 +89,13 @@
     <QtUic Include="TriviadorGame.ui" />
     <QtMoc Include="TriviadorGame.h" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Quiz.cpp" />
     <ClCompile Include="TriviadorGame.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Quiz.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="user_details.txt" />
