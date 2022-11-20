@@ -1,5 +1,5 @@
 #pragma once
-
+#include <sstream>
 #include <string>
 
 class Quiz
@@ -16,6 +16,7 @@ public:
 	std::string GetQuestionAnswer() const;
 	unsigned int GetQuestionScore() const;
 
+	Quiz RandomQuiz(Quiz randQuiz);
 	friend std::istream& operator>>(std::istream&, Quiz&);
 
 private:
