@@ -16,7 +16,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(248, 222, 110, 255), stop:0.202512 rgba(232, 186, 97, 255), stop:0.598116 rgba(232, 135, 97, 255), stop:0.831439 rgba(204, 93, 50, 255));</string>
   </property>
-  <widget class="QWidget" name="GameWidget" native="true">
+  <widget class="QWidget" name="GameForm" native="true">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -333,6 +333,25 @@ border-radius: 10px;</string>
     </property>
     <property name="text">
      <string>TextLabel</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SaveButton">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>400</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(204, 77, 50);
+font: 700 12pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Save</string>
     </property>
    </widget>
   </widget>
