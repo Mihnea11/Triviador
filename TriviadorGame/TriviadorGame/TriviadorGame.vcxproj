@@ -86,14 +86,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="TriviadorGame.qrc" />
+    <QtUic Include="GameWindow.ui" />
     <QtUic Include="TriviadorGame.ui" />
     <QtMoc Include="TriviadorGame.h" />
+    <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quiz.cpp" />
     <ClCompile Include="TriviadorGame.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="GameWindow.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Quiz.h" />
   </ItemGroup>

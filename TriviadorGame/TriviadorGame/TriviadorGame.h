@@ -5,6 +5,7 @@
 #include <QtWidgets/QMainWindow>
 
 #include "ui_TriviadorGame.h"
+#include "GameWindow.h"
 #include "Player.h"
 
 #define _REGEX_MAX_STACK_COUNT 1000
@@ -20,6 +21,7 @@ private:
     void LoginUser();
     void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
     void WaitForSeconds(int seconds);
+
 public:
     TriviadorGame(QWidget *parent = nullptr);
     ~TriviadorGame();
