@@ -53,6 +53,8 @@ void GameWindow::PlayButton()
 {
 	ToggleForm(ui.GameForm, ui.PlayGame);
 	RandomQuestion();
+
+	update();
 }
 
 void GameWindow::on_ChangeProfilePictureButton_clicked()

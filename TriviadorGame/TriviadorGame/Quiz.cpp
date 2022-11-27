@@ -50,26 +50,20 @@ unsigned int Quiz::GetQuestionScore() const
 
 Quiz Quiz::RandomQuiz()
 {
-	std::string line;
-	std::vector<std::string> lines;
-	std::ifstream file("questionsAndAnswers.txt");
-	int totalLines = 0;
-	while (getline(file, line))
+	std::ifstream in("Questions.txt");
+
+	int randomNumber = std::rand() % 100;
+
+	std::string question;
+	std::string answer;
+
+	for (int i = 0; i < randomNumber; i++)
 	{
-		totalLines++;
-		lines.push_back(line);
+		std::getline(in, question);
+		std::getline(in, answer);
 	}
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> dis(0, totalLines);
-	int lineNumber=dis(gen);
-	Quiz auxiliary;
-	std::string delimiter = "?";
-	std::string question = lines[lineNumber].substr(0, lines[lineNumber].find(delimiter));
-	std::string answer = lines[lineNumber].substr(lines[lineNumber].find(delimiter), lines[lineNumber].back());
-	auxiliary.SetQuestionText(question);
-	auxiliary.SetQuestionAnswer(answer);
-	return auxiliary;
+
+	return Quiz(question, answer, 10);
 }
 
 std::istream& operator>>(std::istream& in , Quiz& quiz)

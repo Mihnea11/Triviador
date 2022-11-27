@@ -101,7 +101,6 @@
     <ClInclude Include="Quiz.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\Users\manea\OneDrive\Desktop\quizFolder\questionsAndAnswers.txt" />
     <Text Include="user_details.txt" />
   </ItemGroup>
   <ItemGroup>
