@@ -144,8 +144,23 @@ void TriviadorGame::LoginUser()
     try
     {
         CheckLoginCredentials(userName, password);
+        
+        Player player;
+
+        std::string findUserName, findPassword, findEmail;
+        std::ifstream in("user_details.txt");
+        while (in >> findUserName >> findPassword >> findEmail)
+        {
+            if (findUserName == userName)
+            {
+                player.SetUserName(findUserName);
+                player.SetUserEmail(findEmail);
+            }
+        }
+        in.close();
 
         GameWindow* window = new GameWindow();
+        window->SetPlayer(player);
         window->show();
 
         close();

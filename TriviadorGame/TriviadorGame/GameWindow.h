@@ -17,7 +17,6 @@ private:
 	void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
 	void DisplayPlayerInfo();
 	void RandomQuestion();
-	void PlayButton();
 	void VerifyButton();
 
 	void MenuPlayButton();
@@ -29,10 +28,15 @@ private:
 	void ProfileEditButton();
 	void ProfileSaveButton();
 	void EditProfileSaveButton();
+
 public:
 	explicit GameWindow();
-	bool CheckAnswer(Quiz quiz);
+
 	~GameWindow();
+
+	void SetPlayer(Player& player);
+
+	bool CheckAnswer(Quiz quiz);
 
 private slots:
 	void MenuPlayButtonClicked() { MenuPlayButton(); }

@@ -37,6 +37,11 @@ GameWindow::~GameWindow()
 {
 }
 
+void GameWindow::SetPlayer(Player& player)
+{
+	this->player = player;
+}
+
 void GameWindow::DisplayPlayerInfo()
 {
 	//TO DO: reffrence player
@@ -51,12 +56,6 @@ void GameWindow::ToggleForm(QWidget* disabledForm, QWidget* enabledForm)
 {
 	disabledForm->setVisible(false);
 	enabledForm->setVisible(true);
-}
-
-void GameWindow::PlayButton()
-{
-	ToggleForm(ui.GameMenu, ui.Game);
-	RandomQuestion();
 }
 
 void GameWindow::VerifyButton()
