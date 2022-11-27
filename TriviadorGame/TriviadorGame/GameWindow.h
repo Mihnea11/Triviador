@@ -25,5 +25,7 @@ private slots:
 	void SaveButtonClicked() { ToggleForm(ui.ProfileForm, ui.GameForm); }
 	void EditProfileButtonClicked() { ToggleForm(ui.ProfileForm, ui.EditProfileForm); }
 	void SaveProfileButtonClicked() { ToggleForm(ui.EditProfileForm, ui.ProfileForm); }
+	void SettingsButtonClicked() { ToggleForm(ui.GameForm, ui.SettingsForm); }
+	void SaveSettingsButtonClicked() { ToggleForm(ui.SettingsForm, ui.GameForm); }
 };
 
