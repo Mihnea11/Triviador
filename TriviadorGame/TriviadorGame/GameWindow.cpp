@@ -1,6 +1,7 @@
 #include "GameWindow.h"
 
 
+
 GameWindow::GameWindow(QWidget* parent) : QDialog(parent)
 {
 	ui.setupUi(this);
@@ -40,4 +41,19 @@ void GameWindow::ToggleForm(QWidget* disabledForm, QWidget* enabledForm)
 {
 	disabledForm->setVisible(false);
 	enabledForm->setVisible(true);
+}
+
+void GameWindow::on_ChangeProfilePictureButton_clicked()
+{
+	QString filename = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.bmp)"));
+	if (QString::compare(filename, QString()) != 0)
+	{
+		QImage image;
+		bool valid = image.load(filename);
+		if (valid)
+		{	
+			image = image.scaledToWidth(ui.ProfilePictureLabel->width(), Qt::SmoothTransformation);
+			ui.ProfilePictureLabel->setPixmap(QPixmap::fromImage(image));
+		}
+	}
 }
