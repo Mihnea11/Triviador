@@ -145,9 +145,10 @@ void TriviadorGame::LoginUser()
     {
         CheckLoginCredentials(userName, password);
 
-        GameWindow window;
-        window.setModal(true);
-        window.exec();
+        GameWindow* window = new GameWindow();
+        window->show();
+
+        close();
     }
     catch (std::exception exception)
     {

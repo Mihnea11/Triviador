@@ -1,7 +1,7 @@
 #include "GameWindow.h"
 
 
-GameWindow::GameWindow(QWidget* parent) : QDialog(parent)
+GameWindow::GameWindow() : QDialog()
 {
 	ui.setupUi(this);
 

@@ -16,7 +16,7 @@ private:
 
 
 public:
-	explicit GameWindow(QWidget* parent = nullptr);
+	explicit GameWindow();
 
 	~GameWindow();
 private slots:
