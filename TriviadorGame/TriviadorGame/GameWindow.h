@@ -14,7 +14,9 @@ private:
 	Ui::GameWindow ui;
 	Player player;
 	void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
-
+	void RandomQuestion();
+	void PlayButton();
+	
 
 public:
 	explicit GameWindow();
@@ -29,7 +31,7 @@ private slots:
 	void SettingsButtonClicked() { ToggleForm(ui.GameForm, ui.SettingsForm); }
 	void SaveSettingsButtonClicked() { ToggleForm(ui.SettingsForm, ui.GameForm); }
 	void on_ChangeProfilePictureButton_clicked();
-	void PlayButtonClicked() { ToggleForm(ui.GameForm, ui.PlayGame); }
-
+	void PlayButtonClicked() { PlayButton(); }
+	
 };
 

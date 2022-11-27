@@ -1,5 +1,5 @@
 #include "GameWindow.h"
-
+#include "Quiz.h"
 
 GameWindow::GameWindow() : QDialog()
 {
@@ -35,6 +35,8 @@ GameWindow::GameWindow() : QDialog()
 
 	connect(ui.PlayButton, SIGNAL(clicked()), this, SLOT(PlayButtonClicked()));
 
+	
+
 
 }
 
@@ -45,6 +47,12 @@ void GameWindow::ToggleForm(QWidget* disabledForm, QWidget* enabledForm)
 {
 	disabledForm->setVisible(false);
 	enabledForm->setVisible(true);
+}
+
+void GameWindow::PlayButton()
+{
+	ToggleForm(ui.GameForm, ui.PlayGame);
+	RandomQuestion();
 }
 
 void GameWindow::on_ChangeProfilePictureButton_clicked()
@@ -61,3 +69,13 @@ void GameWindow::on_ChangeProfilePictureButton_clicked()
 		}
 	}
 }
+
+
+void GameWindow::RandomQuestion()
+{
+	Quiz question;
+	question = question.RandomQuiz();
+	ui.QuestionLabel->setText(QString::fromStdString(question.GetQuestionText()));
+
+}
+

@@ -16,7 +16,7 @@ public:
 	std::string GetQuestionAnswer() const;
 	unsigned int GetQuestionScore() const;
 
-	Quiz RandomQuiz(Quiz randQuiz);
+	Quiz RandomQuiz();
 	friend std::istream& operator>>(std::istream&, Quiz&);
 
 private:

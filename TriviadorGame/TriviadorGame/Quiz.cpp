@@ -48,7 +48,7 @@ unsigned int Quiz::GetQuestionScore() const
 	return questionScore;
 }
 
-Quiz Quiz::RandomQuiz(Quiz randQuiz)
+Quiz Quiz::RandomQuiz()
 {
 	std::string line;
 	std::vector<std::string> lines;
