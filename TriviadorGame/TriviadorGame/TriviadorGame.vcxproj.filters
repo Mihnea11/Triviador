@@ -64,4 +64,7 @@
       <UniqueIdentifier>{6da24387-50ad-4168-9b12-9e0cbe774376}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\manea\OneDrive\Desktop\trivdefaultpfp.jpg" />
+  </ItemGroup>
 </Project>
