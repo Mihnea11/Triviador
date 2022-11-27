@@ -1,11 +1,18 @@
 #pragma once
+#include <qrandom.h>
 #include <sstream>
 #include <string>
 
 class Quiz
 {
+private:
+	std::string questionText;
+	std::string questionAnswer;
+	unsigned int questionScore;
+
 public:
 	Quiz();
+	Quiz(const std::string& questionText, const std::string& questionAnswer);
 	Quiz(const std::string& questionText, const std::string& questionAnswer, const unsigned int& questionScore);
 
 	void SetQuestionText(const std::string& questionText);
@@ -16,12 +23,8 @@ public:
 	std::string GetQuestionAnswer() const;
 	unsigned int GetQuestionScore() const;
 
-	Quiz RandomQuiz();
-	friend std::istream& operator>>(std::istream&, Quiz&);
+	Quiz PickRandomQuiz();
 
-private:
-	std::string questionText;
-	std::string questionAnswer;
-	unsigned int questionScore;
+	friend std::istream& operator>>(std::istream&, Quiz&);
 };
 

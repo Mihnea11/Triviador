@@ -13,25 +13,36 @@ class GameWindow : public QDialog
 private:
 	Ui::GameWindow ui;
 	Player player;
+
 	void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
+	void DisplayPlayerInfo();
 	void RandomQuestion();
 	void PlayButton();
 	void VerifyButton();
 
+	void MenuPlayButton();
+	void MenuSettingsButton();
+	void MenuQuitButton();
+	void MenuViewProfileButton();
+	void SettingsSaveButton();
+	void ProfileChangePictureButton();
+	void ProfileEditButton();
+	void ProfileSaveButton();
+	void EditProfileSaveButton();
 public:
 	explicit GameWindow();
 	bool CheckAnswer(Quiz quiz);
 	~GameWindow();
-private slots:
 
-	void EditButtonClicked() { ToggleForm(ui.GameForm, ui.ProfileForm); }
-	void SaveButtonClicked() { ToggleForm(ui.ProfileForm, ui.GameForm); }
-	void EditProfileButtonClicked() { ToggleForm(ui.ProfileForm, ui.EditProfileForm); }
-	void SaveProfileButtonClicked() { ToggleForm(ui.EditProfileForm, ui.ProfileForm); }
-	void SettingsButtonClicked() { ToggleForm(ui.GameForm, ui.SettingsForm); }
-	void SaveSettingsButtonClicked() { ToggleForm(ui.SettingsForm, ui.GameForm); }
-	void on_ChangeProfilePictureButton_clicked();
-	void PlayButtonClicked() { PlayButton(); }
-	void VerifyButtonClicked() { VerifyButton(); }
+private slots:
+	void MenuPlayButtonClicked() { MenuPlayButton(); }
+	void MenuSettingsButtonClicked() { MenuSettingsButton(); }
+	void MenuQuitButtonClicked() { MenuQuitButton(); }
+	void MenuViewProfileButtonClicked() { MenuViewProfileButton(); }
+	void SettingsSaveButtonClicked() { SettingsSaveButton(); }
+	void ProfileChangePictureButtonClicked() { ProfileChangePictureButton(); }
+	void ProfileEditButtonClicked() { ProfileEditButton(); }
+	void ProfileSaveButtonClicked() { ProfileSaveButton(); }
+	void EditProfileSaveButtonClicked() { EditProfileSaveButton(); }
 };
 

@@ -14,12 +14,18 @@
     <ClCompile Include="TriviadorGame.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Round.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Quiz.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Round.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -43,10 +49,10 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\Users\manea\OneDrive\Desktop\quizFolder\questionsAndAnswers.txt">
+    <Text Include="user_details.txt">
       <Filter>Resources</Filter>
     </Text>
-    <Text Include="user_details.txt">
+    <Text Include="questions.txt">
       <Filter>Resources</Filter>
     </Text>
   </ItemGroup>

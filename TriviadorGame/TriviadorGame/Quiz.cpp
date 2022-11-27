@@ -10,11 +10,16 @@ Quiz::Quiz()
 	questionScore = 0;
 }
 
+Quiz::Quiz(const std::string& questionText, const std::string& questionAnswer)
+{
+	this->questionText = questionText;
+	this->questionAnswer = questionAnswer;
+}
+
 Quiz::Quiz(const std::string& questionText, const std::string& questionAnswer, const unsigned int& questionScore)
 {
 	this->questionText = questionText;
 	this->questionAnswer = questionAnswer;
-
 	this->questionScore = questionScore;
 }
 
@@ -48,11 +53,11 @@ unsigned int Quiz::GetQuestionScore() const
 	return questionScore;
 }
 
-Quiz Quiz::RandomQuiz()
+Quiz Quiz::PickRandomQuiz()
 {
-	std::ifstream in("Questions.txt");
+	std::ifstream in("questions.txt");
 
-	int randomNumber = std::rand() % 100;
+	int randomNumber = QRandomGenerator::global()->generate() % 100;
 
 	std::string question;
 	std::string answer;
@@ -63,7 +68,7 @@ Quiz Quiz::RandomQuiz()
 		std::getline(in, answer);
 	}
 
-	return Quiz(question, answer, 10);
+	return Quiz(question, answer);
 }
 
 std::istream& operator>>(std::istream& in , Quiz& quiz)
