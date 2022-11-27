@@ -26,4 +26,7 @@
     <Text Include="user_details.txt" />
     <Text Include="..\..\..\Users\manea\OneDrive\Desktop\quizFolder\questionsAndAnswers.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\manea\OneDrive\Desktop\trivdefaultpfp.jpg" />
+  </ItemGroup>
 </Project>

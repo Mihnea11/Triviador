@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="TriviadorGame">
-    </qresource>
+  <qresource prefix="TriviadorGame">
+    <file>Images/trivdefaultpfp.jpg</file>
+  </qresource>
 </RCC>

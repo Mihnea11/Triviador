@@ -104,6 +104,9 @@
     <Text Include="..\..\..\Users\manea\OneDrive\Desktop\quizFolder\questionsAndAnswers.txt" />
     <Text Include="user_details.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\Users\manea\OneDrive\Desktop\trivdefaultpfp.jpg" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

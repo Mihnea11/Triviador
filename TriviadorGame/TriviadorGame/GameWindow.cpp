@@ -30,8 +30,8 @@ GameWindow::GameWindow(QWidget* parent) : QDialog(parent)
 	connect(ui.SaveProfileButton, SIGNAL(clicked()), this, SLOT(SaveProfileButtonClicked()));
 	connect(ui.SettingsButton, SIGNAL(clicked()), this, SLOT(SettingsButtonClicked()));
 	connect(ui.SaveSettingsButton, SIGNAL(clicked()), this, SLOT(SaveSettingsButtonClicked()));
-
-	QObject::connect(ui.SoundSlider, &QSlider::valueChanged, [&]() { ui.ShowSoundLabel->setText(QString::fromStdString(std::to_string(ui.SoundSlider->value()))); });
+ 
+	connect(ui.SoundSlider, &QSlider::valueChanged, [&]() { ui.ShowSoundLabel->setText(QString::fromStdString(std::to_string(ui.SoundSlider->value()))); });
 }
 
 GameWindow::~GameWindow()
