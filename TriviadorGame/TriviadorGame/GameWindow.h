@@ -20,8 +20,10 @@ public:
 
 	~GameWindow();
 private slots:
-	
+
 	void EditButtonClicked() { ToggleForm(ui.GameForm, ui.ProfileForm); }
 	void SaveButtonClicked() { ToggleForm(ui.ProfileForm, ui.GameForm); }
+	void EditProfileButtonClicked() { ToggleForm(ui.ProfileForm, ui.EditProfileForm); }
+	void SaveProfileButtonClicked() { ToggleForm(ui.EditProfileForm, ui.ProfileForm); }
 };
 

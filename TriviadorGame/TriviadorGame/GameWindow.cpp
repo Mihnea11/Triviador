@@ -14,9 +14,12 @@ GameWindow::GameWindow(QWidget* parent) : QDialog(parent)
 
 	ui.GameForm->setVisible(true);
 	ui.ProfileForm->setVisible(false);
+	ui.EditProfileForm->setVisible(false);
 
 	connect(ui.EditButton, SIGNAL(clicked()), this, SLOT(EditButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveButtonClicked()));
+	connect(ui.EditButtonProfileForm, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
+	connect(ui.SaveProfileButton, SIGNAL(clicked()), this, SLOT(SaveProfileButtonClicked()));
 }
 
 GameWindow::~GameWindow()
