@@ -36,8 +36,15 @@ GameWindow::GameWindow() : QDialog()
 	connect(ui.PlayButton, SIGNAL(clicked()), this, SLOT(PlayButtonClicked()));
 
 	
+	
 
+}
 
+bool GameWindow::CheckAnswer(Quiz quiz)
+{
+	std::string answer = ui.AnswerLabel->toPlainText().toStdString();
+	if (answer == quiz.GetQuestionAnswer()) return true;
+	return false;
 }
 
 GameWindow::~GameWindow()
@@ -55,6 +62,11 @@ void GameWindow::PlayButton()
 	RandomQuestion();
 
 	update();
+}
+
+void GameWindow::VerifyButton()
+{
+
 }
 
 void GameWindow::on_ChangeProfilePictureButton_clicked()
@@ -78,6 +90,10 @@ void GameWindow::RandomQuestion()
 	Quiz question;
 	question = question.RandomQuiz();
 	ui.QuestionLabel->setText(QString::fromStdString(question.GetQuestionText()));
-
+	if (CheckAnswer(question))
+	{
+		ui.VerifyAnswerLabel->setText("Correct!");
+	}
+	else ui.VerifyAnswerLabel->setText("Wrong!");
 }
 

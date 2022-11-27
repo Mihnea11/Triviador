@@ -4,7 +4,7 @@
 #include <QFileDialog>
 #include "Player.h"
 #include "ui_GameWindow.h"
-
+#include "Quiz.h"
 
 class GameWindow : public QDialog
 {
@@ -16,11 +16,11 @@ private:
 	void ToggleForm(QWidget* disabledForm, QWidget* enabledForm);
 	void RandomQuestion();
 	void PlayButton();
-	
+	void VerifyButton();
 
 public:
 	explicit GameWindow();
-
+	bool CheckAnswer(Quiz quiz);
 	~GameWindow();
 private slots:
 
@@ -32,6 +32,6 @@ private slots:
 	void SaveSettingsButtonClicked() { ToggleForm(ui.SettingsForm, ui.GameForm); }
 	void on_ChangeProfilePictureButton_clicked();
 	void PlayButtonClicked() { PlayButton(); }
-	
+	void VerifyButtonClicked() { VerifyButton(); }
 };
 

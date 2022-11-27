@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>988</width>
+    <width>970</width>
     <height>643</height>
    </rect>
   </property>
@@ -666,6 +666,19 @@ border-radius: 10px;</string>
     </property>
     <property name="text">
      <string>Verify</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="VerifyAnswerLabel">
+    <property name="geometry">
+     <rect>
+      <x>228</x>
+      <y>400</y>
+      <width>311</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
     </property>
    </widget>
   </widget>
