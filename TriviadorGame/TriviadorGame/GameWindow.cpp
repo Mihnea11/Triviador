@@ -1,12 +1,7 @@
 #include "GameWindow.h"
 
 
-<<<<<<< HEAD
 GameWindow::GameWindow() : QDialog()
-=======
-
-GameWindow::GameWindow(QWidget* parent) : QDialog(parent)
->>>>>>> ec9500cda37c44e6fa97ac11a7f1c53aa4a15b23
 {
 	ui.setupUi(this);
 
