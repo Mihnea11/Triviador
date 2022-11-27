@@ -29,5 +29,7 @@ private slots:
 	void SettingsButtonClicked() { ToggleForm(ui.GameForm, ui.SettingsForm); }
 	void SaveSettingsButtonClicked() { ToggleForm(ui.SettingsForm, ui.GameForm); }
 	void on_ChangeProfilePictureButton_clicked();
+	void PlayButtonClicked() { ToggleForm(ui.GameForm, ui.PlayGame); }
+
 };
 

@@ -22,6 +22,7 @@ GameWindow::GameWindow() : QDialog()
 	ui.ProfileForm->setVisible(false);
 	ui.EditProfileForm->setVisible(false);
 	ui.SettingsForm->setVisible(false);
+	ui.PlayGame->setVisible(false);
 
 	connect(ui.EditButton, SIGNAL(clicked()), this, SLOT(EditButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveButtonClicked()));
@@ -31,6 +32,10 @@ GameWindow::GameWindow() : QDialog()
 	connect(ui.SaveSettingsButton, SIGNAL(clicked()), this, SLOT(SaveSettingsButtonClicked()));
  
 	connect(ui.SoundSlider, &QSlider::valueChanged, [&]() { ui.ShowSoundLabel->setText(QString::fromStdString(std::to_string(ui.SoundSlider->value()))); });
+
+	connect(ui.PlayButton, SIGNAL(clicked()), this, SLOT(PlayButtonClicked()));
+
+
 }
 
 GameWindow::~GameWindow()

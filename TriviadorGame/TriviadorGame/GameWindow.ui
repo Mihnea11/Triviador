@@ -617,10 +617,63 @@ border-radius: 10px;</string>
     </property>
    </widget>
   </widget>
+  <widget class="QWidget" name="PlayGame" native="true">
+   <property name="geometry">
+    <rect>
+     <x>90</x>
+     <y>40</y>
+     <width>751</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <widget class="QLabel" name="QuestionLabel">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>60</y>
+      <width>751</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPlainTextEdit" name="AnswerLabel">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>180</y>
+      <width>581</width>
+      <height>71</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="VerifyLabel">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>320</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(48, 180, 33);</string>
+    </property>
+    <property name="text">
+     <string>Verify</string>
+    </property>
+   </widget>
+  </widget>
   <zorder>EditProfileForm</zorder>
   <zorder>SettingsForm</zorder>
   <zorder>GameForm</zorder>
   <zorder>ProfileForm</zorder>
+  <zorder>PlayGame</zorder>
  </widget>
  <resources>
   <include location="TriviadorGame.qrc"/>
