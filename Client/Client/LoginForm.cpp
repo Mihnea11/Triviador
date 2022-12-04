@@ -95,7 +95,10 @@ void LoginForm::CheckUser(const std::string & user)
     auto db_users = crow::json::load(response.text);
     for (const auto& db_user : db_users)
     {
-        if (user == db_user["Id"])
+        std::string userDecoded = db_user["Id"].s();
+        userDecoded = curl_escape(userDecoded.c_str(), userDecoded.length());
+
+        if (user == userDecoded)
         {
             throw std::exception("Username already used");
         }
@@ -158,12 +161,18 @@ void LoginForm::ValidateUserLogin(const std::string& user, const std::string& pa
     auto db_users = crow::json::load(response.text);
     for (const auto& db_user : db_users)
     {
-        if (user == db_user["Id"] && password != db_user["Password"])
+        std::string userDecoded = db_user["Id"].s();
+        std::string passwordDecoded = db_user["Password"].s();
+        
+        passwordDecoded = curl_unescape(passwordDecoded.c_str(), passwordDecoded.length());
+        userDecoded = curl_unescape(userDecoded.c_str(), userDecoded.length());
+
+        if (user == userDecoded && password != passwordDecoded)
         {
             throw std::exception("Incorrect password");
         }
 
-        if (user == db_user["Id"] && password == db_user["Password"])
+        if (user == userDecoded && password == passwordDecoded)
         {
             return;
         }
