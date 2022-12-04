@@ -16,7 +16,7 @@ private:
 	std::string difficulty;
 	std::string text;
 	std::string correctAnswer;
-	std::vector<std::string> incorrectAnswers;
+	//std::vector<std::string> incorrectAnswers;
 	bool isMultipleChoice;
 	int score;
 
@@ -27,7 +27,7 @@ public:
 	void SetDifficulty(const std::string& difficulty);
 	void SetText(const std::string& text);
 	void SetCorrectAnswer(const std::string& correctAnswer);
-	void SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers);
+	//void SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers);
 	void SetIsMultipleChoice(bool isMultipleChoice);
 	void SetScore(int score);
 
@@ -35,7 +35,7 @@ public:
 	std::string GetDifficulty() const;
 	std::string GetText() const;
 	std::string GetCorrectAnswer() const;
-	std::vector <std::string> GetIncorrectAnswers() const;
+	//std::vector <std::string> GetIncorrectAnswers() const;
 	bool GetIsMultipleChoice() const;
 	int GetScore() const;
 };
@@ -66,7 +66,7 @@ inline bool CreateBool(const std::string& isMultipleChoice)
 	return false;
 }
 
-inline auto CreateStorage(const std::string& fileName)
+inline auto CreateQuestionsStorage(const std::string& fileName)
 {
 	return sql::make_storage(
 		fileName,
@@ -76,14 +76,14 @@ inline auto CreateStorage(const std::string& fileName)
 			sql::make_column("Difficulty", &Question::SetDifficulty, &Question::GetDifficulty),
 			sql::make_column("Text", &Question::SetText, &Question::GetText),
 			sql::make_column("Correct answer", &Question::SetCorrectAnswer, &Question::GetCorrectAnswer),
-			sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers),
+			//sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers),
 			sql::make_column("Is multiple choice", &Question::SetIsMultipleChoice, &Question::GetIsMultipleChoice),
 			sql::make_column("Score", &Question::SetScore, &Question::GetScore)
 		)
 	);
 }
 
-using QuestionsStorage = decltype(CreateStorage(""));
+using QuestionsStorage = decltype(CreateQuestionsStorage(""));
 class QuestionDatabaseControl
 {
 private:

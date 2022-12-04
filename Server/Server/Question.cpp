@@ -5,7 +5,7 @@ Question::Question()
 	difficulty = std::string();
 	text = std::string();
 	correctAnswer = std::string();
-	incorrectAnswers = std::vector<std::string>();
+	//incorrectAnswers = std::vector<std::string>();
 	isMultipleChoice = true;
 	score = 0;
 }
@@ -30,10 +30,10 @@ void Question::SetCorrectAnswer(const std::string& correctAnswer)
 	this->correctAnswer = correctAnswer;
 }
 
-void Question::SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers)
-{
-	this->incorrectAnswers = incorrectAnswers;
-}
+//void Question::SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers)
+//{
+//	this->incorrectAnswers = incorrectAnswers;
+//}
 
 void Question::SetIsMultipleChoice(bool isMultipleChoice)
 {
@@ -65,10 +65,10 @@ std::string Question::GetCorrectAnswer() const
 	return correctAnswer;
 }
 
-std::vector<std::string> Question::GetIncorrectAnswers() const
-{
-	return incorrectAnswers;
-}
+//std::vector<std::string> Question::GetIncorrectAnswers() const
+//{
+//	return incorrectAnswers;
+//}
 
 bool Question::GetIsMultipleChoice() const
 {
@@ -92,12 +92,12 @@ crow::response QuestionDatabaseControl::operator()(const crow::request& request)
 	auto questionDifficulty = bodyArgs.find("Difficulty");
 	auto questionText = bodyArgs.find("Text");
 	auto questionCorrectAnswer = bodyArgs.find("Correct answer");
-	auto questionIncorrectAnswers = bodyArgs.find("Incorrect answers");
+	//auto questionIncorrectAnswers = bodyArgs.find("Incorrect answers");
 	auto questionIsMultipleChoice = bodyArgs.find("Is multiple choice");
 	auto questionScore = bodyArgs.find("Score");
 
 	if (questionId != end && questionDifficulty != end && questionText != end && questionCorrectAnswer != end &&
-		questionIncorrectAnswers != end && questionIsMultipleChoice != end && questionScore != end)
+		questionIsMultipleChoice != end && questionScore != end)
 	{
 		Question question;
 
@@ -105,11 +105,11 @@ crow::response QuestionDatabaseControl::operator()(const crow::request& request)
 		question.SetDifficulty(questionDifficulty->second);
 		question.SetText(questionText->second);
 		question.SetCorrectAnswer(questionCorrectAnswer->second);
-		question.SetIncorrectAnswers(CreateVector(questionIncorrectAnswers->second));
+		//question.SetIncorrectAnswers(CreateVector(questionIncorrectAnswers->second));
 		question.SetIsMultipleChoice(CreateBool(questionIsMultipleChoice->second));
 		question.SetScore(std::stoi(questionScore->second));
 
-		database.replace(question);
+		database.insert(question);
 	}
 
 	return crow::response(201);
