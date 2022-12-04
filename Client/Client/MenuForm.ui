@@ -62,7 +62,7 @@ background-color: rgb(55, 47, 107);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
-    <widget class="QWidget" name="ProfileHameMenuWidget" native="true">
+    <widget class="QWidget" name="ProfileMenuWidget" native="true">
      <property name="geometry">
       <rect>
        <x>1100</x>
@@ -75,20 +75,29 @@ background-color: rgb(55, 47, 107);</string>
       <string notr="true">border: 2px;
 border-radius: 10px;</string>
      </property>
-     <widget class="QLabel" name="ProfilePictureLabel">
+     <widget class="QLabel" name="MenuProfilePicture">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>10</y>
-        <width>121</width>
-        <height>81</height>
+        <x>-2</x>
+        <y>0</y>
+        <width>175</width>
+        <height>140</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
       </property>
       <property name="text">
        <string/>
       </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
-     <widget class="QPushButton" name="ProfileButton">
+     <widget class="QPushButton" name="MenuEditProfileButton">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -111,10 +120,10 @@ color: rgb(255, 255, 255);</string>
    <widget class="QPushButton" name="QuitButton">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>470</y>
-      <width>221</width>
-      <height>101</height>
+      <x>540</x>
+      <y>450</y>
+      <width>200</width>
+      <height>70</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -131,10 +140,10 @@ color: rgb(255, 255, 255);</string>
    <widget class="QPushButton" name="SettingsButton">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>320</y>
-      <width>221</width>
-      <height>101</height>
+      <x>540</x>
+      <y>350</y>
+      <width>200</width>
+      <height>70</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -146,26 +155,6 @@ color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
      <string>Settings</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="PlayButton">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>170</y>
-      <width>221</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border: 2px;
-border-radius: 10px;
-background-color: rgb(55, 47, 107);
-font: 700 30pt &quot;Segoe UI&quot;;
-color: rgb(255, 255, 255);</string>
-    </property>
-    <property name="text">
-     <string>Play</string>
     </property>
    </widget>
    <widget class="QWidget" name="EditProfileWidget" native="true">
@@ -214,7 +203,7 @@ font: 700 36pt &quot;Segoe UI&quot;;</string>
       <string notr="true">background-color: rgb(55, 47, 107);
 border: 2px;
 border-radius: 10px;
-font: 700 30pt &quot;Segoe UI&quot;;
+font: 700 20pt &quot;Segoe UI&quot;;
 color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -234,7 +223,7 @@ color: rgb(255, 255, 255);</string>
       <string notr="true">background-color: rgb(55, 47, 107);
 border: 2px;
 border-radius: 10px;
-font: 700 30pt &quot;Segoe UI&quot;;
+font: 700 20pt &quot;Segoe UI&quot;;
 color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
@@ -427,13 +416,13 @@ background-color: rgb(48, 180, 33);</string>
       <string>Change photo</string>
      </property>
     </widget>
-    <widget class="QLabel" name="Picture">
+    <widget class="QLabel" name="ProfilePicture">
      <property name="geometry">
       <rect>
-       <x>68</x>
-       <y>35</y>
-       <width>451</width>
-       <height>181</height>
+       <x>200</x>
+       <y>10</y>
+       <width>230</width>
+       <height>230</height>
       </rect>
      </property>
      <property name="text">
@@ -631,12 +620,32 @@ background-color: rgb(48, 180, 33);</string>
      </property>
     </widget>
    </widget>
-   <zorder>GameMenu</zorder>
+   <widget class="QPushButton" name="PlayButton">
+    <property name="geometry">
+     <rect>
+      <x>540</x>
+      <y>250</y>
+      <width>200</width>
+      <height>70</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 2px;
+border-radius: 10px;
+background-color: rgb(55, 47, 107);
+font: 700 30pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Play</string>
+    </property>
+   </widget>
+   <zorder>ChangeInformationsWidget</zorder>
    <zorder>QuitButton</zorder>
    <zorder>SettingsButton</zorder>
    <zorder>PlayButton</zorder>
-   <zorder>ChangeInformationsWidget</zorder>
    <zorder>EditProfileWidget</zorder>
+   <zorder>GameMenu</zorder>
   </widget>
  </widget>
  <resources/>

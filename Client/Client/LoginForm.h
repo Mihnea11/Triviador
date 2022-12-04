@@ -5,6 +5,7 @@
 #include <crow.h>
 #include <regex>
 
+#include "Player.h"
 #include "MenuForm.h"
 #include "ui_LoginForm.h"
 

@@ -45,7 +45,8 @@ void LoginForm::RegisterUser()
             {
                 {"Id", user},
                 {"Email", email},
-                {"Password", password}
+                {"Password", password},
+                {"Image path", " "}
             }
         );
 
@@ -67,8 +68,35 @@ void LoginForm::LoginUser()
     try
     {
         ValidateUserLogin(userName, password);
+        Player currentPlayer;
 
-        MenuForm* menuForm = new MenuForm();
+        cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/Users" });
+        auto db_users = crow::json::load(response.text);
+        for (const auto& db_user : db_users)
+        {
+            std::string userDecoded = db_user["Id"].s();
+            userDecoded = curl_unescape(userDecoded.c_str(), userDecoded.length());
+
+            if (userDecoded == userName)
+            {
+                std::string emailDecoded = db_user["Email"].s();
+                std::string passwordDecoded = db_user["Password"].s();
+                std::string imagePathDecoded = db_user["Image path"].s();
+
+                emailDecoded = curl_unescape(emailDecoded.c_str(), emailDecoded.length());
+                passwordDecoded = curl_unescape(passwordDecoded.c_str(), passwordDecoded.length());
+                imagePathDecoded = curl_unescape(imagePathDecoded.c_str(), imagePathDecoded.length());
+                
+                currentPlayer.SetName(userDecoded);
+                currentPlayer.SetEmail(emailDecoded);
+                currentPlayer.SetPassword(passwordDecoded);
+                currentPlayer.SetImagePath(imagePathDecoded);
+
+                break;
+            }
+        }
+
+        MenuForm* menuForm = new MenuForm(currentPlayer);
         menuForm->show();
 
         close();
@@ -81,6 +109,11 @@ void LoginForm::LoginUser()
 
 void LoginForm::WaitForSeconds(int seconds)
 {
+    QTime delayTime = QTime::currentTime().addSecs(seconds);
+    while (QTime::currentTime() < delayTime)
+    {
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
 }
 
 void LoginForm::CheckUser(const std::string & user)

@@ -10,6 +10,7 @@ int main()
 {
     const std::string usersDbFile = "Users.sqlite";
     const std::string questionsDbFile = "Questions.sqlite";
+
     UsersStorage usersDb = CreateStorage(usersDbFile);
     QuestionsStorage questionsDb = CreateQuestionsStorage(questionsDbFile);
 
@@ -28,7 +29,8 @@ int main()
             {
                 {"Id", user.GetName()},
                 {"Email", user.GetEmail()},
-                {"Password", user.GetPassword()}
+                {"Password", user.GetPassword()},
+                {"Image path", user.GetImagePath()}
             });
         }
 

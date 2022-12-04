@@ -87,6 +87,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="MenuForm.cpp" />
+    <ClCompile Include="Player.cpp" />
     <QtRcc Include="LoginForm.qrc" />
     <QtUic Include="LoginForm.ui" />
     <QtMoc Include="LoginForm.h" />
@@ -99,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MenuForm.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
