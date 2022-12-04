@@ -23,13 +23,26 @@ void MenuForm::ChangeProfilePictureButton()
 
 }
 
+void MenuForm::SaveInformationsButton()
+{
+
+}
+
+void MenuForm::EditProfileButton()
+{
+	ToggleWidget(ui.EditProfileWidget, ui.ChangeInformationsWidget);
+}
+
 MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 {
 	ui.setupUi(this);
 	ui.EditProfileWidget->setVisible(false);
+	ui.ChangeInformationsWidget->setVisible(false);
 	connect(ui.ProfileButton, SIGNAL(clicked()), this, SLOT(ProfileButtonClicked()));
 	connect(ui.BackButton, SIGNAL(clicked()), this, SLOT(BackButtonClicked()));
 	connect(ui.ChangePictureButton, SIGNAL(clicked()), this, SLOT(ChangePictureButtonClicked()));
+	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveInformationsButtonClicked()));
+	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
 }
 
 MenuForm::~MenuForm()

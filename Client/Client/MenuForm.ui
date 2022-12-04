@@ -241,19 +241,6 @@ color: rgb(255, 255, 255);</string>
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="Picture">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>30</y>
-       <width>331</width>
-       <height>191</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Picture</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="UsernameLabel">
      <property name="geometry">
       <rect>
@@ -423,7 +410,7 @@ background-color: rgb(204, 77, 50);</string>
     <widget class="QPushButton" name="ChangePictureButton">
      <property name="geometry">
       <rect>
-       <x>190</x>
+       <x>240</x>
        <y>250</y>
        <width>151</width>
        <height>41</height>
@@ -440,7 +427,216 @@ background-color: rgb(48, 180, 33);</string>
       <string>Change photo</string>
      </property>
     </widget>
+    <widget class="QLabel" name="Picture">
+     <property name="geometry">
+      <rect>
+       <x>68</x>
+       <y>35</y>
+       <width>451</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
+   <widget class="QWidget" name="ChangeInformationsWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1281</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(72, 61, 139);</string>
+    </property>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>20</y>
+       <width>1281</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 32pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+background-color: rgb(55, 47, 107);</string>
+     </property>
+     <property name="text">
+      <string>Change your informations</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="EmailChangeLabel">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>220</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Email</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="OldPasswordLabel">
+     <property name="geometry">
+      <rect>
+       <x>310</x>
+       <y>310</y>
+       <width>251</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Old Password</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="NewPasswordLabel">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>390</y>
+       <width>231</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>New Password</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="ConfirmNewPasswordLabel">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>480</y>
+       <width>351</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Confirm New Password</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="EmailChangeField">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>200</y>
+       <width>361</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+border: 2px;
+border-radius: 10px;
+font: 700 30pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="OldPasswordChangeField">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>290</y>
+       <width>361</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+border: 2px;
+border-radius: 10px;
+font: 700 30pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="NewPasswordChangeField">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>380</y>
+       <width>361</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+border: 2px;
+border-radius: 10px;
+font: 700 30pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="ConfirmNewPasswordChangeField">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>470</y>
+       <width>361</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+border: 2px;
+border-radius: 10px;
+font: 700 30pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="SaveButton">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>610</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 20pt &quot;Segoe UI&quot;;
+background-color: rgb(48, 180, 33);</string>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>GameMenu</zorder>
+   <zorder>QuitButton</zorder>
+   <zorder>SettingsButton</zorder>
+   <zorder>PlayButton</zorder>
+   <zorder>ChangeInformationsWidget</zorder>
+   <zorder>EditProfileWidget</zorder>
   </widget>
  </widget>
  <resources/>
