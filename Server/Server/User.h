@@ -35,7 +35,7 @@ inline auto CreateStorage(const std::string& fileName)
 	return sql::make_storage(
 		fileName,
 		sql::make_table(
-			fileName,
+			"User",
 			sql::make_column("Id", &User::SetName, &User::GetName, sql::primary_key()),
 			sql::make_column("Email", &User::SetEmail, &User::GetEmail),
 			sql::make_column("Password", &User::SetPassword, &User::GetPassword)
