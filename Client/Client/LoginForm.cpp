@@ -1,14 +1,15 @@
 #include "LoginForm.h"
-
+#include "MenuForm.h"
 LoginForm::LoginForm(QWidget* parent): QMainWindow(parent)
 {
     ui.setupUi(this);
-
+    
     
 
     ui.LoginForm->setVisible(true);
     ui.RegisterForm->setVisible(false);
     ui.RegistrationConfirmationForm->setVisible(false);
+  
 
     connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
     connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
