@@ -20,6 +20,11 @@ public:
 	void SetIsMultipleChoice(bool isMultipleChoice);
 	void SetScore(int score);
 
-	
+	std::string GetDifficulty() const;
+	std::string GetText() const;
+	std::string GetCorrectAnswer() const;
+	std::vector <std::string> GetIncorrectAnswers() const;
+	bool GetIsMultipleChoice() const;
+	int GetScore() const;
 };
 
