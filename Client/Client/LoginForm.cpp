@@ -1,6 +1,6 @@
 #include "LoginForm.h"
 
-LoginForm::LoginForm(QWidget *parent): QMainWindow(parent)
+LoginForm::LoginForm(QWidget* parent): QMainWindow(parent)
 {
     ui.setupUi(this);
 
@@ -67,12 +67,10 @@ void LoginForm::LoginUser()
     {
         ValidateUserLogin(userName, password);
 
-        ui.LoginErrorLabel->setText("Logged");
-        //GameWindow* window = new GameWindow();
-        //window->SetPlayer(player);
-        //window->show();
+        MenuForm* menuForm = new MenuForm();
+        menuForm->show();
 
-        //close();
+        close();
     }
     catch (std::exception exception)
     {

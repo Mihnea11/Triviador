@@ -5,6 +5,7 @@
 #include <crow.h>
 #include <regex>
 
+#include "MenuForm.h"
 #include "ui_LoginForm.h"
 
 #define REGEX_STACK_COUNT 1000
@@ -24,7 +25,7 @@ private:
     void ValidateUserRegister(const std::string& user, const std::string& email, const std::string& password);
     void ValidateUserLogin(const std::string& user, const std::string& password);
 public:
-    LoginForm(QWidget *parent = nullptr);
+    LoginForm(QWidget* parent = nullptr);
     ~LoginForm();
 
     void RegisterUser();
