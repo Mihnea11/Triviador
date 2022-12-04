@@ -246,8 +246,8 @@ color: rgb(255, 255, 255);</string>
       <rect>
        <x>130</x>
        <y>30</y>
-       <width>351</width>
-       <height>241</height>
+       <width>331</width>
+       <height>191</height>
       </rect>
      </property>
      <property name="text">
@@ -418,6 +418,26 @@ background-color: rgb(204, 77, 50);</string>
      </property>
      <property name="text">
       <string>Back</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="ChangePictureButton">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>250</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(48, 180, 33);</string>
+     </property>
+     <property name="text">
+      <string>Change photo</string>
      </property>
     </widget>
    </widget>
