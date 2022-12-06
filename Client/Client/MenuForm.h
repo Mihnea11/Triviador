@@ -17,27 +17,30 @@ private:
 	Player player;
 
 	void UploadImageToLabel(QLabel* label);
-	void LoadMenuProfileImage();
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
-	void ProfileButton();
-	void BackButton();
-	void ChangeProfilePictureButton();
+	void MenuEditProfileButton();
+	void EditProfileBackButton();
+	void EditProfileChangeProfilePictureButton();
 	void SaveInformationsButton();
 	void EditProfileButton();
-	void QuitButton();
+	void MenuQuitButton();
 
 public:
 	MenuForm(QWidget* parent = nullptr);
 	MenuForm(const Player& player, QWidget* parent = nullptr);
 	~MenuForm();
 
+	void SetPlayer(const Player& player);
+
+	Player GetPlayer();
+
 private slots:
-	void ProfileButtonClicked() { ProfileButton(); }
-	void BackButtonClicked() { BackButton(); }
-	void ChangePictureButtonClicked() { ChangeProfilePictureButton(); }
+	void MenuEditProfileButtonClicked() { MenuEditProfileButton(); }
+	void EditProfileBackButtonClicked() { EditProfileBackButton(); }
+	void EditProfileChangePictureButtonClicked() { EditProfileChangeProfilePictureButton(); }
 	void EditProfileButtonClicked(){ EditProfileButton(); }
 	void SaveInformationsButtonClicked() { ToggleWidget(ui.ChangeInformationsWidget, ui.EditProfileWidget); }
-	void QuitButtonClicked() { QuitButton(); }
+	void MenuQuitButtonClicked() { MenuQuitButton(); }
 
 };
 

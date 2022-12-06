@@ -7,32 +7,33 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.EditProfileWidget->setVisible(false);
 	ui.ChangeInformationsWidget->setVisible(false);
 
-	LoadMenuProfileImage();
+	UploadImageToLabel(ui.MenuProfilePicture);
 
-	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(ProfileButtonClicked()));
-	connect(ui.BackButton, SIGNAL(clicked()), this, SLOT(BackButtonClicked()));
-	connect(ui.ChangePictureButton, SIGNAL(clicked()), this, SLOT(ChangePictureButtonClicked()));
+	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(MenuEditProfileButtonClicked()));
+	connect(ui.MenuQuitButton, SIGNAL(clicked()), this, SLOT(MenuQuitButtonClicked()));
+	connect(ui.EditProfileBackButton, SIGNAL(clicked()), this, SLOT(EditProfileBackButtonClicked()));
+	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveInformationsButtonClicked()));
 	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
 }
 
-MenuForm::MenuForm(const Player& player, QWidget* parent)
+MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 {
 	ui.setupUi(this);
 
-	this->player = player;
-
 	ui.EditProfileWidget->setVisible(false);
 	ui.ChangeInformationsWidget->setVisible(false);
-	
-	ui.MenuProfilePicture->setPixmap(QPixmap(QString::fromStdString(player.GetImagePath())));
 
-	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(ProfileButtonClicked()));
-	connect(ui.BackButton, SIGNAL(clicked()), this, SLOT(BackButtonClicked()));
-	connect(ui.ChangePictureButton, SIGNAL(clicked()), this, SLOT(ChangePictureButtonClicked()));
+	this->player = player;
+
+	UploadImageToLabel(ui.MenuProfilePicture);
+
+	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(MenuEditProfileButtonClicked()));
+	connect(ui.MenuQuitButton, SIGNAL(clicked()), this, SLOT(MenuQuitButtonClicked()));
+	connect(ui.EditProfileBackButton, SIGNAL(clicked()), this, SLOT(EditProfileBackButtonClicked()));
+	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveInformationsButtonClicked()));
 	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
-	connect(ui.QuitButton, SIGNAL(clicked()), this, SLOT(QuitButtonClicked()));
 }
 
 MenuForm::~MenuForm()
@@ -40,26 +41,28 @@ MenuForm::~MenuForm()
 
 }
 
-void MenuForm::UploadImageToLabel(QLabel* label)
+void MenuForm::SetPlayer(const Player& player)
 {
-	QString fileName = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.bmp)"));
-
-	if (QString::compare(fileName, QString()) != 0)
-	{
-		QImage image;
-		bool valid = image.load(fileName);
-		if (valid)
-		{
-			label->setPixmap(QPixmap::fromImage(image));
-		}
-	}
-
-	player.SetImagePath(fileName.toStdString());
+	this->player = player;
 }
 
-void MenuForm::LoadMenuProfileImage()
+Player MenuForm::GetPlayer()
 {
-	ui.MenuProfilePicture->setPixmap(QPixmap(QString::fromStdString(player.GetImagePath())));
+	return player;
+}
+
+void MenuForm::UploadImageToLabel(QLabel* label)
+{
+	QImage image;
+
+	bool valid = image.load(QString::fromStdString(player.GetImagePath()));
+	if (valid == false)
+	{
+		QString defaultPath = QDir::currentPath() + "/DefaultUser.jpg";
+		image.load(defaultPath);
+	}
+
+	label->setPixmap(QPixmap::fromImage(image));
 }
 
 void MenuForm::ToggleWidget(QWidget* disabledForm, QWidget* enabledForm)
@@ -68,16 +71,30 @@ void MenuForm::ToggleWidget(QWidget* disabledForm, QWidget* enabledForm)
 	enabledForm->setVisible(true);
 }
 
-void MenuForm::ProfileButton()
+void MenuForm::MenuEditProfileButton()
 {
 	ToggleWidget(ui.GameMenu, ui.EditProfileWidget);
 
 	ui.UsernameField->setText(QString::fromStdString(player.GetName()));
 	ui.EmailField->setText(QString::fromStdString(player.GetEmail()));
 
-	if (player.GetImagePath() != " ")
+	UploadImageToLabel(ui.EditProfileProfilePicture);
+}
+
+void MenuForm::EditProfileBackButton()
+{
+	ToggleWidget(ui.EditProfileWidget, ui.GameMenu);
+
+	UploadImageToLabel(ui.MenuProfilePicture);
+}
+
+void MenuForm::EditProfileChangeProfilePictureButton()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.bmp)"));
+	if (QString::compare(fileName, QString()) != 0)
 	{
-		ui.ProfilePicture->setPixmap(QPixmap(QString::fromStdString(player.GetImagePath())));
+		player.SetImagePath(fileName.toStdString());
+		UploadImageToLabel(ui.EditProfileProfilePicture);
 	}
 
 	cpr::Response response = cpr::Put(
@@ -92,18 +109,6 @@ void MenuForm::ProfileButton()
 	);
 }
 
-void MenuForm::BackButton()
-{
-	ToggleWidget(ui.EditProfileWidget, ui.GameMenu);
-
-	LoadMenuProfileImage();
-}
-
-void MenuForm::ChangeProfilePictureButton()
-{
-	UploadImageToLabel(ui.ProfilePicture);
-}
-
 void MenuForm::SaveInformationsButton()
 {
 
@@ -114,7 +119,7 @@ void MenuForm::EditProfileButton()
 	ToggleWidget(ui.EditProfileWidget, ui.ChangeInformationsWidget);
 }
 
-void MenuForm::QuitButton()
+void MenuForm::MenuQuitButton()
 {
 	close();
 }
