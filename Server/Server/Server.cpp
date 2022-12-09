@@ -1,67 +1,41 @@
 #include <vector>
 #include <string>
 
-#include "User.h"
-#include "Question.h"
+#include "Database.h"
 
 namespace sql = sqlite_orm;
 
 int main()
 {
-    const std::string usersDbFile = "Users.sqlite";
-    const std::string questionsDbFile = "Questions.sqlite";
-
-    UsersStorage usersDb = CreateStorage(usersDbFile);
-    QuestionsStorage questionsDb = CreateQuestionsStorage(questionsDbFile);
-
-    usersDb.sync_schema();
-    questionsDb.sync_schema();
+    const std::string databaseFile = "Database.sqlite";
+    Database::Storage database = Database::CreateStorage(databaseFile);
+    database.sync_schema();
 
     crow::SimpleApp app;
 
-    CROW_ROUTE(app, "/Users")(
-    [&usersDb]()
+    //User login route
+    auto& loginUser = CROW_ROUTE(app, "/LoginUser").methods(crow::HTTPMethod::Put);
+    loginUser(Database::LoginUserHandler(database));
+
+    //User register route
+    auto& registerUser = CROW_ROUTE(app, "/RegisterUser").methods(crow::HTTPMethod::Put);
+    registerUser(Database::RegisterUserHandler(database));
+
+    //User information
+    CROW_ROUTE(app, "/User_<string>")([&database](std::string userId)
     {
-        std::vector<crow::json::wvalue> usersJson;
-        for (const auto& user : usersDb.iterate<User>())
+        User user = database.get<User>(userId);
+
+        crow::json::wvalue userData(
         {
-            usersJson.push_back(crow::json::wvalue
-            {
-                {"Id", user.GetName()},
-                {"Email", user.GetEmail()},
-                {"Password", user.GetPassword()},
-                {"Image path", user.GetImagePath()}
-            });
-        }
+            {"Username", user.GetName()},
+            {"Email", user.GetEmail()},
+            {"Password", user.GetPassword()},
+            {"Image path", user.GetImagePath()}
+        });
 
-        return crow::json::wvalue{ usersJson };
+        return userData;
     });
-
-    CROW_ROUTE(app, "/Questions")(
-    [&questionsDb]()
-    {
-        std::vector<crow::json::wvalue> questionsJson;
-        for (const auto& question : questionsDb.iterate<Question>())
-        {
-            questionsJson.push_back(crow::json::wvalue
-            {
-                {"Id", question.GetId()},
-                {"Difficulty", question.GetDifficulty()},
-                {"Text", question.GetText()},
-                {"Correct answer", question.GetCorrectAnswer()},
-                //{"Incorrect answers", question.GetIncorrectAnswers()},
-                {"Is multiple choice", question.GetIsMultipleChoice()},
-                {"Score", question.GetScore()}
-            });
-        }
-        
-        return crow::json::wvalue{ questionsJson };
-    });
-
-    auto& addUser = CROW_ROUTE(app, "/Users").methods(crow::HTTPMethod::PUT);
-    auto& addQuestion = CROW_ROUTE(app, "/Questions").methods(crow::HTTPMethod::PUT);
-    addUser(UserDatabaseControl(usersDb));
-    addQuestion(QuestionDatabaseControl(questionsDb));
 
     app.port(18080).multithreaded().run();
 

@@ -2,6 +2,7 @@
 #include <QtWidgets/QMainWindow>
 #include <curl/curl.h>
 #include <cpr/cpr.h>
+#include <algorithm>
 #include <crow.h>
 #include <regex>
 

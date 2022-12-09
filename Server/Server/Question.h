@@ -65,32 +65,3 @@ inline bool CreateBool(const std::string& isMultipleChoice)
 
 	return false;
 }
-
-inline auto CreateQuestionsStorage(const std::string& fileName)
-{
-	return sql::make_storage(
-		fileName,
-		sql::make_table(
-			"Questions",
-			sql::make_column("Id", &Question::SetId, &Question::GetId, sql::autoincrement(), sql::primary_key()),
-			sql::make_column("Difficulty", &Question::SetDifficulty, &Question::GetDifficulty),
-			sql::make_column("Text", &Question::SetText, &Question::GetText),
-			sql::make_column("Correct answer", &Question::SetCorrectAnswer, &Question::GetCorrectAnswer),
-			//sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers),
-			sql::make_column("Is multiple choice", &Question::SetIsMultipleChoice, &Question::GetIsMultipleChoice),
-			sql::make_column("Score", &Question::SetScore, &Question::GetScore)
-		)
-	);
-}
-
-using QuestionsStorage = decltype(CreateQuestionsStorage(""));
-class QuestionDatabaseControl
-{
-private:
-	QuestionsStorage& database;
-
-public:
-	QuestionDatabaseControl(QuestionsStorage& storage);
-
-	crow::response operator() (const crow::request& request) const;
-};

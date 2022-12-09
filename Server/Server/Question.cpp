@@ -79,38 +79,3 @@ int Question::GetScore() const
 {
 	return score;
 }
-
-QuestionDatabaseControl::QuestionDatabaseControl(QuestionsStorage& storage) : database{ storage }
-{
-}
-
-crow::response QuestionDatabaseControl::operator()(const crow::request& request) const
-{
-	auto bodyArgs = ParseUrlArgs(request.body);
-	auto end = bodyArgs.end();
-	auto questionId = bodyArgs.find("Id");
-	auto questionDifficulty = bodyArgs.find("Difficulty");
-	auto questionText = bodyArgs.find("Text");
-	auto questionCorrectAnswer = bodyArgs.find("Correct answer");
-	//auto questionIncorrectAnswers = bodyArgs.find("Incorrect answers");
-	auto questionIsMultipleChoice = bodyArgs.find("Is multiple choice");
-	auto questionScore = bodyArgs.find("Score");
-
-	if (questionId != end && questionDifficulty != end && questionText != end && questionCorrectAnswer != end &&
-		questionIsMultipleChoice != end && questionScore != end)
-	{
-		Question question;
-
-		question.SetId(std::stoi(questionId->second));
-		question.SetDifficulty(questionDifficulty->second);
-		question.SetText(questionText->second);
-		question.SetCorrectAnswer(questionCorrectAnswer->second);
-		//question.SetIncorrectAnswers(CreateVector(questionIncorrectAnswers->second));
-		question.SetIsMultipleChoice(CreateBool(questionIsMultipleChoice->second));
-		question.SetScore(std::stoi(questionScore->second));
-
-		database.insert(question);
-	}
-
-	return crow::response(201);
-}

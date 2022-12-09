@@ -32,29 +32,3 @@ public:
 	std::string GetPassword() const;
 	std::string GetImagePath() const;
 };
-
-inline auto CreateStorage(const std::string& fileName)
-{
-	return sql::make_storage(
-		fileName,
-		sql::make_table(
-			"User",
-			sql::make_column("Id", &User::SetName, &User::GetName, sql::primary_key()),
-			sql::make_column("Email", &User::SetEmail, &User::GetEmail),
-			sql::make_column("Password", &User::SetPassword, &User::GetPassword),
-			sql::make_column("Image path", &User::SetImagePath, &User::GetImagePath)
-		)
-	);
-}
-
-using UsersStorage = decltype(CreateStorage(""));
-class UserDatabaseControl
-{
-private:
-	UsersStorage& database;
-
-public:
-	UserDatabaseControl(UsersStorage& storage);
-
-	crow::response operator() (const crow::request& request) const;
-};
