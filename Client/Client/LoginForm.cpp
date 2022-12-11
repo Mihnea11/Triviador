@@ -47,18 +47,31 @@ void LoginForm::RegisterUser()
 
 void LoginForm::LoginUser()
 {
-    std::string userName = ui.LoginUsernameField->text().toStdString();
+    std::string username = ui.LoginUsernameField->text().toStdString();
     std::string password = ui.LoginPasswordField->text().toStdString();
 
     try
     {
-        ValidateUserLogin(userName, password);
+        ValidateUserLogin(username, password);
 
-        ui.LoginErrorLabel->setText("logged");
+        cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/User_" + username });
 
-        /*Player currentPlayer;
-        MenuForm* menuForm = new MenuForm(currentPlayer);
-        menuForm->show();*/
+        auto userInformation = crow::json::load(response.text);
+        
+        std::string email = userInformation["Email"].s();
+        std::string imagePath = userInformation["Image path"].s();
+
+        email = curl_unescape(email.c_str(), email.length());
+        imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+
+        Player user;
+        user.SetName(username);
+        user.SetPassword(password);
+        user.SetEmail(email);
+        user.SetImagePath(imagePath);
+
+        MenuForm* menu = new MenuForm(std::move(user));
+        menu->show();
 
         close();
     }

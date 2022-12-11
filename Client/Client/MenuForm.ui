@@ -241,6 +241,9 @@ color: rgb(255, 255, 255);</string>
      <property name="text">
       <string/>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
     <widget class="QLabel" name="EmailField">
      <property name="geometry">
@@ -260,6 +263,9 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="UsernameLabel">
@@ -659,8 +665,8 @@ background-color: rgb(48, 180, 33);</string>
     </widget>
    </widget>
    <zorder>ChangeInformationsWidget</zorder>
-   <zorder>EditProfileWidget</zorder>
    <zorder>GameMenu</zorder>
+   <zorder>EditProfileWidget</zorder>
   </widget>
  </widget>
  <resources>
