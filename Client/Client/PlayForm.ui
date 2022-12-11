@@ -112,15 +112,319 @@ border-radius: 10px;</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(204, 77, 50);
-font: 700 14pt &quot;Segoe UI&quot;;
+     <string notr="true">border: 2px;
 color: rgb(255, 255, 255);
-border: 2px;
-border-radius: 10px;</string>
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
     </property>
     <property name="text">
      <string>Back</string>
     </property>
+   </widget>
+   <widget class="QWidget" name="RoomForm" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>1281</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QLabel" name="RoomText">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>1281</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+color: rgb(255, 255, 255);
+font: 700 30pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Room&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="RoomPlayers">
+     <property name="geometry">
+      <rect>
+       <x>1110</x>
+       <y>160</y>
+       <width>151</width>
+       <height>31</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QWidget" name="RoomPlayer1" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>160</y>
+       <width>561</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(72, 61, 139);</string>
+     </property>
+     <widget class="QLabel" name="RoomPlayer1ProfilePicture">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>115</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="RoomPlayer1Username">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RoomPlayer1Ready">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>20</y>
+        <width>101</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
+      </property>
+      <property name="text">
+       <string>Ready</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="RoomPlayer2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>300</y>
+       <width>561</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(72, 61, 139);</string>
+     </property>
+     <widget class="QLabel" name="RoomPlayer2ProfilePicture">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>115</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="RoomPlayer2Username">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RoomPlayer2Ready">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>20</y>
+        <width>101</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
+      </property>
+      <property name="text">
+       <string>Ready</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="RoomPlayer3" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>440</y>
+       <width>561</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(72, 61, 139);</string>
+     </property>
+     <widget class="QLabel" name="RoomPlayer3ProfilePicture">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>115</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="RoomPlayer3Username">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RoomPlayer3Ready">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>20</y>
+        <width>101</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
+      </property>
+      <property name="text">
+       <string>Ready</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="RoomPlayer4" native="true">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>580</y>
+       <width>561</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(72, 61, 139);</string>
+     </property>
+     <widget class="QLabel" name="RoomPlayer4ProfilePicture">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>115</width>
+        <height>115</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="RoomPlayer4Username">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>40</y>
+        <width>251</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RoomPlayer4Ready">
+      <property name="geometry">
+       <rect>
+        <x>420</x>
+        <y>20</y>
+        <width>101</width>
+        <height>91</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
+      </property>
+      <property name="text">
+       <string>Ready</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>
