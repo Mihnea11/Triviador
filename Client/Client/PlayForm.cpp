@@ -10,6 +10,19 @@ void PlayForm::CreateButton()
 	ui.RoomForm->setVisible(true);
 }
 
+void PlayForm::RoomBackButton()
+{
+	ui.RoomForm->setVisible(false);
+}
+
+void PlayForm::BackButton()
+{
+	MenuForm* menu = new MenuForm(std::move(player));
+	menu->show();
+
+	close();
+}
+
 PlayForm::PlayForm(QWidget* parent) : QMainWindow(parent)
 {
 	ui.setupUi(this);
@@ -17,9 +30,11 @@ PlayForm::PlayForm(QWidget* parent) : QMainWindow(parent)
 	ui.centralwidget->setVisible(true);
 	ui.RoomForm->setVisible(false);
 
-	ui.RoomPlayers->addItems({ "Two Players", "Three Players", "Four Players" });
+	ui.RoomPlayerSelection->addItems({ "Two Players", "Three Players", "Four Players" });
 
 	connect(ui.CreateRoomPlayForm, SIGNAL(clicked()), this, SLOT(CreateButtonClicked()));
+	connect(ui.RoomBackButton, SIGNAL(clicked()), this, SLOT(RoomBackButtonClicked()));
+	connect(ui.BackButton, SIGNAL(clicked()), this, SLOT(BackButtonClicked()));
 }
 
 PlayForm::PlayForm(const Player& player, QWidget* parent)
@@ -29,11 +44,13 @@ PlayForm::PlayForm(const Player& player, QWidget* parent)
 	ui.centralwidget->setVisible(true);
 	ui.RoomForm->setVisible(false);
 
-	ui.RoomPlayers->addItems({ "Two Players", "Three Players", "Four Players" });
+	ui.RoomPlayerSelection->addItems({ "Two Players", "Three Players", "Four Players" });
 
 	this->player = player;
 
 	connect(ui.CreateRoomPlayForm, SIGNAL(clicked()), this, SLOT(CreateButtonClicked()));
+	connect(ui.RoomBackButton, SIGNAL(clicked()), this, SLOT(RoomBackButtonClicked()));
+	connect(ui.BackButton, SIGNAL(clicked()), this, SLOT(BackButtonClicked()));
 }
 
 PlayForm::~PlayForm()

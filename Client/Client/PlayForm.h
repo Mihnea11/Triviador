@@ -5,7 +5,7 @@
 #include <QPainterPath>
 
 #include "Player.h"
-#include "LoginForm.h"
+#include "MenuForm.h"
 #include "ui_PlayForm.h"
 
 class PlayForm : public QMainWindow
@@ -18,6 +18,8 @@ private:
 	Player player;
 
 	void CreateButton();
+	void RoomBackButton();
+	void BackButton();
 
 public:
 	PlayForm(QWidget* parent = nullptr);
@@ -26,6 +28,8 @@ public:
 
 private slots:
 	void CreateButtonClicked() { CreateButton(); }
+	void RoomBackButtonClicked() { RoomBackButton(); }
+	void BackButtonClicked() { BackButton(); }
 };
 
 
