@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GameWindowForm</class>
+ <widget class="QDialog" name="GameWindowForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>815</width>
+    <height>722</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(248, 222, 110, 255), stop:0.202512 rgba(232, 186, 97, 255), stop:0.598116 rgba(232, 135, 97, 255), stop:0.831439 rgba(204, 93, 50, 255));</string>
+  </property>
+  <widget class="QWidget" name="GameWidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>40</y>
+     <width>691</width>
+     <height>471</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <widget class="QLabel" name="Triviador_Label">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>30</y>
+      <width>231</width>
+      <height>71</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 30pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>TRIVIADOR</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="PlayButton">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>140</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(213, 106, 65);
+font: 700 20pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>PLAY</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SettingsButton">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>210</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(232, 161, 97);
+font: 700 20pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>SETTINGS</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="QuitButton">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>280</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="mouseTracking">
+     <bool>true</bool>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(213, 106, 65);
+background-color: rgb(235, 194, 100);
+font: 700 20pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>QUIT</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="ProfileWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>539</x>
+      <y>0</y>
+      <width>151</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QPushButton" name="EditButton">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(56, 200, 37);
+font: 700 12pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+     </property>
+     <property name="text">
+      <string>Edit</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="ProfileLabel">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>101</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 20pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Profile</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="ProfileForm" native="true">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>40</y>
+     <width>741</width>
+     <height>541</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);</string>
+   </property>
+   <widget class="QLabel" name="UsernameProfileFrom">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>30</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 20pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Username</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="EmailLabelProfileForm">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>100</y>
+      <width>91</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 18pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Email</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PlayerStatsLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>190</y>
+      <width>201</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 24pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Player Stats</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="EditButtoProfileForm">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>70</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(56, 200, 37);
+font: 700 12pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Edit</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="WonGamesLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>240</y>
+      <width>131</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 14pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Won Games:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="PlayesGamesLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>280</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 14pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Played Games:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="WinRateLabel">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>320</y>
+      <width>141</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 700 14pt &quot;Segoe UI&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Winrate:</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="SaveProfileForm">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>410</y>
+      <width>101</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(232, 138, 97);
+font: 700 12pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Save</string>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

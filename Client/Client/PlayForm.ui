@@ -6,14 +6,123 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1013</width>
-    <height>600</height>
+    <width>1280</width>
+    <height>720</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <property name="styleSheet">
+   <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(116, 172, 255, 255), stop:0.251894 rgba(99, 124, 235, 255), stop:0.598485 rgba(109, 86, 216, 255), stop:0.831439 rgba(153, 50, 204, 255));</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="BackgroundLabel" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1281</width>
+      <height>191</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(55, 47, 107);</string>
+    </property>
+    <widget class="QLabel" name="CreateorJoinText">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>20</y>
+       <width>761</width>
+       <height>151</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+font: 700 30pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Create or Join &lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Room&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="JoinButtonPlayForm">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>360</y>
+      <width>241</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(72, 61, 139);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Join via Code</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="CreateRoomPlayForm">
+    <property name="geometry">
+     <rect>
+      <x>750</x>
+      <y>360</y>
+      <width>241</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(72, 61, 139);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Create new Room</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BackButton">
+    <property name="geometry">
+     <rect>
+      <x>1100</x>
+      <y>620</y>
+      <width>111</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(204, 77, 50);
+font: 700 14pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
+  </widget>
  </widget>
  <resources/>
  <connections/>
