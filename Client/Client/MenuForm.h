@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "LoginForm.h"
 #include "ui_MenuForm.h"
+#include "PlayForm.h"
 
 class MenuForm : public QMainWindow
 {
@@ -24,6 +25,7 @@ private:
 	void SaveInformationsButton();
 	void EditProfileButton();
 	void MenuQuitButton();
+	void PLayButton();
 
 public:
 	MenuForm(QWidget* parent = nullptr);
@@ -41,7 +43,7 @@ private slots:
 	void EditProfileButtonClicked(){ EditProfileButton(); }
 	void SaveInformationsButtonClicked() { ToggleWidget(ui.ChangeInformationsWidget, ui.EditProfileWidget); }
 	void MenuQuitButtonClicked() { MenuQuitButton(); }
-
+	void PlayButtonClicked() { PLayButton(); }
 };
 
 

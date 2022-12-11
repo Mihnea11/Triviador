@@ -88,12 +88,14 @@
   <ItemGroup>
     <ClCompile Include="MenuForm.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayForm.cpp" />
     <QtRcc Include="LoginForm.qrc" />
     <QtUic Include="LoginForm.ui" />
     <QtMoc Include="LoginForm.h" />
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="MenuForm.ui" />
+    <QtUic Include="PlayForm.ui" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -103,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h" />
+    <QtMoc Include="PlayForm.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DefaultUser.jpg" />

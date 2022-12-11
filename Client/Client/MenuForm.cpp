@@ -15,6 +15,7 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveInformationsButtonClicked()));
 	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
+	connect(ui.MenuPlayButton, SIGNAL(clicked()), this, SLOT(PlayButtonClicked()));
 }
 
 MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
@@ -34,6 +35,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
 	connect(ui.SaveButton, SIGNAL(clicked()), this, SLOT(SaveInformationsButtonClicked()));
 	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
+	connect(ui.MenuPlayButton, SIGNAL(clicked()), this, SLOT(PlayButtonClicked()));
 }
 
 MenuForm::~MenuForm()
@@ -121,5 +123,13 @@ void MenuForm::EditProfileButton()
 
 void MenuForm::MenuQuitButton()
 {
+	close();
+}
+
+void MenuForm::PLayButton()
+{
+	PlayForm* menu = new PlayForm(std::move(player));
+	menu->show();
+
 	close();
 }
