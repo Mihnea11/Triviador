@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
+    <width>1126</width>
     <height>720</height>
    </rect>
   </property>
@@ -17,6 +17,18 @@
    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(116, 172, 255, 255), stop:0.251894 rgba(99, 124, 235, 255), stop:0.598485 rgba(109, 86, 216, 255), stop:0.831439 rgba(153, 50, 204, 255));</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="minimumSize">
+    <size>
+     <width>1280</width>
+     <height>720</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1280</width>
+     <height>720</height>
+    </size>
+   </property>
    <widget class="QWidget" name="LoginForm" native="true">
     <property name="geometry">
      <rect>
@@ -598,6 +610,36 @@ color: rgb(255, 255, 255);
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="LoggingWait" native="true">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>290</y>
+      <width>601</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(72, 61, 139);</string>
+    </property>
+    <widget class="QLabel" name="LoadingLabel">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>50</y>
+       <width>381</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+font: 700 18pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>Loading ... Please Wait</string>
      </property>
     </widget>
    </widget>

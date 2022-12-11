@@ -7,7 +7,8 @@ LoginForm::LoginForm(QWidget* parent): QMainWindow(parent)
     ui.LoginForm->setVisible(true);
     ui.RegisterForm->setVisible(false);
     ui.RegistrationConfirmationForm->setVisible(false);
-  
+    ui.LoggingWait->setVisible(false);
+
     connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
     connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
     connect(ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(LoginRegisterButtonClicked()));
@@ -69,6 +70,10 @@ void LoginForm::LoginUser()
         user.SetPassword(password);
         user.SetEmail(email);
         user.SetImagePath(imagePath);
+
+
+        ToggleWidget(ui.LoginForm, ui.LoggingWait);
+        WaitForSeconds(1);
 
         MenuForm* menu = new MenuForm(std::move(user));
         menu->show();

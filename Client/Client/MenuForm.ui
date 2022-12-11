@@ -29,6 +29,18 @@
    <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(116, 172, 255, 255), stop:0.251894 rgba(99, 124, 235, 255), stop:0.598485 rgba(109, 86, 216, 255), stop:0.831439 rgba(153, 50, 204, 255));</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="minimumSize">
+    <size>
+     <width>1280</width>
+     <height>720</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>1280</width>
+     <height>16777215</height>
+    </size>
+   </property>
    <widget class="QWidget" name="GameMenu" native="true">
     <property name="geometry">
      <rect>
