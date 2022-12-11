@@ -35,6 +35,11 @@ void Question::SetCorrectAnswer(const std::string& correctAnswer)
 //	this->incorrectAnswers = incorrectAnswers;
 //}
 
+void Question::SetIncorrectAnswers(const std::string& incorrectAnswers)
+{
+	this->incorrectAnswers = incorrectAnswers;
+}
+
 void Question::SetIsMultipleChoice(bool isMultipleChoice)
 {
 	this->isMultipleChoice = isMultipleChoice;
@@ -69,6 +74,11 @@ std::string Question::GetCorrectAnswer() const
 //{
 //	return incorrectAnswers;
 //}
+
+std::string Question::GetIncorrectAnswers() const
+{
+	return incorrectAnswers;
+}
 
 bool Question::GetIsMultipleChoice() const
 {

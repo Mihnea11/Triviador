@@ -29,6 +29,7 @@ namespace Database
 				sql::make_column("Text", &Question::SetText, &Question::GetText),
 				sql::make_column("Correct answer", &Question::SetCorrectAnswer, &Question::GetCorrectAnswer),
 				//sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers),
+				sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers),
 				sql::make_column("Is multiple choice", &Question::SetIsMultipleChoice, &Question::GetIsMultipleChoice),
 				sql::make_column("Score", &Question::SetScore, &Question::GetScore)
 			)

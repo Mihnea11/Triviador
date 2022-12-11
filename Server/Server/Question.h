@@ -17,6 +17,7 @@ private:
 	std::string text;
 	std::string correctAnswer;
 	//std::vector<std::string> incorrectAnswers;
+	std::string incorrectAnswers;
 	bool isMultipleChoice;
 	int score;
 
@@ -28,6 +29,7 @@ public:
 	void SetText(const std::string& text);
 	void SetCorrectAnswer(const std::string& correctAnswer);
 	//void SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers);
+	void SetIncorrectAnswers(const std::string& incorrectAnswers);
 	void SetIsMultipleChoice(bool isMultipleChoice);
 	void SetScore(int score);
 
@@ -36,6 +38,7 @@ public:
 	std::string GetText() const;
 	std::string GetCorrectAnswer() const;
 	//std::vector <std::string> GetIncorrectAnswers() const;
+	std::string GetIncorrectAnswers() const;
 	bool GetIsMultipleChoice() const;
 	int GetScore() const;
 };
