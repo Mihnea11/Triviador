@@ -7,7 +7,6 @@
 #include "Player.h"
 #include "LoginForm.h"
 #include "ui_MenuForm.h"
-#include "PlayForm.h"
 
 class MenuForm : public QMainWindow
 {
@@ -17,16 +16,23 @@ private:
 	Ui::MenuFormClass ui;
 	Player player;
 
+	void LoadPlayerInfo();
 	void UploadImageToLabel(QLabel* label);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
 	void MenuEditProfileButton();
 	void EditProfileBackButton();
 	void EditProfileChangeProfilePictureButton();
-	void SaveInformationsButton();
+	void ChangeInformationsSaveButton();
 	void EditProfileButton();
 	void MenuQuitButton();
-	void PLayButton();
+	void MenuPLayButton();
+	void PlayGameBackButton();
+	void PlayGameJoinRoomButton();
+	void PlayGameEnterCodeButton();
+	void PlayGameCreateRoomButton();
+	void RoomOptionsBackButton();
 
+	void ValidateNewInformation();
 public:
 	MenuForm(QWidget* parent = nullptr);
 	MenuForm(const Player& player, QWidget* parent = nullptr);
@@ -41,9 +47,14 @@ private slots:
 	void EditProfileBackButtonClicked() { EditProfileBackButton(); }
 	void EditProfileChangePictureButtonClicked() { EditProfileChangeProfilePictureButton(); }
 	void EditProfileButtonClicked(){ EditProfileButton(); }
-	void SaveInformationsButtonClicked() { ToggleWidget(ui.ChangeInformationsWidget, ui.EditProfileWidget); }
+	void ChangeInformationsSaveButtonClicked() { ChangeInformationsSaveButton(); }
 	void MenuQuitButtonClicked() { MenuQuitButton(); }
-	void PlayButtonClicked() { PLayButton(); }
+	void MenuPlayButtonClicked() { MenuPLayButton(); }
+	void PlayGameBackButtonClicked() { PlayGameBackButton(); }
+	void PlayGameJoinRoomButtonClicked() { PlayGameJoinRoomButton(); }
+	void PlayGameEnterCodeButtonClicked() { PlayGameEnterCodeButton(); }
+	void PlayGameCreateRoomButtonClicked() { PlayGameCreateRoomButton(); }
+	void RoomOptionsBackButtonClicked() { RoomOptionsBackButton(); }
 };
 
 

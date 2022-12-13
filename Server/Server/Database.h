@@ -59,5 +59,16 @@ namespace Database
 
 		crow::response operator() (const crow::request& request) const;
 	};
+
+	class UserHandler
+	{
+	private:
+		Storage& database;
+
+	public:
+		UserHandler(Storage& storage);
+
+		crow::response operator() (const crow::request& request, const std::string& userId) const;
+	};
 }
 

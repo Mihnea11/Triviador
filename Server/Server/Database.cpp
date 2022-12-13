@@ -72,3 +72,39 @@ crow::response Database::RegisterUserHandler::operator()(const crow::request& re
 
 	return crow::response(200);
 }
+
+//-------------------------------------- USER --------------------------------------
+
+Database::UserHandler::UserHandler(Storage& storage) : database{storage}
+{
+}
+
+crow::response Database::UserHandler::operator()(const crow::request& request, const std::string& userId) const
+{
+	auto arguments = ParseUrlArgs(request.body);
+	auto end = arguments.end();
+
+	auto email = arguments.find("Email");
+	auto password = arguments.find("Password");
+	auto imagePath = arguments.find("Image path");
+
+	User user = database.get<User>(userId);
+
+	if (email != end)
+	{
+		user.SetEmail(curl_unescape(email->second.c_str(), email->second.length()));
+	}
+	if (password != end)
+	{
+		user.SetPassword(curl_unescape(password->second.c_str(), password->second.length()));
+	}
+	if (imagePath != end)
+	{
+		user.SetImagePath(curl_unescape(imagePath->second.c_str(), imagePath->second.length()));
+
+	}
+
+	database.update(user);
+
+	return crow::response(200);
+}

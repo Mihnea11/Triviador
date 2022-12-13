@@ -36,6 +36,8 @@ int main()
 
         return userData;
     });
+    auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
+    updateUser(Database::UserHandler(database));
 
     app.port(18080).multithreaded().run();
 

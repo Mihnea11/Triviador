@@ -49,9 +49,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlayForm.cpp">
-      <Filter>Class Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -60,15 +57,9 @@
     <QtUic Include="MenuForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="PlayForm.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MenuForm.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="PlayForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

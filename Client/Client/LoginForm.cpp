@@ -124,7 +124,6 @@ void LoginForm::CheckEmail(const std::string& email)
     }
 
     const std::regex emailPattern("^([a-zA-Z0-9_\\ \\.+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$");
-
     if (!std::regex_match(email, emailPattern))
     {
         throw std::exception("Invalid email");
@@ -146,7 +145,6 @@ void LoginForm::CheckPassword(const std::string& password)
         }
 
         const std::regex passwordPattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-
         if (!std::regex_match(password, passwordPattern))
         {
             throw std::exception("Invalid password!\nThe password must containt at least:\n-8 characters\n-a number\n-a special character");
