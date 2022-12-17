@@ -2,90 +2,67 @@
 
 Question::Question()
 {
-	difficulty = std::string();
-	text = std::string();
-	correctAnswer = std::string();
-	//incorrectAnswers = std::vector<std::string>();
-	isMultipleChoice = true;
-	score = 0;
+	m_id = -1;
+	m_isNumerical = false;
+	m_text = std::string();
+	m_answer = std::string();
+	m_incorrectAnswers = std::string();
 }
 
 void Question::SetId(int id)
 {
-	this->id = id;
+	m_id = id;
 }
 
-void Question::SetDifficulty(const std::string& difficulty)
+void Question::SetIsNumerical(bool isNumerical)
 {
-	this->difficulty = difficulty;
+	m_isNumerical = isNumerical;
 }
 
 void Question::SetText(const std::string& text)
 {
-	this->text = text;
+	m_text = text;
 }
 
-void Question::SetCorrectAnswer(const std::string& correctAnswer)
+void Question::SetAnswer(const std::string& answer)
 {
-	this->correctAnswer = correctAnswer;
+	m_answer = answer;
 }
-
-//void Question::SetIncorrectAnswers(const std::vector<std::string>& incorrectAnswers)
-//{
-//	this->incorrectAnswers = incorrectAnswers;
-//}
 
 void Question::SetIncorrectAnswers(const std::string& incorrectAnswers)
 {
-	this->incorrectAnswers = incorrectAnswers;
-}
-
-void Question::SetIsMultipleChoice(bool isMultipleChoice)
-{
-	this->isMultipleChoice = isMultipleChoice;
-}
-
-void Question::SetScore(int score)
-{
-	this->score = score;
+	m_incorrectAnswers = incorrectAnswers;
 }
 
 int Question::GetId() const
 {
-	return id;
+	return m_id;
 }
 
-std::string Question::GetDifficulty() const
+bool Question::GetIsNumerical() const
 {
-	return difficulty;
+	return m_isNumerical;
 }
 
 std::string Question::GetText() const
 {
-	return text;
+	return m_text;
 }
 
-std::string Question::GetCorrectAnswer() const
+std::string Question::GetAnswer() const
 {
-	return correctAnswer;
+	return m_answer;
 }
-
-//std::vector<std::string> Question::GetIncorrectAnswers() const
-//{
-//	return incorrectAnswers;
-//}
 
 std::string Question::GetIncorrectAnswers() const
 {
-	return incorrectAnswers;
+	return m_incorrectAnswers;
 }
 
-bool Question::GetIsMultipleChoice() const
+template<> double CompareAnswers<double>(const Question& question, const std::string& userAnswer)
 {
-	return isMultipleChoice;
-}
+	double questionAnswerNumerical = std::stod(question.GetAnswer());
+	double userAnswerNumerical = std::stod(userAnswer);
 
-int Question::GetScore() const
-{
-	return score;
+	return std::abs(questionAnswerNumerical - userAnswerNumerical);
 }

@@ -49,6 +49,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
+    <ClCompile Include="ServerConnectForm.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -57,14 +63,23 @@
     <QtUic Include="MenuForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ServerConnectForm.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MenuForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ServerConnectForm.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

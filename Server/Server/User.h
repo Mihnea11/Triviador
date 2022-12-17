@@ -12,12 +12,6 @@ namespace sql = sqlite_orm;
 
 class User
 {
-private:
-	std::string name;
-	std::string email;
-	std::string password;
-	std::string imagePath;
-
 public:
 	User();
 	User(const std::string& name, const std::string& email, const std::string& password);
@@ -31,4 +25,11 @@ public:
 	std::string GetEmail() const;
 	std::string GetPassword() const;
 	std::string GetImagePath() const;
+
+private:
+	std::string m_name;
+	std::string m_email;
+	std::string m_password;
+	std::string m_imagePath;
+
 };

@@ -10,6 +10,7 @@ int main()
     const std::string databaseFile = "Database.sqlite";
     Database::Storage database = Database::CreateStorage(databaseFile);
     database.sync_schema();
+    Database::AddQuestions(database);
 
     crow::SimpleApp app;
 

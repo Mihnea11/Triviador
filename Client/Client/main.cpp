@@ -1,10 +1,10 @@
-#include "LoginForm.h"
+#include "ServerConnectForm.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
-    LoginForm w;
-    w.show();
-    return a.exec();
+    QApplication app(argc, argv);
+    ServerConnectForm window;
+    window.show();
+    return app.exec();
 }

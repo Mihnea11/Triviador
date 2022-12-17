@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QPainterPath>
 
+#include "Utils.h"
 #include "Player.h"
 #include "LoginForm.h"
 #include "ui_MenuForm.h"
@@ -12,9 +13,18 @@ class MenuForm : public QMainWindow
 {
 	Q_OBJECT
 
+public:
+	MenuForm(QWidget* parent = nullptr);
+	MenuForm(const Player& player, QWidget* parent = nullptr);
+	~MenuForm();
+
+	void SetPlayer(const Player& player);
+
+	Player GetPlayer();
+
 private:
 	Ui::MenuFormClass ui;
-	Player player;
+	Player m_player;
 
 	void LoadPlayerInfo();
 	void UploadImageToLabel(QLabel* label);
@@ -33,14 +43,6 @@ private:
 	void RoomOptionsBackButton();
 
 	void ValidateNewInformation();
-public:
-	MenuForm(QWidget* parent = nullptr);
-	MenuForm(const Player& player, QWidget* parent = nullptr);
-	~MenuForm();
-
-	void SetPlayer(const Player& player);
-
-	Player GetPlayer();
 
 private slots:
 	void MenuEditProfileButtonClicked() { MenuEditProfileButton(); }

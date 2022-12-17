@@ -1,5 +1,5 @@
 #include "LoginForm.h"
-#include "MenuForm.h"
+
 LoginForm::LoginForm(QWidget* parent): QMainWindow(parent)
 {
     ui.setupUi(this);
@@ -55,7 +55,7 @@ void LoginForm::LoginUser()
     {
         ValidateUserLogin(username, password);
 
-        cpr::Response response = cpr::Get(cpr::Url{ "http://localhost:18080/User_" + username });
+        cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/User_" + username });
 
         auto userInformation = crow::json::load(response.text);
         
@@ -159,7 +159,7 @@ void LoginForm::ValidateUserRegister(const std::string& user, const std::string&
     CheckPassword(password);
 
     cpr::Response registerRequest = cpr::Put(
-        cpr::Url{ "http://localhost:18080/RegisterUser" },
+        cpr::Url{ Server::GetUrl() + "/RegisterUser" },
         cpr::Payload
         {
             {"Username", user},
@@ -181,7 +181,7 @@ void LoginForm::ValidateUserLogin(const std::string& user, const std::string& pa
     CheckPassword(password);
 
     cpr::Response loginRequest = cpr::Put(
-        cpr::Url{ "http://localhost:18080/LoginUser" },
+        cpr::Url{ Server::GetUrl() + "/LoginUser" },
         cpr::Payload
         {
             {"Username", user},

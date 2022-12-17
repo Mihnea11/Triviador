@@ -2,55 +2,55 @@
 
 User::User()
 {
-    this->name = std::string();
-    this->email = std::string();
-    this->password = std::string();
-    this->imagePath = std::string();
+    this->m_name = std::string();
+    this->m_email = std::string();
+    this->m_password = std::string();
+    this->m_imagePath = std::string();
 }
 
 User::User(const std::string& name, const std::string& email, const std::string& password)
 {
-    this->name = name;
-    this->email = email;
-    this->password = password;
+    this->m_name = name;
+    this->m_email = email;
+    this->m_password = password;
 }
 
 void User::SetName(const std::string& name)
 {
-    this->name = name;
+    this->m_name = name;
 }
 
 void User::SetEmail(const std::string& email)
 {
-    this->email = email;
+    this->m_email = email;
 }
 
 void User::SetPassword(const std::string& password)
 {
-    this->password = password;
+    this->m_password = password;
 }
 
 void User::SetImagePath(const std::string& imagePath)
 {
-    this->imagePath = imagePath;
+    this->m_imagePath = imagePath;
 }
 
 std::string User::GetName() const
 {
-    return name;
+    return m_name;
 }
 
 std::string User::GetEmail() const
 {
-    return email;
+    return m_email;
 }
 
 std::string User::GetPassword() const
 {
-    return password;
+    return m_password;
 }
 
 std::string User::GetImagePath() const
 {
-    return imagePath;
+    return m_imagePath;
 }

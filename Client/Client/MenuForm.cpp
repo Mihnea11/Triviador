@@ -40,7 +40,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 
-	this->player = player;
+	this->m_player = player;
 
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture);
@@ -67,18 +67,18 @@ MenuForm::~MenuForm()
 
 void MenuForm::SetPlayer(const Player& player)
 {
-	this->player = player;
+	this->m_player = player;
 }
 
 Player MenuForm::GetPlayer()
 {
-	return player;
+	return m_player;
 }
 
 void MenuForm::LoadPlayerInfo()
 {
-	ui.UsernameField->setText(QString::fromStdString(player.GetName()));
-	ui.EmailField->setText(QString::fromStdString(player.GetEmail()));
+	ui.UsernameField->setText(QString::fromStdString(m_player.GetName()));
+	ui.EmailField->setText(QString::fromStdString(m_player.GetEmail()));
 
 	/*ui.WonGamesLabel->setText(QString::fromStdString(player.GetWonGames()));
 	ui.PlayedGamesLabel->setText(QString::fromStdString(player.GetPlayedGames()));
@@ -89,7 +89,7 @@ void MenuForm::UploadImageToLabel(QLabel* label)
 {
 	QImage image;
 
-	bool valid = image.load(QString::fromStdString(player.GetImagePath()));
+	bool valid = image.load(QString::fromStdString(m_player.GetImagePath()));
 	if (valid == false)
 	{
 		QString defaultPath = QDir::currentPath() + "/DefaultUser.jpg";
@@ -120,16 +120,16 @@ void MenuForm::EditProfileChangeProfilePictureButton()
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.bmp)"));
 	if (QString::compare(fileName, QString()) != 0)
 	{
-		player.SetImagePath(fileName.toStdString());
+		m_player.SetImagePath(fileName.toStdString());
 		UploadImageToLabel(ui.EditProfileProfilePicture);
 		UploadImageToLabel(ui.MenuProfilePicture);
 	}
 
 	cpr::Response response = cpr::Post(
-		cpr::Url{ "http://localhost:18080/User_" + player.GetName()},
+		cpr::Url{ Server::GetUrl() + "/User_" + m_player.GetName()},
 		cpr::Payload
 		{
-			{"Image path", player.GetImagePath()}
+			{"Image path", m_player.GetImagePath()}
 		}
 	);
 }
@@ -147,11 +147,11 @@ void MenuForm::ChangeInformationsSaveButton()
 		ValidateNewInformation();
 
 		cpr::Response response = cpr::Post(
-			cpr::Url{ "http://localhost:18080/User_" + player.GetName() },
+			cpr::Url{ Server::GetUrl() + "/User_" + m_player.GetName() },
 			cpr::Payload
 			{
-				{"Email", player.GetEmail()},
-				{"Password", player.GetPassword()}
+				{"Email", m_player.GetEmail()},
+				{"Password", m_player.GetPassword()}
 			}
 		);
 
@@ -226,12 +226,12 @@ void MenuForm::ValidateNewInformation()
 			throw std::exception("Invalid email");
 		}
 
-		player.SetEmail(email);
+		m_player.SetEmail(email);
 	}
 
 	if (newPassword != "")
 	{
-		if (ui.ChangeInformationsOldPassowrd->text().toStdString() != player.GetPassword())
+		if (ui.ChangeInformationsOldPassowrd->text().toStdString() != m_player.GetPassword())
 		{
 			throw std::exception("Old password is invalid");
 		}
@@ -247,6 +247,6 @@ void MenuForm::ValidateNewInformation()
 			throw std::exception("Invalid password!\nThe password must containt at least: 8 characters, a number and a special character");
 		}
 
-		player.SetPassword(newPassword);
+		m_player.SetPassword(newPassword);
 	}
 }

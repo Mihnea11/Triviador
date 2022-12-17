@@ -6,6 +6,7 @@
 #include <crow.h>
 #include <regex>
 
+#include "Utils.h"
 #include "Player.h"
 #include "MenuForm.h"
 #include "ui_LoginForm.h"
@@ -15,6 +16,13 @@
 class LoginForm : public QMainWindow
 {
     Q_OBJECT
+
+public:
+    LoginForm(QWidget* parent = nullptr);
+    ~LoginForm();
+
+    void RegisterUser();
+    void LoginUser();
 
 private:
     Ui::LoginFormClass ui;
@@ -26,12 +34,6 @@ private:
     void CheckPassword(const std::string& password);
     void ValidateUserRegister(const std::string& user, const std::string& email, const std::string& password);
     void ValidateUserLogin(const std::string& user, const std::string& password);
-public:
-    LoginForm(QWidget* parent = nullptr);
-    ~LoginForm();
-
-    void RegisterUser();
-    void LoginUser();
 
 private slots:
     void RegisterButtonClicked() { RegisterUser(); }
