@@ -12,6 +12,9 @@ int main()
     database.sync_schema();
     Database::AddQuestions(database);
 
+    std::vector<Question> numericalQuestions = database.get_all<Question>(sql::where(sql::is_equal(&Question::GetIsNumerical, true)));
+    std::vector<Question> multipleChoiceQuestions = database.get_all<Question>(sql::where(sql::is_equal(&Question::GetIsNumerical, false)));
+
     crow::SimpleApp app;
 
     //User login route

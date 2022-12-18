@@ -2,48 +2,43 @@
 
 Room::Room()
 {
-	users = std::vector<User>();
-	typeOfRoom = 2; // by default a room of 2 players
-	timer = 10;
-	codeToJoin = 0; // generate random code
+	m_users = std::vector<std::string>();
+	m_owner = std::string();
 }
 
-void Room::SetUsers(const std::vector<User>& users)
+Room::Room(const std::vector<Question>& numericalQuestions, const std::vector<Question>& multipleChoiceQuesition)
 {
-	this->users = users;
+	m_numericalQuestions = numericalQuestions;
+	m_multipleChoiceQuestions = multipleChoiceQuesition;
 }
 
-void Room::SetTypeOfRoom(int typeOfRoom)
+void Room::SetUsers(const std::vector<std::string>& users)
 {
-	this->typeOfRoom = typeOfRoom;
+	this->m_users = users;
 }
 
-void Room::SetTimer(int timer)
+void Room::SetNumericalQuestions(const std::vector<Question> numericalQuestions)
 {
-	this->timer = timer;
+	m_numericalQuestions = numericalQuestions;
 }
 
-void Room::SetCodeToJoin(int codeToJoin)
+void Room::SetMultipleChoiceQuestions(const std::vector<Question> multipleChoiceQuestions)
 {
-	this->codeToJoin = codeToJoin;
+	m_multipleChoiceQuestions = multipleChoiceQuestions;
 }
 
-std::vector<User> Room::GetUsers() const
+std::vector<std::string> Room::GetUsers() const
 {
-	return users;
+	return m_users;
 }
 
-int Room::GetTypeOfRoom() const
+std::vector<Question> Room::GetNumericalQuestions() const
 {
-	return typeOfRoom;
+	return m_numericalQuestions;
 }
 
-int Room::GetTimer() const
+std::vector<Question> Room::GetMultipleChoiceQuestions() const
 {
-	return timer;
+	return std::vector<Question>();
 }
 
-int Room::GetCodeToJoin() const
-{
-	return codeToJoin;
-}
