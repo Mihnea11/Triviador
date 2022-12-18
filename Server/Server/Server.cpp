@@ -2,12 +2,14 @@
 #include <string>
 
 #include "Database.h"
+#include "Room.h"
+#include "Utilities.h"
 
 namespace sql = sqlite_orm;
 
 int main()
 {
-    int createdRooms = 0;
+    std::vector<Room> rooms;
     const std::string databaseFile = "Database.sqlite";
     Database::Storage database = Database::CreateStorage(databaseFile);
     database.sync_schema();
@@ -44,11 +46,15 @@ int main()
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
     
-    CROW_ROUTE(app, "/Create_Room")([&database,&createdRooms]()
-        {
-            crow::json::wvalue roomCode({ "Room code",createdRooms });
-            createdRooms++;
-        });
+    CROW_ROUTE(app, "/Create_Room")([&database,&rooms]()
+    {
+        crow::json::wvalue roomCode(
+            { "Room code", CreateRoomCode(rooms.size())});
+        
+        rooms.emplace_back(Room());
+
+        return roomCode;
+    });
 
 
     app.port(18080).multithreaded().run();

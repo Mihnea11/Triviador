@@ -6,3 +6,4 @@
 std::vector<std::string> Split(const std::string& str, const std::string& delim);
 std::unordered_map<std::string, std::string> ParseUrlArgs(const std::string& urlArgs);
 
+std::string CreateRoomCode(int code);
