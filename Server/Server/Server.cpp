@@ -49,7 +49,9 @@ int main()
     CROW_ROUTE(app, "/Create_Room")([&database,&rooms]()
     {
         crow::json::wvalue roomCode(
-            { "Room code", CreateRoomCode(rooms.size())});
+        { 
+            {"Room code", CreateRoomCode(rooms.size())}
+        });
         
         rooms.emplace_back(Room());
 

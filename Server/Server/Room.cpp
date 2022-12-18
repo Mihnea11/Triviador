@@ -6,6 +6,11 @@ Room::Room()
 	m_owner = std::string();
 }
 
+Room::Room(const std::string& owner)
+{
+	m_owner = owner;
+}
+
 Room::Room(const std::vector<Question>& numericalQuestions, const std::vector<Question>& multipleChoiceQuesition)
 {
 	m_numericalQuestions = numericalQuestions;
