@@ -7,6 +7,7 @@ namespace sql = sqlite_orm;
 
 int main()
 {
+    int createdRooms = 0;
     const std::string databaseFile = "Database.sqlite";
     Database::Storage database = Database::CreateStorage(databaseFile);
     database.sync_schema();
@@ -42,6 +43,13 @@ int main()
     });
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
+    
+    CROW_ROUTE(app, "/Create_Room")([&database,&createdRooms]()
+        {
+            crow::json::wvalue roomCode({ "Room code",createdRooms });
+            createdRooms++;
+        });
+
 
     app.port(18080).multithreaded().run();
 

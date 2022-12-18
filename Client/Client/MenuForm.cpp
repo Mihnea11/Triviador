@@ -199,13 +199,16 @@ void MenuForm::PlayGameEnterCodeButton()
 }
 
 void MenuForm::PlayGameCreateRoomButton()
-{
+{	
+	cpr::Response createRoomRequest=cpr::Get(cpr::Url{ Server::GetUrl() + "/CreateRoom" });
 	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
 
 	ui.PlayGameEnterRoomCode->setVisible(false);
 	ui.PlayGameEnterCodeButton->setVisible(false);
-
-	//TO DO: fill players from server
+	auto responseText = crow::json::load(createRoomRequest.text);
+	std::string roomCode = responseText["Room code"].s();
+	ui.RoomCode->setText(QString::fromStdString(roomCode));
+	//DisplayJoinedPlayers();
 }
 
 void MenuForm::RoomOptionsBackButton()
