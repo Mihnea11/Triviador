@@ -200,7 +200,7 @@ void MenuForm::PlayGameEnterCodeButton()
 
 void MenuForm::PlayGameCreateRoomButton()
 {	
-	cpr::Response createRoomRequest=cpr::Get(
+	cpr::Response createRoomRequest=cpr::Post(
 		cpr::Url{ Server::GetUrl() + "/Create_Room" }, 
 		cpr::Payload{ 
 			{"Owner", m_player.GetName()}
@@ -212,7 +212,7 @@ void MenuForm::PlayGameCreateRoomButton()
 	auto responseText = crow::json::load(createRoomRequest.text);
 	std::string roomCode = responseText["Room code"].s();
 	ui.RoomCode->setText(QString::fromStdString(roomCode));
-	ui.RoomOwnerLabel->setText(QString::fromStdString(m_player.GetName()));
+	ui.RoomOwnerUsername->setText(QString::fromStdString(m_player.GetName()));
 	//DisplayJoinedPlayers();
 }
 

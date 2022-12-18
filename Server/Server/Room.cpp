@@ -22,12 +22,12 @@ void Room::SetUsers(const std::vector<std::string>& users)
 	this->m_users = users;
 }
 
-void Room::SetNumericalQuestions(const std::vector<Question> numericalQuestions)
+void Room::SetNumericalQuestions(const std::vector<Question>& numericalQuestions)
 {
 	m_numericalQuestions = numericalQuestions;
 }
 
-void Room::SetMultipleChoiceQuestions(const std::vector<Question> multipleChoiceQuestions)
+void Room::SetMultipleChoiceQuestions(const std::vector<Question>& multipleChoiceQuestions)
 {
 	m_multipleChoiceQuestions = multipleChoiceQuestions;
 }

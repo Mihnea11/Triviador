@@ -46,14 +46,19 @@ int main()
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
     
-    CROW_ROUTE(app, "/Create_Room")([&database,&rooms]()
+    //Room information
+    CROW_ROUTE(app, "/Create_Room")([&database, &rooms](crow::request& request)
     {
+        auto arguments = ParseUrlArgs(request.body);
+        auto owner = arguments.find("Owner")->second;
+        owner = curl_unescape(owner.c_str(), owner.length());
+
         crow::json::wvalue roomCode(
         { 
             {"Room code", CreateRoomCode(rooms.size())}
         });
         
-        rooms.emplace_back(Room());
+        rooms.emplace_back(Room(owner));
 
         return roomCode;
     });
