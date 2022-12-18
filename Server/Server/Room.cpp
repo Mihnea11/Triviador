@@ -42,3 +42,10 @@ std::vector<Question> Room::GetMultipleChoiceQuestions() const
 	return std::vector<Question>();
 }
 
+void Room::ShuffleQuestions()
+{
+	auto rng = std::default_random_engine{};
+	std::shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions), rng);
+	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
+}
+

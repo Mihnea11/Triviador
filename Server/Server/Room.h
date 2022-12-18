@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
+#include <random>
 
 #include "User.h"
 #include "Question.h"
@@ -19,6 +21,8 @@ public:
 	std::vector<std::string> GetUsers() const;
 	std::vector<Question> GetNumericalQuestions() const;
 	std::vector<Question> GetMultipleChoiceQuestions() const; 
+
+	void ShuffleQuestions();
 
 private:
 	std::string m_owner;
