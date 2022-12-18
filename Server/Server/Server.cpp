@@ -45,25 +45,26 @@ int main()
     });
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
-    
-    //Room information
-    CROW_ROUTE(app, "/Create_Room")([&database, &rooms](crow::request& request)
+
+    //Room creation
+    CROW_ROUTE(app, "/CreateRoom")([&rooms]()
     {
-        auto arguments = ParseUrlArgs(request.body);
-        auto owner = arguments.find("Owner")->second;
-        owner = curl_unescape(owner.c_str(), owner.length());
+        std::string roomCode = CreateRoomCode(rooms.size() + 1);
 
-        crow::json::wvalue roomCode(
-        { 
-            {"Room code", CreateRoomCode(rooms.size())}
+        return crow::json::wvalue(
+        {
+            {"Room code", roomCode}
         });
-        
-        rooms.emplace_back(Room(owner));
-
-        return roomCode;
     });
 
-
+    //Room access
+    CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
+    {
+        return crow::json::wvalue(
+        {
+            {"User 1", "Vasile"}
+        });
+    });
     app.port(18080).multithreaded().run();
 
     return 0;

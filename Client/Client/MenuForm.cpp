@@ -14,19 +14,7 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture);
 	UploadImageToLabel(ui.EditProfileProfilePicture);
-
-	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(MenuEditProfileButtonClicked()));
-	connect(ui.MenuQuitButton, SIGNAL(clicked()), this, SLOT(MenuQuitButtonClicked()));
-	connect(ui.EditProfileBackButton, SIGNAL(clicked()), this, SLOT(EditProfileBackButtonClicked()));
-	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
-	connect(ui.ChangeInformationsSaveButton, SIGNAL(clicked()), this, SLOT(ChangeInformationsSaveButtonClicked()));
-	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
-	connect(ui.MenuPlayButton, SIGNAL(clicked()), this, SLOT(MenuPlayButtonClicked()));
-	connect(ui.PlayGameBackButton, SIGNAL(clicked()), this, SLOT(PlayGameBackButtonClicked()));
-	connect(ui.PlayGameJoinRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameJoinRoomButtonClicked()));
-	connect(ui.PlayGameCreateRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameCreateRoomButtonClicked()));
-	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
-	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
+	ConnectUi();
 }
 
 MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
@@ -45,19 +33,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture);
 	UploadImageToLabel(ui.EditProfileProfilePicture);
-
-	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(MenuEditProfileButtonClicked()));
-	connect(ui.MenuQuitButton, SIGNAL(clicked()), this, SLOT(MenuQuitButtonClicked()));
-	connect(ui.EditProfileBackButton, SIGNAL(clicked()), this, SLOT(EditProfileBackButtonClicked()));
-	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
-	connect(ui.ChangeInformationsSaveButton, SIGNAL(clicked()), this, SLOT(ChangeInformationsSaveButtonClicked()));
-	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
-	connect(ui.MenuPlayButton, SIGNAL(clicked()), this, SLOT(MenuPlayButtonClicked()));
-	connect(ui.PlayGameBackButton, SIGNAL(clicked()), this, SLOT(PlayGameBackButtonClicked()));
-	connect(ui.PlayGameJoinRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameJoinRoomButtonClicked()));
-	connect(ui.PlayGameCreateRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameCreateRoomButtonClicked()));
-	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
-	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
+	ConnectUi();
 }
 
 MenuForm::~MenuForm()
@@ -73,6 +49,23 @@ void MenuForm::SetPlayer(const Player& player)
 Player MenuForm::GetPlayer()
 {
 	return m_player;
+}
+
+void MenuForm::ConnectUi()
+{
+	connect(ui.MenuEditProfileButton, SIGNAL(clicked()), this, SLOT(MenuEditProfileButtonClicked()));
+	connect(ui.MenuQuitButton, SIGNAL(clicked()), this, SLOT(MenuQuitButtonClicked()));
+	connect(ui.EditProfileBackButton, SIGNAL(clicked()), this, SLOT(EditProfileBackButtonClicked()));
+	connect(ui.EditProfileChangePictureButton, SIGNAL(clicked()), this, SLOT(EditProfileChangePictureButtonClicked()));
+	connect(ui.ChangeInformationsSaveButton, SIGNAL(clicked()), this, SLOT(ChangeInformationsSaveButtonClicked()));
+	connect(ui.EditProfileButton, SIGNAL(clicked()), this, SLOT(EditProfileButtonClicked()));
+	connect(ui.MenuPlayButton, SIGNAL(clicked()), this, SLOT(MenuPlayButtonClicked()));
+	connect(ui.PlayGameBackButton, SIGNAL(clicked()), this, SLOT(PlayGameBackButtonClicked()));
+	connect(ui.PlayGameJoinRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameJoinRoomButtonClicked()));
+	connect(ui.PlayGameCreateRoomButton, SIGNAL(clicked()), this, SLOT(PlayGameCreateRoomButtonClicked()));
+	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
+	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
+	connect(ui.RoomCreateRoomButton, SIGNAL(clicked()), this, SLOT(RoomCreateRoomButtonClicked()));
 }
 
 void MenuForm::LoadPlayerInfo()
@@ -200,25 +193,33 @@ void MenuForm::PlayGameEnterCodeButton()
 
 void MenuForm::PlayGameCreateRoomButton()
 {	
-	cpr::Response createRoomRequest=cpr::Post(
-		cpr::Url{ Server::GetUrl() + "/Create_Room" }, 
-		cpr::Payload{ 
-			{"Owner", m_player.GetName()}
-			});
-	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
+	cpr::Response request = cpr::Get(cpr::Url{ Server::GetUrl() + "/CreateRoom" });
 
-	ui.PlayGameEnterRoomCode->setVisible(false);
-	ui.PlayGameEnterCodeButton->setVisible(false);
-	auto responseText = crow::json::load(createRoomRequest.text);
-	std::string roomCode = responseText["Room code"].s();
+	std::string roomCode = crow::json::load(request.text)["Room code"].s();
 	ui.RoomCode->setText(QString::fromStdString(roomCode));
 	ui.RoomOwnerUsername->setText(QString::fromStdString(m_player.GetName()));
-	//DisplayJoinedPlayers();
+
+	ui.RoomSelectedPlayers->setVisible(false);
+	ui.RoomCreateRoomButton->setVisible(true);
+	ui.RoomPlayerSelection->setVisible(true);
+	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
 }
 
 void MenuForm::RoomOptionsBackButton()
 {
 	ToggleWidget(ui.RoomWidget, ui.PlayGameOptions);
+	ui.RoomPlayerSelection->setDisabled(false);
+	ui.RoomCreateRoomButton->setDisabled(false);
+	ui.RoomCreateRoomButton->setVisible(true);
+	ui.RoomSelectedPlayers->setVisible(false);
+}
+
+void MenuForm::RoomCreateRoomButton()
+{
+	ui.RoomPlayerSelection->setVisible(false);
+	ui.RoomCreateRoomButton->setVisible(false);
+	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
+	ui.RoomSelectedPlayers->setVisible(true);
 }
 
 void MenuForm::ValidateNewInformation()

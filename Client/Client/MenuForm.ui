@@ -1261,6 +1261,9 @@ border-radius: 10px;</string>
       <property name="text">
        <string/>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
      <widget class="QLabel" name="SelectNoOfPlayersLabel">
       <property name="geometry">
@@ -1334,6 +1337,45 @@ border-radius: 10px;</string>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RoomCreateRoomButton">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>323</y>
+        <width>91</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Create room</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="RoomSelectedPlayers">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>120</y>
+        <width>171</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(55, 47, 107);
+color: rgb(255, 255, 255);
+font: 700 20pt &quot;Segoe UI&quot;;
+border: 2px;
+border-radius: 10px;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>

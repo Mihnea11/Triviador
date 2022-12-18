@@ -1,8 +1,9 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
+#include <QPainterPath>
 #include <QFileDialog>
 #include <QPainter>
-#include <QPainterPath>
+#include <QThread>
 
 #include "Utils.h"
 #include "Player.h"
@@ -26,9 +27,11 @@ private:
 	Ui::MenuFormClass ui;
 	Player m_player;
 
+	void ConnectUi();
 	void LoadPlayerInfo();
 	void UploadImageToLabel(QLabel* label);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
+
 	void MenuEditProfileButton();
 	void EditProfileBackButton();
 	void EditProfileChangeProfilePictureButton();
@@ -41,6 +44,7 @@ private:
 	void PlayGameEnterCodeButton();
 	void PlayGameCreateRoomButton();
 	void RoomOptionsBackButton();
+	void RoomCreateRoomButton();
 
 	void ValidateNewInformation();
 
@@ -57,6 +61,7 @@ private slots:
 	void PlayGameEnterCodeButtonClicked() { PlayGameEnterCodeButton(); }
 	void PlayGameCreateRoomButtonClicked() { PlayGameCreateRoomButton(); }
 	void RoomOptionsBackButtonClicked() { RoomOptionsBackButton(); }
+	void RoomCreateRoomButtonClicked() { RoomCreateRoomButton(); }
 };
 
 
