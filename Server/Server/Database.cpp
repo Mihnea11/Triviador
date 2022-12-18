@@ -175,3 +175,20 @@ crow::response Database::UserHandler::operator()(const crow::request& request, c
 
 	return crow::response(200);
 }
+
+Database::RoomHandler::RoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
+{
+}
+
+crow::response Database::RoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
+{
+	int roomIndex = std::stoi(roomCode);
+	auto arguments = ParseUrlArgs(request.body);
+
+	auto user = arguments.find("Player")->second;
+	user = curl_unescape(user.c_str(), user.length());
+
+	m_rooms[roomIndex].AddUser(user);
+
+	return crow::response(200);
+}

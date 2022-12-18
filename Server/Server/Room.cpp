@@ -54,3 +54,8 @@ void Room::ShuffleQuestions()
 	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
 }
 
+void Room::AddUser(const std::string& user)
+{
+	m_users.push_back(user);
+}
+

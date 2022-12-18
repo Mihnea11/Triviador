@@ -234,6 +234,7 @@ void MenuForm::RoomOptionsBackButton()
 
 void MenuForm::RoomCreateRoomButton()
 {
+	std::string roomCode = ui.RoomCode->text().toStdString();
 	ui.RoomPlayerSelection->setVisible(false);
 	ui.RoomCreateRoomButton->setVisible(false);
 	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
@@ -251,6 +252,14 @@ void MenuForm::RoomCreateRoomButton()
 		ui.RoomPlayer4->setVisible(false);
 		break;
 	}
+
+	cpr::Response response = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode},
+		cpr::Payload
+		{
+			{"Player", m_player.GetName()}
+		}
+	);
 
 	timer->start(1000);
 }

@@ -24,6 +24,7 @@ public:
 	std::vector<Question> GetMultipleChoiceQuestions() const; 
 
 	void ShuffleQuestions();
+	void AddUser(const std::string& user);
 
 private:
 	std::string m_owner;

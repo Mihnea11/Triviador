@@ -5,6 +5,7 @@
 #include <crow.h>
 
 #include "User.h"
+#include "Room.h"
 #include "Question.h"
 #include "Utilities.h"
 
@@ -70,6 +71,17 @@ namespace Database
 
 	private:
 		Storage& database;
+	};
+
+	class RoomHandler
+	{
+	public:
+		RoomHandler(std::vector<Room>& rooms);
+
+		crow::response operator() (const crow::request& request, const std::string& roomCode) const;
+
+	private:
+		std::vector<Room>& m_rooms;
 	};
 }
 

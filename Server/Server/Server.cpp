@@ -60,11 +60,24 @@ int main()
     //Room access
     CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
     {
-        return crow::json::wvalue(
+        int roomCodeIndex = std::stoi(roomCode);
+        auto users = rooms[roomCodeIndex].GetUsers();
+        
+        std::vector<crow::json::wvalue> usersJson;
+        int index = 1;
+        for (const auto& user : users)
         {
-            {"User 1", "Vasile"}
-        });
+            usersJson.push_back(crow::json::wvalue
+            {
+                {"Player " + std::to_string(index), user}
+            });
+        }
+
+        return crow::json::wvalue{ usersJson };
     });
+    auto& addUser = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Put);
+    addUser(Database::RoomHandler(rooms));
+
     app.port(18080).multithreaded().run();
 
     return 0;
