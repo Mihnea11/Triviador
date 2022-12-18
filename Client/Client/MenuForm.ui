@@ -604,7 +604,7 @@ color: rgb(255, 255, 255);</string>
     <widget class="QPushButton" name="ChangeInformationsSaveButton">
      <property name="geometry">
       <rect>
-       <x>550</x>
+       <x>255</x>
        <y>610</y>
        <width>101</width>
        <height>41</height>
@@ -937,7 +937,7 @@ font: 700 30pt &quot;Segoe UI&quot;;</string>
      <widget class="QLabel" name="RoomPlayer1Username">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>215</x>
         <y>40</y>
         <width>251</width>
         <height>51</height>
@@ -952,26 +952,6 @@ border-radius: 10px;</string>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RoomPlayer1Ready">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>20</y>
-        <width>101</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 2px;
-color: rgb(255, 255, 255);
-border-radius: 10px;
-font: 700 16pt &quot;Segoe UI&quot;;
-background-color: rgb(204, 77, 50);</string>
-      </property>
-      <property name="text">
-       <string>Ready</string>
       </property>
      </widget>
     </widget>
@@ -1006,7 +986,7 @@ background-color: rgb(204, 77, 50);</string>
      <widget class="QLabel" name="RoomPlayer2Username">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>215</x>
         <y>40</y>
         <width>251</width>
         <height>51</height>
@@ -1021,26 +1001,6 @@ border-radius: 10px;</string>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RoomPlayer2Ready">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>20</y>
-        <width>101</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 2px;
-color: rgb(255, 255, 255);
-border-radius: 10px;
-font: 700 16pt &quot;Segoe UI&quot;;
-background-color: rgb(204, 77, 50);</string>
-      </property>
-      <property name="text">
-       <string>Ready</string>
       </property>
      </widget>
     </widget>
@@ -1075,7 +1035,7 @@ background-color: rgb(204, 77, 50);</string>
      <widget class="QLabel" name="RoomPlayer3Username">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>215</x>
         <y>40</y>
         <width>251</width>
         <height>51</height>
@@ -1090,26 +1050,6 @@ border-radius: 10px;</string>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RoomPlayer3Ready">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>20</y>
-        <width>101</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 2px;
-color: rgb(255, 255, 255);
-border-radius: 10px;
-font: 700 16pt &quot;Segoe UI&quot;;
-background-color: rgb(204, 77, 50);</string>
-      </property>
-      <property name="text">
-       <string>Ready</string>
       </property>
      </widget>
     </widget>
@@ -1144,7 +1084,7 @@ background-color: rgb(204, 77, 50);</string>
      <widget class="QLabel" name="RoomPlayer4Username">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>215</x>
         <y>40</y>
         <width>251</width>
         <height>51</height>
@@ -1159,26 +1099,6 @@ border-radius: 10px;</string>
       </property>
       <property name="text">
        <string/>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="RoomPlayer4Ready">
-      <property name="geometry">
-       <rect>
-        <x>420</x>
-        <y>20</y>
-        <width>101</width>
-        <height>91</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: 2px;
-color: rgb(255, 255, 255);
-border-radius: 10px;
-font: 700 16pt &quot;Segoe UI&quot;;
-background-color: rgb(204, 77, 50);</string>
-      </property>
-      <property name="text">
-       <string>Ready</string>
       </property>
      </widget>
     </widget>
@@ -1345,11 +1265,18 @@ border-radius: 10px;</string>
      <widget class="QPushButton" name="RoomCreateRoomButton">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>323</y>
-        <width>91</width>
-        <height>41</height>
+        <x>255</x>
+        <y>350</y>
+        <width>181</width>
+        <height>51</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(48, 180, 33);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
       </property>
       <property name="text">
        <string>Create room</string>

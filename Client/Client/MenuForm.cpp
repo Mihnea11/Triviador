@@ -11,6 +11,8 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 
+	timer = new QTimer(this);
+
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture);
 	UploadImageToLabel(ui.EditProfileProfilePicture);
@@ -29,6 +31,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.RoomWidget->setVisible(false);
 
 	this->m_player = player;
+	timer = new QTimer(this);
 
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture);
@@ -66,6 +69,8 @@ void MenuForm::ConnectUi()
 	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
 	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
 	connect(ui.RoomCreateRoomButton, SIGNAL(clicked()), this, SLOT(RoomCreateRoomButtonClicked()));
+
+	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
 }
 
 void MenuForm::LoadPlayerInfo()
@@ -96,6 +101,13 @@ void MenuForm::ToggleWidget(QWidget* disabledForm, QWidget* enabledForm)
 {
 	disabledForm->setVisible(false);
 	enabledForm->setVisible(true);
+}
+
+void MenuForm::UpdateRoom()
+{
+	static int x = 5;
+	ui.RoomPlayer1Username->setText(QString::fromStdString(std::to_string(x)));
+	x++;
 }
 
 void MenuForm::MenuEditProfileButton()
@@ -202,6 +214,7 @@ void MenuForm::PlayGameCreateRoomButton()
 	ui.RoomSelectedPlayers->setVisible(false);
 	ui.RoomCreateRoomButton->setVisible(true);
 	ui.RoomPlayerSelection->setVisible(true);
+
 	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
 }
 
@@ -212,6 +225,11 @@ void MenuForm::RoomOptionsBackButton()
 	ui.RoomCreateRoomButton->setDisabled(false);
 	ui.RoomCreateRoomButton->setVisible(true);
 	ui.RoomSelectedPlayers->setVisible(false);
+
+	ui.RoomPlayer3->setVisible(true);
+	ui.RoomPlayer4->setVisible(true);
+
+	timer->stop();
 }
 
 void MenuForm::RoomCreateRoomButton()
@@ -220,6 +238,21 @@ void MenuForm::RoomCreateRoomButton()
 	ui.RoomCreateRoomButton->setVisible(false);
 	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
 	ui.RoomSelectedPlayers->setVisible(true);
+
+	int playerCount = std::stoi(ui.RoomPlayerSelection->currentText().toStdString());
+	switch (playerCount)
+	{
+	case 2:
+		ui.RoomPlayer3->setVisible(false);
+		ui.RoomPlayer4->setVisible(false);
+		break;
+
+	case 3:
+		ui.RoomPlayer4->setVisible(false);
+		break;
+	}
+
+	timer->start(1000);
 }
 
 void MenuForm::ValidateNewInformation()

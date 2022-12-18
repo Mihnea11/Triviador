@@ -3,7 +3,7 @@
 #include <QPainterPath>
 #include <QFileDialog>
 #include <QPainter>
-#include <QThread>
+#include <QTimer>
 
 #include "Utils.h"
 #include "Player.h"
@@ -26,11 +26,13 @@ public:
 private:
 	Ui::MenuFormClass ui;
 	Player m_player;
+	QTimer* timer;
 
 	void ConnectUi();
 	void LoadPlayerInfo();
 	void UploadImageToLabel(QLabel* label);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
+	void UpdateRoom();
 
 	void MenuEditProfileButton();
 	void EditProfileBackButton();
@@ -62,6 +64,7 @@ private slots:
 	void PlayGameCreateRoomButtonClicked() { PlayGameCreateRoomButton(); }
 	void RoomOptionsBackButtonClicked() { RoomOptionsBackButton(); }
 	void RoomCreateRoomButtonClicked() { RoomCreateRoomButton(); }
+	void UpdateRoomInformation() { UpdateRoom(); }
 };
 
 
