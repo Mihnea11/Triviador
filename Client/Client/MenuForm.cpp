@@ -116,20 +116,20 @@ void MenuForm::DisplayPlayer(const std::string& playerCount, const Player& curre
 	if (playerCount == "Player2")
 	{
 		ui.RoomPlayer2->setVisible(true);
-		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
-		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+		ui.RoomPlayer2Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer2ProfilePicture, currentUser);
 	}
 	if (playerCount == "Player3")
 	{
 		ui.RoomPlayer3->setVisible(true);
-		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
-		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+		ui.RoomPlayer3Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer3ProfilePicture, currentUser);
 	}
 	if (playerCount == "Player4")
 	{
 		ui.RoomPlayer4->setVisible(true);
-		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
-		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+		ui.RoomPlayer4Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer4ProfilePicture, currentUser);
 	}
 }
 
@@ -291,6 +291,11 @@ void MenuForm::PlayGameEnterCodeButton()
 		ui.PlayGameEnterRoomCode->setText("");
 		ui.PlayGameEnterRoomCode->setPlaceholderText(QString::fromStdString(response.text));
 	}
+
+	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
+	DisplayRoom();
+
+	timer->start(1000);
 }
 
 void MenuForm::PlayGameCreateRoomButton()
