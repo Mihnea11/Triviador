@@ -2,11 +2,11 @@
 
 Room::Room()
 {
-	m_users = std::vector<std::string>();
-	m_owner = std::string();
+	m_users = std::vector<User>();
+	m_owner = User();
 }
 
-Room::Room(const std::string& owner)
+Room::Room(const User& owner)
 {
 	m_owner = owner;
 }
@@ -17,7 +17,12 @@ Room::Room(const std::vector<Question>& numericalQuestions, const std::vector<Qu
 	m_multipleChoiceQuestions = multipleChoiceQuesition;
 }
 
-void Room::SetUsers(const std::vector<std::string>& users)
+void Room::SetOwner(const User& owner)
+{
+	m_owner = owner;
+}
+
+void Room::SetUsers(const std::vector<User>& users)
 {
 	this->m_users = users;
 }
@@ -32,7 +37,12 @@ void Room::SetMultipleChoiceQuestions(const std::vector<Question>& multipleChoic
 	m_multipleChoiceQuestions = multipleChoiceQuestions;
 }
 
-std::vector<std::string> Room::GetUsers() const
+User Room::GetOwner() const
+{
+	return m_owner;
+}
+
+std::vector<User> Room::GetUsers() const
 {
 	return m_users;
 }
@@ -54,7 +64,7 @@ void Room::ShuffleQuestions()
 	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
 }
 
-void Room::AddUser(const std::string& user)
+void Room::AddUser(const User& user)
 {
 	m_users.push_back(user);
 }

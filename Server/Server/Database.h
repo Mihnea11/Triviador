@@ -83,5 +83,16 @@ namespace Database
 	private:
 		std::vector<Room>& m_rooms;
 	};
+
+	class DeleteRoomHandler
+	{
+	public:
+		DeleteRoomHandler(std::vector<Room>& rooms);
+
+		crow::response operator() (const crow::request& request, const std::string& roomCode) const;
+
+	private:
+		std::vector<Room>& m_rooms;
+	};
 }
 

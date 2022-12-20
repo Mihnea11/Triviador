@@ -182,13 +182,44 @@ Database::RoomHandler::RoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
 
 crow::response Database::RoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
 {
+	try
+	{
+		int roomIndex = std::stoi(roomCode);
+		if (roomIndex < 0 || roomIndex >= m_rooms.size())
+		{
+			return crow::response(409, "Invalid code");
+		}
+
+		auto arguments = ParseUrlArgs(request.body);
+
+		auto username = arguments.find("User name")->second;
+		auto imagePath = arguments.find("Image path")->second;
+
+		username = curl_unescape(username.c_str(), username.length());
+		imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+
+		User newUser;
+		newUser.SetName(username);
+		newUser.SetImagePath(imagePath);
+
+		m_rooms[roomIndex].AddUser(newUser);
+
+		return crow::response(200);
+	}
+	catch (std::exception)
+	{
+		return crow::response(409, "Invalid code");
+	}
+}
+
+Database::DeleteRoomHandler::DeleteRoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
+{
+}
+
+crow::response Database::DeleteRoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
+{
 	int roomIndex = std::stoi(roomCode);
-	auto arguments = ParseUrlArgs(request.body);
-
-	auto user = arguments.find("Player")->second;
-	user = curl_unescape(user.c_str(), user.length());
-
-	m_rooms[roomIndex].AddUser(user);
+	m_rooms.erase(m_rooms.begin() + roomIndex);
 
 	return crow::response(200);
 }

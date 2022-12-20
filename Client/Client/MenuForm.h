@@ -30,9 +30,12 @@ private:
 
 	void ConnectUi();
 	void LoadPlayerInfo();
-	void UploadImageToLabel(QLabel* label);
+	void UploadImageToLabel(QLabel* label, const Player& player);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
+	void DisplayPlayer(const std::string& playerCount, const Player& currentUser);
+	void DisplayRoom();
 	void UpdateRoom();
+	void WaitForSeconds(int seconds);
 
 	void MenuEditProfileButton();
 	void EditProfileBackButton();

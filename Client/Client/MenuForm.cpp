@@ -10,12 +10,13 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterRoomCode->setVisible(false);
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
+	ui.WaitingWidget->setVisible(false);
 
 	timer = new QTimer(this);
 
 	LoadPlayerInfo();
-	UploadImageToLabel(ui.MenuProfilePicture);
-	UploadImageToLabel(ui.EditProfileProfilePicture);
+	UploadImageToLabel(ui.MenuProfilePicture, m_player);
+	UploadImageToLabel(ui.EditProfileProfilePicture, m_player);
 	ConnectUi();
 }
 
@@ -29,13 +30,14 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterRoomCode->setVisible(false);
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
+	ui.WaitingWidget->setVisible(false);
 
 	this->m_player = player;
 	timer = new QTimer(this);
 
 	LoadPlayerInfo();
-	UploadImageToLabel(ui.MenuProfilePicture);
-	UploadImageToLabel(ui.EditProfileProfilePicture);
+	UploadImageToLabel(ui.MenuProfilePicture, m_player);
+	UploadImageToLabel(ui.EditProfileProfilePicture, m_player);
 	ConnectUi();
 }
 
@@ -83,11 +85,11 @@ void MenuForm::LoadPlayerInfo()
 	ui.WinRateLabel->setText(QString::fromStdString(player.GetWinRate()));*/
 }
 
-void MenuForm::UploadImageToLabel(QLabel* label)
+void MenuForm::UploadImageToLabel(QLabel* label, const Player& player)
 {
 	QImage image;
 
-	bool valid = image.load(QString::fromStdString(m_player.GetImagePath()));
+	bool valid = image.load(QString::fromStdString(player.GetImagePath()));
 	if (valid == false)
 	{
 		QString defaultPath = QDir::currentPath() + "/DefaultUser.jpg";
@@ -103,11 +105,85 @@ void MenuForm::ToggleWidget(QWidget* disabledForm, QWidget* enabledForm)
 	enabledForm->setVisible(true);
 }
 
+void MenuForm::DisplayPlayer(const std::string& playerCount, const Player& currentUser)
+{
+	if (playerCount == "Player1")
+	{
+		ui.RoomPlayer1->setVisible(true);
+		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+	}
+	if (playerCount == "Player2")
+	{
+		ui.RoomPlayer2->setVisible(true);
+		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+	}
+	if (playerCount == "Player3")
+	{
+		ui.RoomPlayer3->setVisible(true);
+		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+	}
+	if (playerCount == "Player4")
+	{
+		ui.RoomPlayer4->setVisible(true);
+		ui.RoomPlayer1Username->setText(QString::fromStdString(currentUser.GetName()));
+		UploadImageToLabel(ui.RoomPlayer1ProfilePicture, currentUser);
+	}
+}
+
+void MenuForm::DisplayRoom()
+{
+	ui.WaitingWidget->setVisible(true);
+	WaitForSeconds(1);
+
+	std::string roomCode = ui.RoomCode->text().toStdString();
+	ui.RoomPlayerSelection->setVisible(false);
+	ui.RoomCreateRoomButton->setVisible(false);
+	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
+	ui.RoomSelectedPlayers->setVisible(true);
+
+	ui.RoomPlayer1->setVisible(false);
+	ui.RoomPlayer2->setVisible(false);
+	ui.RoomPlayer3->setVisible(false);
+	ui.RoomPlayer4->setVisible(false);
+
+	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Room_" + roomCode });
+
+	auto arguments = crow::json::load(response.text);
+	std::string ownerName = arguments[0]["Owner"].s();
+	ui.RoomOwnerUsername->setText(QString::fromStdString(ownerName));
+
+	ui.WaitingWidget->setVisible(false);
+
+	UpdateRoom();
+}
+
 void MenuForm::UpdateRoom()
 {
-	static int x = 5;
-	ui.RoomPlayer1Username->setText(QString::fromStdString(std::to_string(x)));
-	x++;
+	std::string roomCode = ui.RoomCode->text().toStdString();
+	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Room_" + roomCode });
+
+	auto roomInformation = crow::json::load(response.text);
+
+	int playerIndex = 1;
+	for (int i = 1; i < roomInformation.size(); i++)
+	{
+		Player currentUser;
+
+		std::string username = roomInformation[i]["User name"].s();
+		std::string imagePath = roomInformation[i]["Image path"].s();
+
+		username = curl_unescape(username.c_str(), username.length());
+		imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+
+		currentUser.SetName(username);
+		currentUser.SetImagePath(imagePath);
+
+		DisplayPlayer("Player" + std::to_string(playerIndex), currentUser);
+		playerIndex++;
+	}
 }
 
 void MenuForm::MenuEditProfileButton()
@@ -126,8 +202,8 @@ void MenuForm::EditProfileChangeProfilePictureButton()
 	if (QString::compare(fileName, QString()) != 0)
 	{
 		m_player.SetImagePath(fileName.toStdString());
-		UploadImageToLabel(ui.EditProfileProfilePicture);
-		UploadImageToLabel(ui.MenuProfilePicture);
+		UploadImageToLabel(ui.EditProfileProfilePicture, m_player);
+		UploadImageToLabel(ui.MenuProfilePicture, m_player);
 	}
 
 	cpr::Response response = cpr::Post(
@@ -200,16 +276,44 @@ void MenuForm::PlayGameJoinRoomButton()
 
 void MenuForm::PlayGameEnterCodeButton()
 {
-	//TO DO: request from server to join room
+	std::string roomCode = ui.PlayGameEnterRoomCode->text().toStdString();
+
+	cpr::Response response = cpr::Put(
+		cpr::Url{Server::GetUrl() + "/Room_" + roomCode},
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()},
+			{"Image path", m_player.GetImagePath()}
+		}
+	);
+	if (response.status_code != 200)
+	{
+		ui.PlayGameEnterRoomCode->setText("");
+		ui.PlayGameEnterRoomCode->setPlaceholderText(QString::fromStdString(response.text));
+	}
 }
 
 void MenuForm::PlayGameCreateRoomButton()
 {	
-	cpr::Response request = cpr::Get(cpr::Url{ Server::GetUrl() + "/CreateRoom" });
+	cpr::Response request = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/CreateRoom" },
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()},
+			{"Image path", m_player.GetImagePath()}
+		}
+	);
 
 	std::string roomCode = crow::json::load(request.text)["Room code"].s();
+	cpr::Response addOwner = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode },
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()},
+			{"Image path", m_player.GetImagePath()}
+		}
+	);
 	ui.RoomCode->setText(QString::fromStdString(roomCode));
-	ui.RoomOwnerUsername->setText(QString::fromStdString(m_player.GetName()));
 
 	ui.RoomSelectedPlayers->setVisible(false);
 	ui.RoomCreateRoomButton->setVisible(true);
@@ -226,41 +330,30 @@ void MenuForm::RoomOptionsBackButton()
 	ui.RoomCreateRoomButton->setVisible(true);
 	ui.RoomSelectedPlayers->setVisible(false);
 
+	ui.RoomPlayer1->setVisible(true);
+	ui.RoomPlayer2->setVisible(true);
 	ui.RoomPlayer3->setVisible(true);
 	ui.RoomPlayer4->setVisible(true);
+
+	ui.RoomPlayer1Username->setText("");
+	ui.RoomPlayer2Username->setText("");
+	ui.RoomPlayer3Username->setText("");
+	ui.RoomPlayer4Username->setText("");
+
+	ui.RoomPlayer1ProfilePicture->setPixmap(QPixmap());
+	ui.RoomPlayer2ProfilePicture->setPixmap(QPixmap());
+	ui.RoomPlayer3ProfilePicture->setPixmap(QPixmap());
+	ui.RoomPlayer4ProfilePicture->setPixmap(QPixmap());
+
+	std::string roomCode = ui.RoomCode->text().toStdString();
+	cpr::Response response = cpr::Put(cpr::Url{ Server::GetUrl() + "/DeleteRoom_" + roomCode });
 
 	timer->stop();
 }
 
 void MenuForm::RoomCreateRoomButton()
 {
-	std::string roomCode = ui.RoomCode->text().toStdString();
-	ui.RoomPlayerSelection->setVisible(false);
-	ui.RoomCreateRoomButton->setVisible(false);
-	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
-	ui.RoomSelectedPlayers->setVisible(true);
-
-	int playerCount = std::stoi(ui.RoomPlayerSelection->currentText().toStdString());
-	switch (playerCount)
-	{
-	case 2:
-		ui.RoomPlayer3->setVisible(false);
-		ui.RoomPlayer4->setVisible(false);
-		break;
-
-	case 3:
-		ui.RoomPlayer4->setVisible(false);
-		break;
-	}
-
-	cpr::Response response = cpr::Put(
-		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode},
-		cpr::Payload
-		{
-			{"Player", m_player.GetName()}
-		}
-	);
-
+	DisplayRoom();
 	timer->start(1000);
 }
 
@@ -299,5 +392,14 @@ void MenuForm::ValidateNewInformation()
 		}
 
 		m_player.SetPassword(newPassword);
+	}
+}
+
+void MenuForm::WaitForSeconds(int seconds)
+{
+	QTime delayTime = QTime::currentTime().addSecs(seconds);
+	while (QTime::currentTime() < delayTime)
+	{
+		QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
 	}
 }

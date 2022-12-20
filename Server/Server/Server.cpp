@@ -47,33 +47,50 @@ int main()
     updateUser(Database::UserHandler(database));
 
     //Room creation
-    CROW_ROUTE(app, "/CreateRoom")([&rooms]()
+    CROW_ROUTE(app, "/CreateRoom").methods(crow::HTTPMethod::Put)([&rooms](const crow::request& request)
     {
-        std::string roomCode = CreateRoomCode(rooms.size() + 1);
+        auto arguments = ParseUrlArgs(request.body);
 
-        return crow::json::wvalue(
-        {
-            {"Room code", roomCode}
-        });
+        auto username = arguments.find("User name")->second;
+        auto imagePath = arguments.find("Image path")->second;
+
+        username = curl_unescape(username.c_str(), username.length());
+        imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+
+        User owner;
+        owner.SetName(username);
+        owner.SetImagePath(imagePath);
+
+        std::string roomCode = CreateRoomCode(rooms.size());
+
+        rooms.emplace_back(Room(owner));
+
+        return crow::json::wvalue{ { "Room code", roomCode } };
     });
+
+    //Room deletion
+    auto& deleteRoom = CROW_ROUTE(app, "/DeleteRoom_<string>").methods(crow::HTTPMethod::Put);
+    deleteRoom(Database::DeleteRoomHandler(rooms));  
 
     //Room access
     CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
     {
-        int roomCodeIndex = std::stoi(roomCode);
-        auto users = rooms[roomCodeIndex].GetUsers();
-        
-        std::vector<crow::json::wvalue> usersJson;
-        int index = 1;
+        int roomIndex = std::stoi(roomCode);
+        auto users = rooms[roomIndex].GetUsers();
+
+        std::vector<crow::json::wvalue> roomInformations;
+
+        roomInformations.push_back(crow::json::wvalue{ {"Owner", rooms[roomIndex].GetOwner().GetName()} });
         for (const auto& user : users)
         {
-            usersJson.push_back(crow::json::wvalue
+            roomInformations.push_back(crow::json::wvalue
             {
-                {"Player " + std::to_string(index), user}
+                {"User name", user.GetName()},
+                {"Image path", user.GetImagePath()}
             });
         }
 
-        return crow::json::wvalue{ usersJson };
+        return crow::json::wvalue(roomInformations);
     });
     auto& addUser = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Put);
     addUser(Database::RoomHandler(rooms));
