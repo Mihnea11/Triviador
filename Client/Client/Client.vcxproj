@@ -96,6 +96,7 @@
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="MenuForm.ui" />
+    <QtUic Include="PlayForm.ui" />
     <QtUic Include="ServerConnectForm.ui" />
   </ItemGroup>
   <ItemGroup>
