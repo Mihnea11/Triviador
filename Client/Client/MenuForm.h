@@ -50,6 +50,8 @@ private:
 	void PlayGameCreateRoomButton();
 	void RoomOptionsBackButton();
 	void RoomCreateRoomButton();
+	void MenuSettingsButton();
+	void SettingsBackButton();
 
 	void ValidateNewInformation();
 
@@ -67,6 +69,8 @@ private slots:
 	void PlayGameCreateRoomButtonClicked() { PlayGameCreateRoomButton(); }
 	void RoomOptionsBackButtonClicked() { RoomOptionsBackButton(); }
 	void RoomCreateRoomButtonClicked() { RoomCreateRoomButton(); }
+	void MenuSettingsButtonClicked() { MenuSettingsButton(); }
+	void SettingsBackButtonClicked() { SettingsBackButton(); }
 	void UpdateRoomInformation() { UpdateRoom(); }
 };
 

@@ -11,6 +11,7 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 	ui.WaitingWidget->setVisible(false);
+	ui.SettingsWidget->setVisible(false);
 
 	timer = new QTimer(this);
 
@@ -31,6 +32,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 	ui.WaitingWidget->setVisible(false);
+	ui.SettingsWidget->setVisible(false);
 
 	this->m_player = player;
 	timer = new QTimer(this);
@@ -71,6 +73,8 @@ void MenuForm::ConnectUi()
 	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
 	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
 	connect(ui.RoomCreateRoomButton, SIGNAL(clicked()), this, SLOT(RoomCreateRoomButtonClicked()));
+	connect(ui.MenuSettingsButton, SIGNAL(clicked()), this, SLOT(MenuSettingsButtonClicked()));
+	connect(ui.SettingsBackButton, SIGNAL(clicked()), this, SLOT(SettingsBackButtonClicked()));
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
 }
@@ -360,6 +364,16 @@ void MenuForm::RoomCreateRoomButton()
 {
 	DisplayRoom();
 	timer->start(1000);
+}
+
+void MenuForm::MenuSettingsButton()
+{
+	ToggleWidget(ui.GameMenu, ui.SettingsWidget);
+}
+
+void MenuForm::SettingsBackButton()
+{
+	ToggleWidget(ui.SettingsWidget, ui.GameMenu);
 }
 
 void MenuForm::ValidateNewInformation()

@@ -737,10 +737,10 @@ color: rgb(255, 255, 255);</string>
    <widget class="QWidget" name="PlayGameOptions" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>-1</x>
       <y>0</y>
-      <width>1280</width>
-      <height>720</height>
+      <width>1281</width>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QLabel" name="PlayGameTitle">
@@ -1385,6 +1385,42 @@ font: 700 30pt &quot;Segoe UI&quot;;</string>
      </widget>
     </widget>
    </widget>
+   <widget class="QWidget" name="SettingsWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>-1</x>
+      <y>-1</y>
+      <width>1281</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <widget class="QPushButton" name="SettingsBackButton">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>640</y>
+       <width>131</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border: 2px;
+color: rgb(255, 255, 255);
+border-radius: 10px;
+font: 700 16pt &quot;Segoe UI&quot;;
+background-color: rgb(204, 77, 50);</string>
+     </property>
+     <property name="text">
+      <string>Back</string>
+     </property>
+    </widget>
+   </widget>
+   <zorder>RoomWidget</zorder>
+   <zorder>EditProfileWidget</zorder>
+   <zorder>ChangeInformationsWidget</zorder>
+   <zorder>PlayGameOptions</zorder>
+   <zorder>GameMenu</zorder>
+   <zorder>SettingsWidget</zorder>
   </widget>
  </widget>
  <resources>

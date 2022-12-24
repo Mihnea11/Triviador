@@ -55,6 +55,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayForm.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -75,6 +78,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ServerConnectForm.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="PlayForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
