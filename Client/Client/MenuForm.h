@@ -33,7 +33,7 @@ private:
 	void UploadImageToLabel(QLabel* label, const Player& player);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
 	void DisplayPlayer(const std::string& playerCount, const Player& currentUser);
-	void DisplayRoom();
+	void DisplayRoom(const std::string& roomCode);
 	void UpdateRoom();
 	void WaitForSeconds(int seconds);
 

@@ -11,6 +11,8 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 	ui.WaitingWidget->setVisible(false);
+	ui.JoiningWidget->setVisible(false);
+	ui.RoomStartGameButton->setVisible(false);
 	ui.SettingsWidget->setVisible(false);
 
 	timer = new QTimer(this);
@@ -32,7 +34,6 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.PlayGameEnterCodeButton->setVisible(false);
 	ui.RoomWidget->setVisible(false);
 	ui.WaitingWidget->setVisible(false);
-	ui.SettingsWidget->setVisible(false);
 
 	this->m_player = player;
 	timer = new QTimer(this);
@@ -137,17 +138,12 @@ void MenuForm::DisplayPlayer(const std::string& playerCount, const Player& curre
 	}
 }
 
-void MenuForm::DisplayRoom()
+void MenuForm::DisplayRoom(const std::string& roomCode)
 {
-	ui.WaitingWidget->setVisible(true);
-	WaitForSeconds(1);
-
-	std::string roomCode = ui.RoomCode->text().toStdString();
 	ui.RoomPlayerSelection->setVisible(false);
 	ui.RoomCreateRoomButton->setVisible(false);
-	ui.RoomSelectedPlayers->setText(ui.RoomPlayerSelection->currentText());
 	ui.RoomSelectedPlayers->setVisible(true);
-
+	ui.RoomCode->setText(QString::fromStdString(roomCode));
 	ui.RoomPlayer1->setVisible(false);
 	ui.RoomPlayer2->setVisible(false);
 	ui.RoomPlayer3->setVisible(false);
@@ -157,9 +153,10 @@ void MenuForm::DisplayRoom()
 
 	auto arguments = crow::json::load(response.text);
 	std::string ownerName = arguments[0]["Owner"].s();
-	ui.RoomOwnerUsername->setText(QString::fromStdString(ownerName));
+	std::string playerCount = std::to_string(arguments[1]["Player count"].i());
 
-	ui.WaitingWidget->setVisible(false);
+	ui.RoomOwnerUsername->setText(QString::fromStdString(ownerName));
+	ui.RoomSelectedPlayers->setText(QString::fromStdString(playerCount));
 
 	UpdateRoom();
 }
@@ -167,13 +164,26 @@ void MenuForm::DisplayRoom()
 void MenuForm::UpdateRoom()
 {
 	std::string roomCode = ui.RoomCode->text().toStdString();
+	if (roomCode == "")
+	{
+		roomCode = ui.PlayGameEnterRoomCode->text().toStdString();
+	}
 	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Room_" + roomCode });
 
 	auto roomInformation = crow::json::load(response.text);
-
 	int playerIndex = 1;
-	for (int i = 1; i < roomInformation.size(); i++)
+
+	ui.RoomPlayer1->setVisible(false);
+	ui.RoomPlayer2->setVisible(false);
+	ui.RoomPlayer3->setVisible(false);
+	ui.RoomPlayer4->setVisible(false);
+	for (int i = 0; i < roomInformation.size(); i++)
 	{
+		if (roomInformation[i].has("User name") == false || roomInformation[i].has("Image path") == false)
+		{
+			continue;
+		}
+
 		Player currentUser;
 
 		std::string username = roomInformation[i]["User name"].s();
@@ -187,6 +197,38 @@ void MenuForm::UpdateRoom()
 
 		DisplayPlayer("Player" + std::to_string(playerIndex), currentUser);
 		playerIndex++;
+	}
+
+	if (m_player.GetName() == ui.RoomOwnerUsername->text().toStdString())
+	{
+		int index = 0;
+		int maxPlayers = std::stoi(ui.RoomSelectedPlayers->text().toStdString());
+
+		if (ui.RoomPlayer1->isVisible() == true)
+		{
+			index++;
+		}
+		if (ui.RoomPlayer2->isVisible() == true)
+		{
+			index++;
+		}
+		if (ui.RoomPlayer3->isVisible() == true)
+		{
+			index++;
+		}
+		if (ui.RoomPlayer4->isVisible() == true)
+		{
+			index++;
+		}
+
+		if (index == maxPlayers)
+		{
+			ui.RoomStartGameButton->setVisible(true);
+		}
+		else
+		{
+			ui.RoomStartGameButton->setVisible(false);
+		}
 	}
 }
 
@@ -294,36 +336,22 @@ void MenuForm::PlayGameEnterCodeButton()
 	{
 		ui.PlayGameEnterRoomCode->setText("");
 		ui.PlayGameEnterRoomCode->setPlaceholderText(QString::fromStdString(response.text));
+
+		return;
 	}
 
+	ui.JoiningWidget->setVisible(true);
+	WaitForSeconds(1);
+
 	ToggleWidget(ui.PlayGameOptions, ui.RoomWidget);
-	DisplayRoom();
+	DisplayRoom(roomCode);
+	ui.JoiningWidget->setVisible(false);
 
 	timer->start(1000);
 }
 
 void MenuForm::PlayGameCreateRoomButton()
 {	
-	cpr::Response request = cpr::Put(
-		cpr::Url{ Server::GetUrl() + "/CreateRoom" },
-		cpr::Payload
-		{
-			{"User name", m_player.GetName()},
-			{"Image path", m_player.GetImagePath()}
-		}
-	);
-
-	std::string roomCode = crow::json::load(request.text)["Room code"].s();
-	cpr::Response addOwner = cpr::Put(
-		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode },
-		cpr::Payload
-		{
-			{"User name", m_player.GetName()},
-			{"Image path", m_player.GetImagePath()}
-		}
-	);
-	ui.RoomCode->setText(QString::fromStdString(roomCode));
-
 	ui.RoomSelectedPlayers->setVisible(false);
 	ui.RoomCreateRoomButton->setVisible(true);
 	ui.RoomPlayerSelection->setVisible(true);
@@ -333,7 +361,9 @@ void MenuForm::PlayGameCreateRoomButton()
 
 void MenuForm::RoomOptionsBackButton()
 {
+	timer->stop();
 	ToggleWidget(ui.RoomWidget, ui.PlayGameOptions);
+
 	ui.RoomPlayerSelection->setDisabled(false);
 	ui.RoomCreateRoomButton->setDisabled(false);
 	ui.RoomCreateRoomButton->setVisible(true);
@@ -354,15 +384,50 @@ void MenuForm::RoomOptionsBackButton()
 	ui.RoomPlayer3ProfilePicture->setPixmap(QPixmap());
 	ui.RoomPlayer4ProfilePicture->setPixmap(QPixmap());
 
-	std::string roomCode = ui.RoomCode->text().toStdString();
-	cpr::Response response = cpr::Put(cpr::Url{ Server::GetUrl() + "/DeleteRoom_" + roomCode });
+	ui.RoomStartGameButton->setVisible(false);
 
-	timer->stop();
+	std::string roomCode = ui.RoomCode->text().toStdString();
+	cpr::Response response = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/LeaveRoom_" + roomCode },
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()}
+		}
+	);
+
+	ui.RoomOwnerUsername->setText("");
+	ui.RoomCode->setText("");
 }
 
 void MenuForm::RoomCreateRoomButton()
 {
-	DisplayRoom();
+	std::string playerCount = ui.RoomPlayerSelection->currentText().toStdString();
+	cpr::Response request = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/CreateRoom" },
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()},
+			{"Image path", m_player.GetImagePath()},
+			{"Player count", playerCount}
+		}
+	);
+
+	std::string roomCode = crow::json::load(request.text)["Room code"].s();
+	cpr::Response addOwner = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode },
+		cpr::Payload
+		{
+			{"User name", m_player.GetName()},
+			{"Image path", m_player.GetImagePath()}
+		}
+	);
+
+	ui.WaitingWidget->setVisible(true);
+	WaitForSeconds(1);
+
+	DisplayRoom(roomCode);
+	ui.WaitingWidget->setVisible(false);
+
 	timer->start(1000);
 }
 

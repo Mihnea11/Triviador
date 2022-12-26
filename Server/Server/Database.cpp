@@ -176,6 +176,8 @@ crow::response Database::UserHandler::operator()(const crow::request& request, c
 	return crow::response(200);
 }
 
+//-------------------------------------- ROOM --------------------------------------
+
 Database::RoomHandler::RoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
 {
 }
@@ -188,6 +190,10 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 		if (roomIndex < 0 || roomIndex >= m_rooms.size())
 		{
 			return crow::response(409, "Invalid code");
+		}
+		if (m_rooms[roomIndex].GetMaxUsers() == m_rooms[roomIndex].GetUsers().size())
+		{
+			return crow::response(409, "Room full");
 		}
 
 		auto arguments = ParseUrlArgs(request.body);
@@ -212,14 +218,27 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 	}
 }
 
-Database::DeleteRoomHandler::DeleteRoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
+Database::LeaveRoomHandler::LeaveRoomHandler(std::vector<Room>& rooms) : m_rooms{rooms}
 {
 }
 
-crow::response Database::DeleteRoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
+crow::response Database::LeaveRoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
 {
 	int roomIndex = std::stoi(roomCode);
-	m_rooms.erase(m_rooms.begin() + roomIndex);
+	auto arguments = ParseUrlArgs(request.body);
+
+	auto username = arguments.find("User name")->second;
+	username = curl_unescape(username.c_str(), username.length());
+
+	if (username == m_rooms[roomIndex].GetOwner().GetName())
+	{
+		m_rooms.erase(m_rooms.begin() + roomIndex);
+		return crow::response(204);
+	}
+	else
+	{
+		m_rooms[roomIndex].RemoveUser(username);
+	}
 
 	return crow::response(200);
 }

@@ -1329,6 +1329,26 @@ border-radius: 10px;</string>
        <set>Qt::AlignCenter</set>
       </property>
      </widget>
+     <widget class="QPushButton" name="RoomStartGameButton">
+      <property name="geometry">
+       <rect>
+        <x>260</x>
+        <y>350</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(48, 180, 33);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
+      </property>
+      <property name="text">
+       <string>Start game</string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="WaitingWidget" native="true">
      <property name="geometry">
@@ -1385,6 +1405,7 @@ font: 700 30pt &quot;Segoe UI&quot;;</string>
      </widget>
     </widget>
    </widget>
+<<<<<<< Updated upstream
    <widget class="QWidget" name="SettingsWidget" native="true">
     <property name="geometry">
      <rect>
@@ -1421,6 +1442,62 @@ background-color: rgb(204, 77, 50);</string>
    <zorder>PlayGameOptions</zorder>
    <zorder>GameMenu</zorder>
    <zorder>SettingsWidget</zorder>
+=======
+   <widget class="QWidget" name="JoiningWidget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>245</y>
+      <width>481</width>
+      <height>231</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(72, 61, 139);</string>
+    </property>
+    <widget class="QLabel" name="JoiningRoomLabel">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>110</y>
+       <width>481</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+font: 700 22pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>joining room</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="PleaseWaitLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>481</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+color: rgb(255, 255, 255);
+font: 700 30pt &quot;Segoe UI&quot;;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Please wait...&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
+>>>>>>> Stashed changes
   </widget>
  </widget>
  <resources>
