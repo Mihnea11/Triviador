@@ -33,7 +33,7 @@ private:
 	void UploadImageToLabel(QLabel* label, const Player& player);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
 	void DisplayPlayer(const std::string& playerCount, const Player& currentUser);
-	void DisplayRoom();
+	void DisplayRoom(const std::string& roomCode);
 	void UpdateRoom();
 	void WaitForSeconds(int seconds);
 
@@ -57,7 +57,7 @@ private slots:
 	void MenuEditProfileButtonClicked() { MenuEditProfileButton(); }
 	void EditProfileBackButtonClicked() { EditProfileBackButton(); }
 	void EditProfileChangePictureButtonClicked() { EditProfileChangeProfilePictureButton(); }
-	void EditProfileButtonClicked(){ EditProfileButton(); }
+	void EditProfileButtonClicked() { EditProfileButton(); }
 	void ChangeInformationsSaveButtonClicked() { ChangeInformationsSaveButton(); }
 	void MenuQuitButtonClicked() { MenuQuitButton(); }
 	void MenuPlayButtonClicked() { MenuPLayButton(); }
@@ -69,5 +69,3 @@ private slots:
 	void RoomCreateRoomButtonClicked() { RoomCreateRoomButton(); }
 	void UpdateRoomInformation() { UpdateRoom(); }
 };
-
-
