@@ -22,11 +22,6 @@ void Room::SetOwner(const User& owner)
 	m_owner = owner;
 }
 
-void Room::SetMaxUsers(int maxUsers)
-{
-	m_maxUsers = maxUsers;
-}
-
 void Room::SetUsers(const std::vector<User>& users)
 {
 	this->m_users = users;
@@ -45,11 +40,6 @@ void Room::SetMultipleChoiceQuestions(const std::vector<Question>& multipleChoic
 User Room::GetOwner() const
 {
 	return m_owner;
-}
-
-int Room::GetMaxUsers() const
-{
-	return m_maxUsers;
 }
 
 std::vector<User> Room::GetUsers() const
@@ -77,17 +67,5 @@ void Room::ShuffleQuestions()
 void Room::AddUser(const User& user)
 {
 	m_users.push_back(user);
-}
-
-void Room::RemoveUser(const std::string& username)
-{
-	for (int i = 0; i < m_users.size(); i++)
-	{
-		if (username == m_users[i].GetName())
-		{
-			m_users.erase(m_users.begin() + i);
-			return;
-		}
-	}
 }
 

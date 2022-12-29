@@ -84,10 +84,10 @@ namespace Database
 		std::vector<Room>& m_rooms;
 	};
 
-	class LeaveRoomHandler
+	class DeleteRoomHandler
 	{
 	public:
-		LeaveRoomHandler(std::vector<Room>& rooms);
+		DeleteRoomHandler(std::vector<Room>& rooms);
 
 		crow::response operator() (const crow::request& request, const std::string& roomCode) const;
 

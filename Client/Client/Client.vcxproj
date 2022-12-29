@@ -88,7 +88,6 @@
   <ItemGroup>
     <ClCompile Include="MenuForm.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="PlayForm.cpp" />
     <ClCompile Include="ServerConnectForm.cpp" />
     <ClCompile Include="Utils.cpp" />
     <QtRcc Include="LoginForm.qrc" />
@@ -97,7 +96,6 @@
     <ClCompile Include="LoginForm.cpp" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="MenuForm.ui" />
-    <QtUic Include="PlayForm.ui" />
     <QtUic Include="ServerConnectForm.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +107,6 @@
   <ItemGroup>
     <ClInclude Include="Player.h" />
     <QtMoc Include="ServerConnectForm.h" />
-    <QtMoc Include="PlayForm.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
