@@ -2,6 +2,7 @@
 #include <QtWidgets/QMainWindow>
 #include <cpr/cpr.h>
 #include <crow.h>
+
 #include "Utils.h"
 #include "ui_GameForm.h"
 
@@ -19,6 +20,7 @@ private:
 	std::string m_gameCode;
 
 	int GetPlayerCount();
+	void DisplayPlayerMap(int playerCount);
 
 private slots:
 

@@ -1062,7 +1062,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QWidget" name="PlayerMap3_2" native="true">
+   <widget class="QWidget" name="PlayerMap4" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
