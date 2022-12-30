@@ -104,6 +104,15 @@ int main()
     auto& updateInformaton = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Post);
     updateInformaton(Database::RoomHandler(rooms));
 
+    //Game handling
+    CROW_ROUTE(app, "/Game_<string>")([&rooms](std::string gameCode)
+        {
+            int roomIndex = std::stoi(gameCode);
+
+            return crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} };
+        });
+    
+
     app.port(18080).multithreaded().run();
 
     return 0;

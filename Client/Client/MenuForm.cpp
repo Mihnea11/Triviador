@@ -249,7 +249,7 @@ void MenuForm::UpdateRoom()
 	if (startGame == 1)
 	{
 		timer->stop();
-		GameForm* window = new GameForm();
+		GameForm* window = new GameForm(roomCode);
 		window->show();
 		close();
 	}
