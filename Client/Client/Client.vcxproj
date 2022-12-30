@@ -86,11 +86,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GameForm.cpp" />
     <ClCompile Include="MenuForm.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="ServerConnectForm.cpp" />
     <ClCompile Include="Utils.cpp" />
     <QtRcc Include="LoginForm.qrc" />
+    <QtUic Include="GameForm.ui" />
     <QtUic Include="LoginForm.ui" />
     <QtMoc Include="LoginForm.h" />
     <ClCompile Include="LoginForm.cpp" />
@@ -105,6 +107,7 @@
     <QtMoc Include="MenuForm.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="GameForm.h" />
     <ClInclude Include="Player.h" />
     <QtMoc Include="ServerConnectForm.h" />
     <ClInclude Include="Utils.h" />

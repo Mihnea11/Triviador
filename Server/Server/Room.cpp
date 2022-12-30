@@ -4,11 +4,13 @@ Room::Room()
 {
 	m_users = std::vector<User>();
 	m_owner = User();
+	m_startGame = false;
 }
 
 Room::Room(const User& owner)
 {
 	m_owner = owner;
+	m_startGame = false;
 }
 
 Room::Room(const std::vector<Question>& numericalQuestions, const std::vector<Question>& multipleChoiceQuesition)
@@ -25,6 +27,11 @@ void Room::SetOwner(const User& owner)
 void Room::SetMaxUsers(int maxUsers)
 {
 	m_maxUsers = maxUsers;
+}
+
+void Room::SetStartGame(bool startGame)
+{
+	m_startGame = startGame;
 }
 
 void Room::SetUsers(const std::vector<User>& users)
@@ -50,6 +57,11 @@ User Room::GetOwner() const
 int Room::GetMaxUsers() const
 {
 	return m_maxUsers;
+}
+
+bool Room::GetStartGame() const
+{
+	return m_startGame;
 }
 
 std::vector<User> Room::GetUsers() const

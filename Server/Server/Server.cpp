@@ -79,27 +79,30 @@ int main()
 
     //Room access
     CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
-        {
-            int roomIndex = std::stoi(roomCode);
-    auto users = rooms[roomIndex].GetUsers();
-
-    std::vector<crow::json::wvalue> roomInformations;
-
-    roomInformations.push_back(crow::json::wvalue{ {"Owner", rooms[roomIndex].GetOwner().GetName()} });
-    roomInformations.push_back(crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} });
-    for (const auto& user : users)
     {
-        roomInformations.push_back(crow::json::wvalue
-            {
-                {"User name", user.GetName()},
-                {"Image path", user.GetImagePath()}
-            });
-    }
+        int roomIndex = std::stoi(roomCode);
+        auto users = rooms[roomIndex].GetUsers();
 
-    return crow::json::wvalue(roomInformations);
-        });
+        std::vector<crow::json::wvalue> roomInformations;
+
+        roomInformations.push_back(crow::json::wvalue{ {"Game start", std::to_string(rooms[roomIndex].GetStartGame())} });
+        roomInformations.push_back(crow::json::wvalue{ {"Owner", rooms[roomIndex].GetOwner().GetName()} });
+        roomInformations.push_back(crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} });
+        for (const auto& user : users)
+        {
+            roomInformations.push_back(crow::json::wvalue
+                {
+                    {"User name", user.GetName()},
+                    {"Image path", user.GetImagePath()}
+                });
+        }
+
+        return crow::json::wvalue(roomInformations);
+    });
     auto& addUser = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Put);
     addUser(Database::RoomHandler(rooms));
+    auto& updateInformaton = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Post);
+    updateInformaton(Database::RoomHandler(rooms));
 
     app.port(18080).multithreaded().run();
 

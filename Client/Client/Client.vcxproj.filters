@@ -55,6 +55,9 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameForm.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -66,12 +69,18 @@
     <QtUic Include="ServerConnectForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="GameForm.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MenuForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ServerConnectForm.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="GameForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

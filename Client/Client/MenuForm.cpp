@@ -75,6 +75,7 @@ void MenuForm::ConnectUi()
 	connect(ui.PlayGameEnterCodeButton, SIGNAL(clicked()), this, SLOT(PlayGameEnterCodeButtonClicked()));
 	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
 	connect(ui.RoomCreateRoomButton, SIGNAL(clicked()), this, SLOT(RoomCreateRoomButtonClicked()));
+	connect(ui.RoomStartGameButton, SIGNAL(clicked()), this, SLOT(StartGameButtonClicked()));
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
 }
@@ -151,8 +152,21 @@ void MenuForm::DisplayRoom(const std::string& roomCode)
 	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Room_" + roomCode });
 
 	auto arguments = crow::json::load(response.text);
-	std::string ownerName = arguments[0]["Owner"].s();
-	std::string playerCount = std::to_string(arguments[1]["Player count"].i());
+
+	std::string ownerName;
+	std::string playerCount;
+	for (int i = 0; i < arguments.size(); i++)
+	{
+		if (arguments[i].has("Owner") == true)
+		{
+			ownerName = arguments[i]["Owner"].s();
+		}
+
+		if (arguments[i].has("Player count") == true)
+		{
+			playerCount = std::to_string(arguments[i]["Player count"].i());
+		}
+	}
 
 	ui.RoomOwnerUsername->setText(QString::fromStdString(ownerName));
 	ui.RoomSelectedPlayers->setText(QString::fromStdString(playerCount));
@@ -228,6 +242,16 @@ void MenuForm::UpdateRoom()
 		{
 			ui.RoomStartGameButton->setVisible(false);
 		}
+	}
+
+	int startGame = std::stoi(roomInformation[0]["Game start"].s());
+
+	if (startGame == 1)
+	{
+		timer->stop();
+		GameForm* window = new GameForm();
+		window->show();
+		close();
 	}
 }
 
@@ -428,6 +452,20 @@ void MenuForm::RoomCreateRoomButton()
 	ui.WaitingWidget->setVisible(false);
 
 	timer->start(1000);
+}
+
+void MenuForm::StartGameButton()
+{
+	std::string roomCode = ui.RoomCode->text().toStdString();
+	cpr::Response response = cpr::Post(
+		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode },
+		cpr::Payload
+		{
+			{"Game start", "1"}
+		}
+	);
+
+	UpdateRoom();
 }
 
 void MenuForm::ValidateNewInformation()

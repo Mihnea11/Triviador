@@ -7,6 +7,7 @@
 
 #include "Utils.h"
 #include "Player.h"
+#include "GameForm.h"
 #include "LoginForm.h"
 #include "ui_MenuForm.h"
 
@@ -50,6 +51,7 @@ private:
 	void PlayGameCreateRoomButton();
 	void RoomOptionsBackButton();
 	void RoomCreateRoomButton();
+	void StartGameButton();
 
 	void ValidateNewInformation();
 
@@ -67,5 +69,6 @@ private slots:
 	void PlayGameCreateRoomButtonClicked() { PlayGameCreateRoomButton(); }
 	void RoomOptionsBackButtonClicked() { RoomOptionsBackButton(); }
 	void RoomCreateRoomButtonClicked() { RoomCreateRoomButton(); }
+	void StartGameButtonClicked() { StartGameButton(); }
 	void UpdateRoomInformation() { UpdateRoom(); }
 };

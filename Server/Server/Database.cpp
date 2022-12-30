@@ -184,6 +184,21 @@ Database::RoomHandler::RoomHandler(std::vector<Room>& rooms) : m_rooms{ rooms }
 
 crow::response Database::RoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
 {
+	if (request.method == crow::HTTPMethod::Post)
+	{
+		int roomIndex = std::stoi(roomCode);
+		auto arguments = ParseUrlArgs(request.body);
+		auto end = arguments.end();
+
+		auto startGamePair = arguments.find("Game start");
+
+		if (startGamePair != end)
+		{
+			int startGame = std::stoi(startGamePair->second);
+			m_rooms[roomIndex].SetStartGame(startGame);
+		}
+	}
+
 	try
 	{
 		int roomIndex = std::stoi(roomCode);
@@ -197,18 +212,26 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 		}
 
 		auto arguments = ParseUrlArgs(request.body);
+		auto end = arguments.end();
 
-		auto username = arguments.find("User name")->second;
-		auto imagePath = arguments.find("Image path")->second;
+		auto usernamePair = arguments.find("User name");
+		auto imagePathPair = arguments.find("Image path");
 
-		username = curl_unescape(username.c_str(), username.length());
-		imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+		if (usernamePair != end && imagePathPair != end)
+		{
+			std::string username = usernamePair->second;
+			std::string imagePath = imagePathPair->second;
 
-		User newUser;
-		newUser.SetName(username);
-		newUser.SetImagePath(imagePath);
+			username = curl_unescape(username.c_str(), username.length());
+			imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
 
-		m_rooms[roomIndex].AddUser(newUser);
+
+			User newUser;
+			newUser.SetName(username);
+			newUser.SetImagePath(imagePath);
+
+			m_rooms[roomIndex].AddUser(newUser);
+		}
 
 		return crow::response(200);
 	}
