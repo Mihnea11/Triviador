@@ -32,14 +32,14 @@
       <x>0</x>
       <y>0</y>
       <width>1281</width>
-      <height>701</height>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QWidget" name="widget_3" native="true">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>-210</y>
+       <x>205</x>
+       <y>-200</y>
        <width>971</width>
        <height>831</height>
       </rect>
@@ -504,14 +504,14 @@
       <x>0</x>
       <y>0</y>
       <width>1281</width>
-      <height>701</height>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QWidget" name="widget_4" native="true">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>-210</y>
+       <x>205</x>
+       <y>-200</y>
        <width>971</width>
        <height>831</height>
       </rect>
@@ -1068,14 +1068,14 @@
       <x>0</x>
       <y>0</y>
       <width>1281</width>
-      <height>701</height>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QWidget" name="widget_24" native="true">
      <property name="geometry">
       <rect>
-       <x>340</x>
-       <y>-210</y>
+       <x>205</x>
+       <y>-200</y>
        <width>971</width>
        <height>831</height>
       </rect>
@@ -1735,6 +1735,7 @@
  </widget>
  <resources>
   <include location="LoginForm.qrc"/>
+  <include location="../../../Users/manea/.designer/backup/LoginForm.qrc"/>
  </resources>
  <connections/>
 </ui>

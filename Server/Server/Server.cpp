@@ -106,11 +106,11 @@ int main()
 
     //Game handling
     CROW_ROUTE(app, "/Game_<string>")([&rooms](std::string gameCode)
-        {
-            int roomIndex = std::stoi(gameCode);
+    {
+        int roomIndex = std::stoi(gameCode);
 
-            return crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} };
-        });
+        return crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} };
+    });
     
 
     app.port(18080).multithreaded().run();

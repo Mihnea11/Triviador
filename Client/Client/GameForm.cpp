@@ -40,14 +40,17 @@ void GameForm::DisplayPlayerMap(int playerCount)
 	{
 	case 2:
 		ui.PlayerMap2->setVisible(true);
+		m_regions = ui.PlayerMap2->children();
 		break;
 
 	case 3:
 		ui.PlayerMap3->setVisible(true);
+		m_regions = ui.PlayerMap2->children();
 		break;
 
 	case 4:
 		ui.PlayerMap4->setVisible(true);
+		m_regions = ui.PlayerMap2->children();
 		break;
 	}
 }
