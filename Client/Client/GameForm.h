@@ -17,15 +17,17 @@ public:
 	GameForm(const std::string& gameCode, QWidget* parent = nullptr);
 	~GameForm();
 
-	virtual void mousePressEvent(QMouseEvent* event) override;
+	//virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:
 	Ui::GameForm ui;
 	std::string m_gameCode;
-	QObjectList m_regions;
+	QList<QLabel*> m_regions;
 
 	int GetPlayerCount();
 	void DisplayPlayerMap(int playerCount);
+	void GetMapRegions(int playerCount);
+	void EmptyLabels();
 
 private slots:
 

@@ -13,6 +13,8 @@ GameForm::GameForm(const std::string& gameCode, QWidget* parent)
 	m_gameCode = gameCode;
 	int playerCount = GetPlayerCount();
 	DisplayPlayerMap(playerCount);
+	GetMapRegions(playerCount);
+	EmptyLabels();
 }
 
 
@@ -40,17 +42,41 @@ void GameForm::DisplayPlayerMap(int playerCount)
 	{
 	case 2:
 		ui.PlayerMap2->setVisible(true);
-		m_regions = ui.PlayerMap2->children();
 		break;
 
 	case 3:
 		ui.PlayerMap3->setVisible(true);
-		m_regions = ui.PlayerMap2->children();
 		break;
 
 	case 4:
 		ui.PlayerMap4->setVisible(true);
-		m_regions = ui.PlayerMap2->children();
 		break;
+	}
+}
+
+void GameForm::GetMapRegions(int playerCount)
+{
+
+	switch (playerCount)
+	{
+	case 2:
+		m_regions = ui.Regions2->findChildren<QLabel*>();
+		break;
+
+	case 3:
+		m_regions = ui.Regions3->findChildren<QLabel*>();
+		break;
+
+	case 4:
+		m_regions = ui.Regions4->findChildren<QLabel*>();
+		break;
+	}
+}
+
+void GameForm::EmptyLabels()
+{
+	for (int i = 0; i < m_regions.size(); i++)
+	{
+		m_regions[i]->setPixmap(QPixmap());
 	}
 }

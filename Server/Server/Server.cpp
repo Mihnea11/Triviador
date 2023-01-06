@@ -9,6 +9,8 @@ namespace sql = sqlite_orm;
 
 int main()
 {
+    srand(time(NULL));
+
     std::vector<Room> rooms;
     const std::string databaseFile = "Database.sqlite";
     Database::Storage database = Database::CreateStorage(databaseFile);
@@ -48,30 +50,40 @@ int main()
 
     //Room creation
     CROW_ROUTE(app, "/CreateRoom").methods(crow::HTTPMethod::Put)([&rooms](const crow::request& request)
+    {
+        auto arguments = ParseUrlArgs(request.body);
+
+        auto username = arguments.find("User name")->second;
+        auto imagePath = arguments.find("Image path")->second;
+        auto maxUsers = arguments.find("Player count")->second;
+
+        username = curl_unescape(username.c_str(), username.length());
+        imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
+        maxUsers = curl_unescape(maxUsers.c_str(), maxUsers.length());
+
+        User owner;
+        owner.SetName(username);
+        owner.SetImagePath(imagePath);
+
+        std::string roomCode = "";
+        while (std::find(rooms.begin(), rooms.end(), roomCode) != rooms.end() || rooms.size() == 0)
         {
-            auto arguments = ParseUrlArgs(request.body);
+            roomCode = CreateRoomCode();
 
-    auto username = arguments.find("User name")->second;
-    auto imagePath = arguments.find("Image path")->second;
-    auto maxUsers = arguments.find("Player count")->second;
+            if (rooms.size() == 0)
+            {
+                break;
+            }
+        }
 
-    username = curl_unescape(username.c_str(), username.length());
-    imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
-    maxUsers = curl_unescape(maxUsers.c_str(), maxUsers.length());
+        Room room(owner);
+        room.SetMaxUsers(std::stoi(maxUsers));
+        room.SetRoomCode(roomCode);
 
-    User owner;
-    owner.SetName(username);
-    owner.SetImagePath(imagePath);
+        rooms.emplace_back(room);
 
-    std::string roomCode = CreateRoomCode(rooms.size());
-
-    Room room(owner);
-    room.SetMaxUsers(std::stoi(maxUsers));
-
-    rooms.emplace_back(room);
-
-    return crow::json::wvalue{ { "Room code", roomCode } };
-        });
+        return crow::json::wvalue{ { "Room code", roomCode } };
+    });
 
     //LeaveRoom
     auto& leaveRoom = CROW_ROUTE(app, "/LeaveRoom_<string>").methods(crow::HTTPMethod::Put);
@@ -80,14 +92,14 @@ int main()
     //Room access
     CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
     {
-        int roomIndex = std::stoi(roomCode);
-        auto users = rooms[roomIndex].GetUsers();
+        auto foundRoom = std::find(rooms.begin(), rooms.end(), roomCode);
+        auto users = foundRoom->GetUsers();
 
         std::vector<crow::json::wvalue> roomInformations;
 
-        roomInformations.push_back(crow::json::wvalue{ {"Game start", std::to_string(rooms[roomIndex].GetStartGame())} });
-        roomInformations.push_back(crow::json::wvalue{ {"Owner", rooms[roomIndex].GetOwner().GetName()} });
-        roomInformations.push_back(crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} });
+        roomInformations.push_back(crow::json::wvalue{ {"Game start", std::to_string(foundRoom->GetStartGame())} });
+        roomInformations.push_back(crow::json::wvalue{ {"Owner", foundRoom->GetOwner().GetName()} });
+        roomInformations.push_back(crow::json::wvalue{ {"Player count", foundRoom->GetMaxUsers()} });
         for (const auto& user : users)
         {
             roomInformations.push_back(crow::json::wvalue
@@ -107,13 +119,11 @@ int main()
     //Game handling
     CROW_ROUTE(app, "/Game_<string>")([&rooms](std::string gameCode)
     {
-        int roomIndex = std::stoi(gameCode);
+        auto foundGame = std::find(rooms.begin(), rooms.end(), gameCode);
 
-        return crow::json::wvalue{ {"Player count", rooms[roomIndex].GetMaxUsers()} };
+        return crow::json::wvalue{ {"Player count", foundGame->GetMaxUsers()} };
     });
-    
 
     app.port(18080).multithreaded().run();
-
     return 0;
 }

@@ -17,6 +17,7 @@ public:
 
 	void SetOwner(const User& owner);
 	void SetMaxUsers(int maxUsers);
+	void SetRoomCode(const std::string& roomCode);
 	void SetStartGame(bool startGame);
 	void SetUsers(const std::vector<User>& users);
 	void SetNumericalQuestions(const std::vector<Question>& numericalQuestions);
@@ -24,6 +25,7 @@ public:
 
 	User GetOwner() const;
 	int GetMaxUsers() const;
+	std::string GetRoomCode() const;
 	bool GetStartGame() const;
 	std::vector<User> GetUsers() const;
 	std::vector<Question> GetNumericalQuestions() const;
@@ -32,12 +34,14 @@ public:
 	void ShuffleQuestions();
 	void AddUser(const User& user);
 	void RemoveUser(const std::string& username);
+
+	bool operator== (const std::string& roomCode);
 private:
 	User m_owner;
 	int m_maxUsers;
 	bool m_startGame;
-	std::vector<User> m_users;
 	std::string m_roomCode;
+	std::vector<User> m_users;
 	std::vector<Question> m_numericalQuestions;
 	std::vector<Question> m_multipleChoiceQuestions;
 	

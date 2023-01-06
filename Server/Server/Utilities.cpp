@@ -34,14 +34,15 @@ std::unordered_map<std::string, std::string> ParseUrlArgs(const std::string& url
     return result;
 }
 
-std::string CreateRoomCode(int code)
+std::string CreateRoomCode()
 {
+    bool generated = false;
+
     std::string roomCode = "00000";
 
-    for (int i = roomCode.size() - 1; code != 0; i--)
+    for (int i = roomCode.size() - 1; i >= 0; i--)
     {
-        roomCode[i] = char('0' + code % 10);
-        code /= 10;
+        roomCode[i] = char('0' + rand() % 10);
     }
 
     return roomCode;

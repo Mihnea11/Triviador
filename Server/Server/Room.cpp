@@ -29,6 +29,11 @@ void Room::SetMaxUsers(int maxUsers)
 	m_maxUsers = maxUsers;
 }
 
+void Room::SetRoomCode(const std::string& roomCode)
+{
+	m_roomCode = roomCode;
+}
+
 void Room::SetStartGame(bool startGame)
 {
 	m_startGame = startGame;
@@ -57,6 +62,11 @@ User Room::GetOwner() const
 int Room::GetMaxUsers() const
 {
 	return m_maxUsers;
+}
+
+std::string Room::GetRoomCode() const
+{
+	return m_roomCode;
 }
 
 bool Room::GetStartGame() const
@@ -101,5 +111,15 @@ void Room::RemoveUser(const std::string& username)
 			return;
 		}
 	}
+}
+
+bool Room::operator==(const std::string& roomCode)
+{
+	if (m_roomCode == roomCode)
+	{
+		return true;
+	}
+
+	return false;
 }
 

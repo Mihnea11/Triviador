@@ -186,7 +186,6 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 {
 	if (request.method == crow::HTTPMethod::Post)
 	{
-		int roomIndex = std::stoi(roomCode);
 		auto arguments = ParseUrlArgs(request.body);
 		auto end = arguments.end();
 
@@ -195,18 +194,25 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 		if (startGamePair != end)
 		{
 			int startGame = std::stoi(startGamePair->second);
-			m_rooms[roomIndex].SetStartGame(startGame);
+			
+			for (auto& room : m_rooms)
+			{
+				if (room.GetRoomCode() == roomCode)
+				{
+					room.SetStartGame(startGame);
+				}
+			}
 		}
 	}
 
 	try
 	{
-		int roomIndex = std::stoi(roomCode);
-		if (roomIndex < 0 || roomIndex >= m_rooms.size())
+		auto foundRoom = std::find(m_rooms.begin(), m_rooms.end(), roomCode);
+		if (foundRoom == m_rooms.end())
 		{
 			return crow::response(409, "Invalid code");
 		}
-		if (m_rooms[roomIndex].GetMaxUsers() == m_rooms[roomIndex].GetUsers().size())
+		if (foundRoom->GetMaxUsers() == foundRoom->GetUsers().size())
 		{
 			return crow::response(409, "Room full");
 		}
@@ -230,7 +236,7 @@ crow::response Database::RoomHandler::operator()(const crow::request& request, c
 			newUser.SetName(username);
 			newUser.SetImagePath(imagePath);
 
-			m_rooms[roomIndex].AddUser(newUser);
+			foundRoom->AddUser(newUser);
 		}
 
 		return crow::response(200);
@@ -247,20 +253,20 @@ Database::LeaveRoomHandler::LeaveRoomHandler(std::vector<Room>& rooms) : m_rooms
 
 crow::response Database::LeaveRoomHandler::operator()(const crow::request& request, const std::string& roomCode) const
 {
-	int roomIndex = std::stoi(roomCode);
+	auto foundRoom = std::find(m_rooms.begin(), m_rooms.end(), roomCode);
 	auto arguments = ParseUrlArgs(request.body);
 
 	auto username = arguments.find("User name")->second;
 	username = curl_unescape(username.c_str(), username.length());
 
-	if (username == m_rooms[roomIndex].GetOwner().GetName())
+	if (username == foundRoom->GetOwner().GetName())
 	{
-		m_rooms.erase(m_rooms.begin() + roomIndex);
+		m_rooms.erase(foundRoom);
 		return crow::response(204);
 	}
 	else
 	{
-		m_rooms[roomIndex].RemoveUser(username);
+		foundRoom->RemoveUser(username);
 	}
 
 	return crow::response(200);
