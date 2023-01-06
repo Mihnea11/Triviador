@@ -998,6 +998,137 @@
      </widget>
     </widget>
    </widget>
+   <widget class="QWidget" name="QuestionDisplay" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1281</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(116, 172, 255, 255), stop:0.251894 rgba(99, 124, 235, 255), stop:0.598485 rgba(109, 86, 216, 255), stop:0.831439 rgba(153, 50, 204, 255));</string>
+    </property>
+    <widget class="QLabel" name="QuestionText">
+     <property name="geometry">
+      <rect>
+       <x>245</x>
+       <y>150</y>
+       <width>791</width>
+       <height>91</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+font: 700 12pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Il iubesc pe Mihnea uwU</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QWidget" name="MultipleAnswerQuestion" native="true">
+     <property name="geometry">
+      <rect>
+       <x>245</x>
+       <y>290</y>
+       <width>791</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(72, 61, 139);</string>
+     </property>
+     <widget class="QPushButton" name="Answer1">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>371</width>
+        <height>110</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(153, 50, 204);
+color: rgb(255, 255, 255);
+font: 700 14pt &quot;Segoe UI&quot;;
+border: 1px;
+border-radius: 15px;
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Answer2">
+      <property name="geometry">
+       <rect>
+        <x>409</x>
+        <y>10</y>
+        <width>371</width>
+        <height>110</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(153, 50, 204);
+color: rgb(255, 255, 255);
+font: 700 14pt &quot;Segoe UI&quot;;
+border: 1px;
+border-radius: 15px;
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Answer3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>371</width>
+        <height>110</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(153, 50, 204);
+color: rgb(255, 255, 255);
+font: 700 14pt &quot;Segoe UI&quot;;
+border: 1px;
+border-radius: 15px;
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="Answer4">
+      <property name="geometry">
+       <rect>
+        <x>409</x>
+        <y>130</y>
+        <width>371</width>
+        <height>110</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(153, 50, 204);
+color: rgb(255, 255, 255);
+font: 700 14pt &quot;Segoe UI&quot;;
+border: 1px;
+border-radius: 15px;
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources>
