@@ -2,14 +2,11 @@
 
 #include <string>
 #include <vector>
-#include <crow.h>
-#include <sqlite_orm/sqlite_orm.h>
 
-#include "Utilities.h"
+#include "LibDefine.h"
 
-namespace sql = sqlite_orm;
 
-class Question
+class DLL_API Question
 {
 public:
 	Question();
