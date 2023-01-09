@@ -17,7 +17,6 @@ GameForm::GameForm(const std::string& gameCode, QWidget* parent)
 	EmptyLabels();
 }
 
-
 GameForm::~GameForm()
 {
 }

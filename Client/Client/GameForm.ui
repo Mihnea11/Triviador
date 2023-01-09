@@ -1227,6 +1227,10 @@ border-radius: 10px;</string>
     <zorder>MultipleAnswerQuestion</zorder>
     <zorder>TrueFalseQuestion</zorder>
    </widget>
+   <zorder>PlayerMap3</zorder>
+   <zorder>PlayerMap4</zorder>
+   <zorder>QuestionDisplay</zorder>
+   <zorder>PlayerMap2</zorder>
   </widget>
  </widget>
  <resources>

@@ -13,6 +13,7 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.WaitingWidget->setVisible(false);
 	ui.JoiningWidget->setVisible(false);
 	ui.RoomStartGameButton->setVisible(false);
+	ui.LeftRoomWidget->setVisible(false);
 
 	timer = new QTimer(this);
 
@@ -35,6 +36,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.WaitingWidget->setVisible(false);
 	ui.JoiningWidget->setVisible(false);
 	ui.RoomStartGameButton->setVisible(false);
+	ui.LeftRoomWidget->setVisible(false);
 
 	this->m_player = player;
 	timer = new QTimer(this);
@@ -76,6 +78,7 @@ void MenuForm::ConnectUi()
 	connect(ui.RoomOptionsBackButton, SIGNAL(clicked()), this, SLOT(RoomOptionsBackButtonClicked()));
 	connect(ui.RoomCreateRoomButton, SIGNAL(clicked()), this, SLOT(RoomCreateRoomButtonClicked()));
 	connect(ui.RoomStartGameButton, SIGNAL(clicked()), this, SLOT(StartGameButtonClicked()));
+	connect(ui.LeftRoomOKButton, SIGNAL(clicked()), this, SLOT(LeftRoomOkButtonClicked()));
 
 	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
 }
@@ -182,6 +185,16 @@ void MenuForm::UpdateRoom()
 		roomCode = ui.PlayGameEnterRoomCode->text().toStdString();
 	}
 	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Room_" + roomCode });
+
+	if (response.text == "\"\"")
+	{
+		ui.RoomWidget->setVisible(false);
+		ui.GameMenu->setVisible(true);
+		ui.LeftRoomWidget->setVisible(true);
+		timer->stop();
+
+		return;
+	}
 
 	auto roomInformation = crow::json::load(response.text);
 	int playerIndex = 1;
@@ -466,6 +479,11 @@ void MenuForm::StartGameButton()
 	);
 
 	UpdateRoom();
+}
+
+void MenuForm::LeftRoomOkButton()
+{
+	ui.LeftRoomWidget->setVisible(false);
 }
 
 void MenuForm::ValidateNewInformation()

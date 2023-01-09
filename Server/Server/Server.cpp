@@ -66,7 +66,7 @@ int main()
         owner.SetImagePath(imagePath);
 
         std::string roomCode = "";
-        while (std::find(rooms.begin(), rooms.end(), roomCode) != rooms.end() || rooms.size() == 0)
+        while (std::find(rooms.begin(), rooms.end(), roomCode) != rooms.end() || roomCode == "")
         {
             roomCode = CreateRoomCode();
 
@@ -80,7 +80,7 @@ int main()
         room.SetMaxUsers(std::stoi(maxUsers));
         room.SetRoomCode(roomCode);
 
-        rooms.emplace_back(room);
+        rooms.push_back(room);
 
         return crow::json::wvalue{ { "Room code", roomCode } };
     });
@@ -93,6 +93,12 @@ int main()
     CROW_ROUTE(app, "/Room_<string>")([&rooms](std::string roomCode)
     {
         auto foundRoom = std::find(rooms.begin(), rooms.end(), roomCode);
+
+        if (foundRoom == rooms.end())
+        {
+            return crow::json::wvalue{ {""} };
+        }
+        
         auto users = foundRoom->GetUsers();
 
         std::vector<crow::json::wvalue> roomInformations;

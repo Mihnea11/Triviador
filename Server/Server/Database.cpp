@@ -267,7 +267,6 @@ crow::response Database::LeaveRoomHandler::operator()(const crow::request& reque
 	else
 	{
 		foundRoom->RemoveUser(username);
-	}
-
+	} 
 	return crow::response(200);
 }
