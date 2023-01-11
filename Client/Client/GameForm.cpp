@@ -12,9 +12,13 @@ GameForm::GameForm(const std::string& gameCode, QWidget* parent)
 
 	m_gameCode = gameCode;
 	int playerCount = GetPlayerCount();
+
+	LoadPlayerIcons(playerCount);
 	DisplayPlayerMap(playerCount);
 	GetMapRegions(playerCount);
 	EmptyLabels();
+
+	ui.QuestionDisplay->setVisible(false);
 }
 
 GameForm::~GameForm()
@@ -29,6 +33,40 @@ int GameForm::GetPlayerCount()
 	int playerCount = arguments["Player count"].i();
 
 	return playerCount;
+}
+
+void GameForm::LoadPlayerIcons(int playerCount)
+{
+	switch (playerCount)
+	{
+	case 4:
+		m_playerFourTower = std::make_unique<QPixmap>();
+		m_playerFourFlag = std::make_unique<QPixmap>();
+
+		m_playerFourTower->load(QDir::currentPath() + "/Castle_P4.png");
+		m_playerFourFlag->load(QDir::currentPath() + "/Flag_P4.png");
+		__fallthrough;
+
+	case 3:
+		m_playerThreeTower = std::make_unique<QPixmap>();
+		m_playerThreeFlag = std::make_unique<QPixmap>();
+
+		m_playerThreeTower->load(QDir::currentPath() + "/Castle_P3.png");
+		m_playerThreeFlag->load(QDir::currentPath() + "/Flag_P3.png");
+		__fallthrough;
+
+	case 2:
+		m_playerOneTower = std::make_unique<QPixmap>();
+		m_playerTwoTower = std::make_unique<QPixmap>();
+		m_playerOneFlag = std::make_unique<QPixmap>();
+		m_playerTwoFlag = std::make_unique<QPixmap>();
+
+		m_playerTwoTower->load(QDir::currentPath() + "/Castle_P2.png");
+		m_playerOneTower->load(QDir::currentPath() + "/Castle_P1.png");
+		m_playerTwoFlag->load(QDir::currentPath() + "/Flag_P2.png");
+		m_playerOneFlag->load(QDir::currentPath() + "/Flag_P1.png");
+		break;
+	}
 }
 
 void GameForm::DisplayPlayerMap(int playerCount)

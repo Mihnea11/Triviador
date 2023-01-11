@@ -470,6 +470,7 @@ void MenuForm::RoomCreateRoomButton()
 void MenuForm::StartGameButton()
 {
 	std::string roomCode = ui.RoomCode->text().toStdString();
+
 	cpr::Response response = cpr::Post(
 		cpr::Url{ Server::GetUrl() + "/Room_" + roomCode },
 		cpr::Payload
@@ -477,6 +478,8 @@ void MenuForm::StartGameButton()
 			{"Game start", "1"}
 		}
 	);
+
+	cpr::Response createGame = cpr::Get(cpr::Url{ Server::GetUrl() + "Game_" + roomCode });
 
 	UpdateRoom();
 }

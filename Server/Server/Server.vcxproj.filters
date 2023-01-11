@@ -30,6 +30,12 @@
     <ClCompile Include="Database.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
+    <ClCompile Include="Region.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -39,6 +45,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Region.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -140,12 +140,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Region.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Database.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Region.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>

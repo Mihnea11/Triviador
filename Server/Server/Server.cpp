@@ -1,8 +1,9 @@
 #include <vector>
 #include <string>
 
-#include "Database.h"
+#include "Game.h"
 #include "Room.h"
+#include "Database.h"
 #include "Utilities.h"
 
 namespace sql = sqlite_orm;
@@ -12,6 +13,8 @@ int main()
     srand(time(NULL));
 
     std::vector<Room> rooms;
+    std::vector<Game> games;
+
     const std::string databaseFile = "Database.sqlite";
     Database::Storage database = Database::CreateStorage(databaseFile);
     database.sync_schema();
@@ -122,13 +125,21 @@ int main()
     auto& updateInformaton = CROW_ROUTE(app, "/Room_<string>").methods(crow::HTTPMethod::Post);
     updateInformaton(Database::RoomHandler(rooms));
 
-    //Game handling
-    CROW_ROUTE(app, "/Game_<string>")([&rooms](std::string gameCode)
+    //Game creation
+    CROW_ROUTE(app, "/Game_<string>")([&rooms, &games](std::string gameCode)
     {
-        auto foundGame = std::find(rooms.begin(), rooms.end(), gameCode);
+        auto room = std::find(rooms.begin(), rooms.end(), gameCode);
 
-        return crow::json::wvalue{ {"Player count", foundGame->GetMaxUsers()} };
+        Game newGame;
+        newGame.SetPlayerCount(room->GetMaxUsers());
+        newGame.SetGameState(Game::JOINING);
+
+        games.push_back(newGame);
+
+        return crow::json::wvalue{ {"Player count", newGame.GetPlayerCount()} };
     });
+
+    //Join game
 
     app.port(18080).multithreaded().run();
     return 0;
