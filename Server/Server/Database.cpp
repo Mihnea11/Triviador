@@ -270,3 +270,33 @@ crow::response Database::LeaveRoomHandler::operator()(const crow::request& reque
 	} 
 	return crow::response(200);
 }
+
+Database::JoinGameHandler::JoinGameHandler(std::vector<Game>& games) : m_games{ games }
+{
+}
+
+crow::response Database::JoinGameHandler::operator()(const crow::request& request, const std::string& gameCode) const
+{
+	auto foundGame = std::find(m_games.begin(), m_games.end(), gameCode);
+	auto arguments = ParseUrlArgs(request.body);
+	auto end = arguments.end();
+
+	auto usernameFound = arguments.find("Player name");
+	auto regionsCountFound = arguments.find("Regions count");
+
+	if (regionsCountFound != end)
+	{
+		int regionsCount = std::stoi(curl_unescape(regionsCountFound->second.c_str(), regionsCountFound->second.length()));
+		foundGame->SetRegionsNumber(regionsCount);
+
+		return crow::response(200);
+	}
+
+	if (usernameFound != end)
+	{
+		std::string username = curl_unescape(usernameFound->second.c_str(), usernameFound->second.length());
+		foundGame->AddPlayer(username);
+
+		return crow::response(200);
+	}
+}

@@ -9,6 +9,7 @@ class Game
 public:
 	static enum GameState
 	{
+		EMPTY,
 		JOINING,
 		BASE_SELECTION,
 		REGION_SELECTION,
@@ -20,9 +21,15 @@ public:
 
 	void SetPlayerCount(int playerCount);
 	void SetGameState(Game::GameState state);
+	void SetRegionsNumber(int regionsNumber);
 
-	int GetPlayerCount() const;
 	Game::GameState GetGameState() const;
+	int GetPlayerCount() const;
+	int GetRegionsCount() const;
+
+	void AddPlayer(const std::string& playerName);
+
+	bool operator== (const std::string gameCode);
 
 private:
 	GameState m_state;

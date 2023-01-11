@@ -6,6 +6,7 @@
 
 #include "User.h"
 #include "Room.h"
+#include "Game.h"
 #include "Question.h"
 #include "Utilities.h"
 
@@ -93,5 +94,16 @@ namespace Database
 
 	private:
 		std::vector<Room>& m_rooms;
+	};
+
+	class JoinGameHandler
+	{
+	public: 
+		JoinGameHandler(std::vector<Game>& games);
+
+		crow::response operator() (const crow::request& request, const std::string& gameCode) const;
+
+	private:
+		std::vector<Game>& m_games;
 	};
 }

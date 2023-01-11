@@ -262,8 +262,18 @@ void MenuForm::UpdateRoom()
 	if (startGame == 1)
 	{
 		timer->stop();
-		GameForm* window = new GameForm(roomCode);
-		window->show();
+
+		if (m_player.GetName() == ui.RoomOwnerUsername->text().toStdString())
+		{
+			GameForm* window = new GameForm(roomCode, true);
+			window->show();
+		}
+		else
+		{
+			GameForm* window = new GameForm(roomCode);
+			window->show();
+		}
+
 		close();
 	}
 }

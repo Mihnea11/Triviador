@@ -139,7 +139,12 @@ int main()
         return crow::json::wvalue{ {"Player count", newGame.GetPlayerCount()} };
     });
 
+    // Game joining
+    auto& joinGame = CROW_ROUTE(app, "/GameJoin_<string>").methods(crow::HTTPMethod::Put);
+    joinGame(Database::JoinGameHandler(games));
+
     //Join game
+    
 
     app.port(18080).multithreaded().run();
     return 0;

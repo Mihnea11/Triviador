@@ -15,8 +15,12 @@ class GameForm : public QMainWindow
 
 public:
 	GameForm(QWidget* parent = nullptr);
-	GameForm(const std::string& gameCode, QWidget* parent = nullptr);
+	GameForm(const std::string& gameCode, bool isOwner = false, QWidget* parent = nullptr);
 	~GameForm();
+
+	void SetIsOwner(bool isOwner);
+
+	bool GetIsOwner() const;
 
 	//virtual void mousePressEvent(QMouseEvent* event) override;
 
@@ -24,6 +28,7 @@ private:
 	Ui::GameForm ui;
 	std::string m_gameCode;
 	QList<QLabel*> m_regions;
+	bool m_isOwner;
 
 	std::unique_ptr<QPixmap> m_playerOneTower;
 	std::unique_ptr<QPixmap> m_playerTwoTower;
@@ -39,6 +44,7 @@ private:
 	void LoadPlayerIcons(int playerCount);
 	void DisplayPlayerMap(int playerCount);
 	void GetMapRegions(int playerCount);
+	void SendRegionCount();
 	void EmptyLabels();
 };
 

@@ -6,10 +6,11 @@ GameForm::GameForm(QWidget* parent)
 	int playerCount = GetPlayerCount();
 }
 
-GameForm::GameForm(const std::string& gameCode, QWidget* parent)
+GameForm::GameForm(const std::string& gameCode, bool isOwner, QWidget* parent)
 {
 	ui.setupUi(this);
 
+	m_isOwner = true;
 	m_gameCode = gameCode;
 	int playerCount = GetPlayerCount();
 
@@ -18,11 +19,26 @@ GameForm::GameForm(const std::string& gameCode, QWidget* parent)
 	GetMapRegions(playerCount);
 	EmptyLabels();
 
+	if (m_isOwner == true)
+	{
+		SendRegionCount();
+	}
+
 	ui.QuestionDisplay->setVisible(false);
 }
 
 GameForm::~GameForm()
 {
+}
+
+void GameForm::SetIsOwner(bool isOwner)
+{
+	m_isOwner = true;
+}
+
+bool GameForm::GetIsOwner() const
+{
+	return m_isOwner;
 }
 
 int GameForm::GetPlayerCount()
@@ -108,6 +124,17 @@ void GameForm::GetMapRegions(int playerCount)
 		m_regions = ui.Regions4->findChildren<QLabel*>();
 		break;
 	}
+}
+
+void GameForm::SendRegionCount()
+{
+	cpr::Response response = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/GameJoin_" + m_gameCode },
+		cpr::Payload
+		{
+			{"Regions count", std::to_string(m_regions.size())}
+		}
+	);
 }
 
 void GameForm::EmptyLabels()
