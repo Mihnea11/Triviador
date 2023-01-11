@@ -263,6 +263,14 @@ void MenuForm::UpdateRoom()
 	{
 		timer->stop();
 
+		cpr::Response response = cpr::Put(
+			cpr::Url{Server::GetUrl() + "/Game_" + roomCode},
+			cpr::Payload
+			{
+				{"Player name", m_player.GetName()}
+			}
+		);
+
 		if (m_player.GetName() == ui.RoomOwnerUsername->text().toStdString())
 		{
 			GameForm* window = new GameForm(roomCode, true);

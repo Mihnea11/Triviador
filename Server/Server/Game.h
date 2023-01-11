@@ -23,11 +23,13 @@ public:
 	void SetPlayerCount(int playerCount);
 	void SetGameState(Game::GameState state);
 	void SetRegionsNumber(int regionsNumber);
+	void SetPlayers(const std::vector<std::string>& players);
 
 	std::string GetGameCode();
 	Game::GameState GetGameState() const;
 	int GetPlayerCount() const;
 	int GetRegionsCount() const;
+	std::vector<std::string> GetPlayers() const;
 
 	void AddPlayer(const std::string& playerName);
 

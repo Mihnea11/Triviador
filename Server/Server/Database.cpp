@@ -301,4 +301,11 @@ crow::response Database::JoinGameHandler::operator()(const crow::request& reques
 
 		return crow::response(200);
 	}
+
+	if (foundGame->GetPlayerCount() == foundGame->GetPlayers().size())
+	{
+		foundGame->SetGameState(Game::BASE_SELECTION);
+	}
+
+	return crow::response(200);
 }

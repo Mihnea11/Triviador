@@ -30,6 +30,11 @@ void Game::SetRegionsNumber(int regionsNumber)
 	m_regionsNumber = regionsNumber;
 }
 
+void Game::SetPlayers(const std::vector<std::string>& players)
+{
+	m_players = players;
+}
+
 int Game::GetPlayerCount() const
 {
 	return m_playerCount;
@@ -38,6 +43,11 @@ int Game::GetPlayerCount() const
 int Game::GetRegionsCount() const
 {
 	return m_regionsNumber;
+}
+
+std::vector<std::string> Game::GetPlayers() const
+{
+	return m_players;
 }
 
 std::string Game::GetGameCode()
