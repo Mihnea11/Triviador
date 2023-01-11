@@ -19,10 +19,12 @@ public:
 
 	Game();
 
+	void SetGameCode(const std::string& gameCode);
 	void SetPlayerCount(int playerCount);
 	void SetGameState(Game::GameState state);
 	void SetRegionsNumber(int regionsNumber);
 
+	std::string GetGameCode();
 	Game::GameState GetGameState() const;
 	int GetPlayerCount() const;
 	int GetRegionsCount() const;

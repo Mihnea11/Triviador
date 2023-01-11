@@ -489,7 +489,7 @@ void MenuForm::StartGameButton()
 		}
 	);
 
-	cpr::Response createGame = cpr::Get(cpr::Url{ Server::GetUrl() + "Game_" + roomCode });
+	cpr::Response createGame = cpr::Get(cpr::Url{ Server::GetUrl() + "/CreateGame_" + roomCode });
 
 	UpdateRoom();
 }

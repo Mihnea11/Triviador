@@ -10,7 +10,7 @@ GameForm::GameForm(const std::string& gameCode, bool isOwner, QWidget* parent)
 {
 	ui.setupUi(this);
 
-	m_isOwner = true;
+	m_isOwner = isOwner;
 	m_gameCode = gameCode;
 	int playerCount = GetPlayerCount();
 
@@ -129,7 +129,7 @@ void GameForm::GetMapRegions(int playerCount)
 void GameForm::SendRegionCount()
 {
 	cpr::Response response = cpr::Put(
-		cpr::Url{ Server::GetUrl() + "/GameJoin_" + m_gameCode },
+		cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode },
 		cpr::Payload
 		{
 			{"Regions count", std::to_string(m_regions.size())}

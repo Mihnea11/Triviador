@@ -271,6 +271,8 @@ crow::response Database::LeaveRoomHandler::operator()(const crow::request& reque
 	return crow::response(200);
 }
 
+//-------------------------------------- GAME --------------------------------------
+
 Database::JoinGameHandler::JoinGameHandler(std::vector<Game>& games) : m_games{ games }
 {
 }

@@ -126,24 +126,30 @@ int main()
     updateInformaton(Database::RoomHandler(rooms));
 
     //Game creation
-    CROW_ROUTE(app, "/Game_<string>")([&rooms, &games](std::string gameCode)
+    CROW_ROUTE(app, "/CreateGame_<string>")([&rooms, &games](std::string roomCode)
     {
-        auto room = std::find(rooms.begin(), rooms.end(), gameCode);
+        auto room = std::find(rooms.begin(), rooms.end(), roomCode);
 
         Game newGame;
+        newGame.SetGameCode(roomCode);
         newGame.SetPlayerCount(room->GetMaxUsers());
         newGame.SetGameState(Game::JOINING);
 
         games.push_back(newGame);
 
-        return crow::json::wvalue{ {"Player count", newGame.GetPlayerCount()} };
+        return crow::response(200);
     });
 
-    // Game joining
-    auto& joinGame = CROW_ROUTE(app, "/GameJoin_<string>").methods(crow::HTTPMethod::Put);
+    // Game modifications
+    CROW_ROUTE(app, "/Game_<string>")([&games](std::string gameCode)
+    {
+        auto game = std::find(games.begin(), games.end(), gameCode);
+
+        return crow::json::wvalue{ {"Player count", game->GetPlayerCount()}};
+    });
+    auto& joinGame = CROW_ROUTE(app, "/Game_<string>").methods(crow::HTTPMethod::Put);
     joinGame(Database::JoinGameHandler(games));
 
-    //Join game
     
 
     app.port(18080).multithreaded().run();

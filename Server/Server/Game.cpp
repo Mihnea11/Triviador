@@ -10,6 +10,11 @@ Game::Game()
 	m_state = EMPTY;
 }
 
+void Game::SetGameCode(const std::string& gameCode)
+{
+	m_gameCode = gameCode;
+}
+
 void Game::SetPlayerCount(int playerCount)
 {
 	m_playerCount = playerCount;
@@ -33,6 +38,11 @@ int Game::GetPlayerCount() const
 int Game::GetRegionsCount() const
 {
 	return m_regionsNumber;
+}
+
+std::string Game::GetGameCode()
+{
+	return m_gameCode;
 }
 
 Game::GameState Game::GetGameState() const
