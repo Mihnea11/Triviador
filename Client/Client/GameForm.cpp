@@ -6,25 +6,31 @@ GameForm::GameForm(QWidget* parent)
 	int playerCount = GetPlayerCount();
 }
 
-GameForm::GameForm(const std::string& gameCode, bool isOwner, QWidget* parent)
+GameForm::GameForm(const Player& player, const std::string& gameCode, bool isOwner, QWidget* parent)
 {
 	ui.setupUi(this);
 
+	m_player = player;
 	m_isOwner = isOwner;
 	m_gameCode = gameCode;
 	int playerCount = GetPlayerCount();
 
+	JoinPlayer();
 	LoadPlayerIcons(playerCount);
 	DisplayPlayerMap(playerCount);
 	GetMapRegions(playerCount);
 	EmptyLabels();
-
 	if (m_isOwner == true)
 	{
 		SendRegionCount();
 	}
 
+	m_timer = std::make_shared<QTimer>(this);
+
+	connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(WaitingForPlayersToJoin()));
+
 	ui.QuestionDisplay->setVisible(false);
+	m_timer->start(100);
 }
 
 GameForm::~GameForm()
@@ -49,6 +55,17 @@ int GameForm::GetPlayerCount()
 	int playerCount = arguments["Player count"].i();
 
 	return playerCount;
+}
+
+void GameForm::JoinPlayer()
+{
+	cpr::Response response = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode },
+		cpr::Payload
+		{
+			{"Player name", m_player.GetName()}
+		}
+	);
 }
 
 void GameForm::LoadPlayerIcons(int playerCount)
@@ -137,10 +154,60 @@ void GameForm::SendRegionCount()
 	);
 }
 
+void GameForm::WaitForPlayers()
+{
+	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode });
+
+	auto arguments = crow::json::load(response.text);
+	std::string gameState = arguments["Game state"].s();
+
+	if (gameState != "JOINING")
+	{
+		m_timer->stop();
+		BaseSelectionFight();
+	}
+}
+
 void GameForm::EmptyLabels()
 {
 	for (int i = 0; i < m_regions.size(); i++)
 	{
 		m_regions[i]->setPixmap(QPixmap());
+	}
+}
+
+void GameForm::DisplayQuestion(bool isNumerical)
+{
+	ui.QuestionDisplay->setVisible(true);
+	ui.QuestionDisplay->raise();
+
+	if (isNumerical == true)
+	{
+		ui.NumericalQuestion->setVisible(true);
+		ui.MultipleChoiceQuestion->setVisible(false);
+		ui.TrueFalseQuestion->setVisible(false);
+	}
+	else
+	{
+
+	}
+}
+
+void GameForm::BaseSelectionFight()
+{
+	//TO DO: add ui to inform players the game state
+
+	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode });
+
+	auto arguments = crow::json::load(response.text);
+	std::string gameState = arguments["Game state"].s();
+
+	if (gameState != "BASE_FIGHT")
+	{
+
+	}
+	else
+	{
+		DisplayQuestion(true);
 	}
 }

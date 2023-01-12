@@ -15,7 +15,7 @@ MenuForm::MenuForm(QWidget* parent) : QMainWindow(parent)
 	ui.RoomStartGameButton->setVisible(false);
 	ui.LeftRoomWidget->setVisible(false);
 
-	timer = new QTimer(this);
+	m_timer = std::make_shared<QTimer>(this);
 
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture, m_player);
@@ -39,7 +39,7 @@ MenuForm::MenuForm(const Player& player, QWidget* parent) : QMainWindow(parent)
 	ui.LeftRoomWidget->setVisible(false);
 
 	this->m_player = player;
-	timer = new QTimer(this);
+	m_timer = std::make_shared<QTimer>(this);
 
 	LoadPlayerInfo();
 	UploadImageToLabel(ui.MenuProfilePicture, m_player);
@@ -80,7 +80,7 @@ void MenuForm::ConnectUi()
 	connect(ui.RoomStartGameButton, SIGNAL(clicked()), this, SLOT(StartGameButtonClicked()));
 	connect(ui.LeftRoomOKButton, SIGNAL(clicked()), this, SLOT(LeftRoomOkButtonClicked()));
 
-	connect(timer, SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
+	connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(UpdateRoomInformation()));
 }
 
 void MenuForm::LoadPlayerInfo()
@@ -191,7 +191,7 @@ void MenuForm::UpdateRoom()
 		ui.RoomWidget->setVisible(false);
 		ui.GameMenu->setVisible(true);
 		ui.LeftRoomWidget->setVisible(true);
-		timer->stop();
+		m_timer->stop();
 
 		return;
 	}
@@ -261,24 +261,16 @@ void MenuForm::UpdateRoom()
 
 	if (startGame == 1)
 	{
-		timer->stop();
-
-		cpr::Response response = cpr::Put(
-			cpr::Url{Server::GetUrl() + "/Game_" + roomCode},
-			cpr::Payload
-			{
-				{"Player name", m_player.GetName()}
-			}
-		);
+		m_timer->stop();
 
 		if (m_player.GetName() == ui.RoomOwnerUsername->text().toStdString())
 		{
-			GameForm* window = new GameForm(roomCode, true);
+			GameForm* window = new GameForm(m_player, roomCode, true);
 			window->show();
 		}
 		else
 		{
-			GameForm* window = new GameForm(roomCode);
+			GameForm* window = new GameForm(m_player, roomCode);
 			window->show();
 		}
 
@@ -401,7 +393,7 @@ void MenuForm::PlayGameEnterCodeButton()
 	DisplayRoom(roomCode);
 	ui.JoiningWidget->setVisible(false);
 
-	timer->start(1000);
+	m_timer->start(1000);
 }
 
 void MenuForm::PlayGameCreateRoomButton()
@@ -415,7 +407,7 @@ void MenuForm::PlayGameCreateRoomButton()
 
 void MenuForm::RoomOptionsBackButton()
 {
-	timer->stop();
+	m_timer->stop();
 	ToggleWidget(ui.RoomWidget, ui.PlayGameOptions);
 
 	ui.RoomPlayerSelection->setDisabled(false);
@@ -482,7 +474,7 @@ void MenuForm::RoomCreateRoomButton()
 	DisplayRoom(roomCode);
 	ui.WaitingWidget->setVisible(false);
 
-	timer->start(1000);
+	m_timer->start(1000);
 }
 
 void MenuForm::StartGameButton()

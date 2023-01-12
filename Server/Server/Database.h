@@ -96,10 +96,10 @@ namespace Database
 		std::vector<Room>& m_rooms;
 	};
 
-	class JoinGameHandler
+	class GameHandler
 	{
 	public: 
-		JoinGameHandler(std::vector<Game>& games);
+		GameHandler(std::vector<Game>& games);
 
 		crow::response operator() (const crow::request& request, const std::string& gameCode) const;
 

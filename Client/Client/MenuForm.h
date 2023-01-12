@@ -27,7 +27,7 @@ public:
 private:
 	Ui::MenuFormClass ui;
 	Player m_player;
-	QTimer* timer;
+	std::shared_ptr<QTimer> m_timer;
 
 	void ConnectUi();
 	void LoadPlayerInfo();

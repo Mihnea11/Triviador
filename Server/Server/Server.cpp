@@ -126,14 +126,18 @@ int main()
     updateInformaton(Database::RoomHandler(rooms));
 
     //Game creation
-    CROW_ROUTE(app, "/CreateGame_<string>")([&rooms, &games](std::string roomCode)
+    CROW_ROUTE(app, "/CreateGame_<string>")([&rooms, &games, &numericalQuestions, &multipleChoiceQuestions](std::string roomCode)
     {
         auto room = std::find(rooms.begin(), rooms.end(), roomCode);
 
         Game newGame;
+        newGame.SetNumericalQuestions(numericalQuestions);
+        newGame.SetMultipleChoiceQuestions(multipleChoiceQuestions);
         newGame.SetGameCode(roomCode);
         newGame.SetPlayerCount(room->GetMaxUsers());
         newGame.SetGameState(Game::JOINING);
+
+        newGame.ShuffleQuestions();
 
         games.push_back(newGame);
 
@@ -144,13 +148,28 @@ int main()
     CROW_ROUTE(app, "/Game_<string>")([&games](std::string gameCode)
     {
         auto game = std::find(games.begin(), games.end(), gameCode);
+        
+        switch (game->GetGameState())
+        {
+        case Game::JOINING:
+            return crow::json::wvalue
+            {
+                {"Game state", "JOINING"},
+                {"Player count", game->GetPlayerCount()} 
+            };
 
-        return crow::json::wvalue{ {"Player count", game->GetPlayerCount()}};
+        case Game::BASE_FIGHT:
+            auto numericalQuestion = game->SelectNumericalQuestion();
+            return crow::json::wvalue
+            {
+                {"Game state", "BASE_FIGHT"},
+                {"Question text", numericalQuestion.GetText()},
+                {"Question type", (int)numericalQuestion.GetIsNumerical()}
+            };
+        }
     });
-    auto& joinGame = CROW_ROUTE(app, "/Game_<string>").methods(crow::HTTPMethod::Put);
-    joinGame(Database::JoinGameHandler(games));
-
-    
+    auto& gameHandler = CROW_ROUTE(app, "/Game_<string>").methods(crow::HTTPMethod::Put);
+    gameHandler(Database::GameHandler(games));
 
     app.port(18080).multithreaded().run();
     return 0;

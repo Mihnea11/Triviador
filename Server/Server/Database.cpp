@@ -273,38 +273,57 @@ crow::response Database::LeaveRoomHandler::operator()(const crow::request& reque
 
 //-------------------------------------- GAME --------------------------------------
 
-Database::JoinGameHandler::JoinGameHandler(std::vector<Game>& games) : m_games{ games }
+Database::GameHandler::GameHandler(std::vector<Game>& games) : m_games{ games }
 {
 }
 
-crow::response Database::JoinGameHandler::operator()(const crow::request& request, const std::string& gameCode) const
+crow::response Database::GameHandler::operator()(const crow::request& request, const std::string& gameCode) const
 {
 	auto foundGame = std::find(m_games.begin(), m_games.end(), gameCode);
 	auto arguments = ParseUrlArgs(request.body);
 	auto end = arguments.end();
 
-	auto usernameFound = arguments.find("Player name");
-	auto regionsCountFound = arguments.find("Regions count");
-
-	if (regionsCountFound != end)
+	if (foundGame->GetGameState() == Game::JOINING)
 	{
-		int regionsCount = std::stoi(curl_unescape(regionsCountFound->second.c_str(), regionsCountFound->second.length()));
-		foundGame->SetRegionsNumber(regionsCount);
+		auto usernameFound = arguments.find("Player name");
+		auto regionsCountFound = arguments.find("Regions count");
 
-		return crow::response(200);
+		if (regionsCountFound != end)
+		{
+			int regionsCount = std::stoi(curl_unescape(regionsCountFound->second.c_str(), regionsCountFound->second.length()));
+			foundGame->SetRegionsNumber(regionsCount);
+		}
+
+		if (usernameFound != end)
+		{
+			std::string username = curl_unescape(usernameFound->second.c_str(), usernameFound->second.length());
+			foundGame->AddPlayer(username);
+		}
+
+		if (foundGame->IsFull() == true)
+		{
+			foundGame->SetGameState(Game::BASE_FIGHT);
+		}
 	}
-
-	if (usernameFound != end)
+	else if (foundGame->GetGameState() == Game::BASE_FIGHT)
 	{
-		std::string username = curl_unescape(usernameFound->second.c_str(), usernameFound->second.length());
-		foundGame->AddPlayer(username);
 
-		return crow::response(200);
 	}
-
-	if (foundGame->GetPlayerCount() == foundGame->GetPlayers().size())
+	else if (foundGame->GetGameState() == Game::BASE_SELECTION)
 	{
-		foundGame->SetGameState(Game::BASE_SELECTION);
+
+	}
+	else if (foundGame->GetGameState() == Game::DUELS)
+	{
+
+	}
+	else if (foundGame->GetGameState() == Game::REGION_SELECTION)
+	{
+
+	}
+	else if (foundGame->GetGameState() == Game::ENDING)
+	{
+
 	}
 
 	return crow::response(200);

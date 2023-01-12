@@ -4,7 +4,7 @@ Game::Game()
 {
 	m_gameCode = std::string();
 	m_playerCount = 0;
-	m_players = std::vector<std::string>();
+	m_playersAndAnswers = std::unordered_map<std::string, std::string>();
 	m_regions = std::vector<Region>();
 	m_regionsNumber = 0;
 	m_state = EMPTY;
@@ -30,9 +30,14 @@ void Game::SetRegionsNumber(int regionsNumber)
 	m_regionsNumber = regionsNumber;
 }
 
-void Game::SetPlayers(const std::vector<std::string>& players)
+void Game::SetNumericalQuestions(const std::vector<Question>& numericalQuestions)
 {
-	m_players = players;
+	m_numericalQuestions = numericalQuestions;
+}
+
+void Game::SetMultipleChoiceQuestions(const std::vector<Question>& multipleChoiceQuestions)
+{
+	m_multipleChoiceQuestions = multipleChoiceQuestions;
 }
 
 int Game::GetPlayerCount() const
@@ -45,9 +50,28 @@ int Game::GetRegionsCount() const
 	return m_regionsNumber;
 }
 
-std::vector<std::string> Game::GetPlayers() const
+std::vector<Question> Game::GetNumericalQuestions() const
 {
-	return m_players;
+	return m_numericalQuestions;
+}
+
+std::vector<Question> Game::GetMultipleChoiceQuestions() const
+{
+	return m_multipleChoiceQuestions;
+}
+
+Question Game::SelectNumericalQuestion()
+{
+	static int numericalQuestionIndex = 0;
+
+	return m_numericalQuestions[numericalQuestionIndex++];
+}
+
+Question Game::SelectMultipleChoiceQuestion()
+{
+	static int multipleChoiceIndex = 0;
+
+	return m_multipleChoiceQuestions[multipleChoiceIndex++];
 }
 
 std::string Game::GetGameCode()
@@ -62,7 +86,24 @@ Game::GameState Game::GetGameState() const
 
 void Game::AddPlayer(const std::string& playerName)
 {
-	m_players.push_back(playerName);
+	m_playersAndAnswers[playerName] = "";
+}
+
+void Game::ShuffleQuestions()
+{
+	auto rng = std::default_random_engine{};
+	std::shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions), rng);
+	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
+}
+
+bool Game::IsFull()
+{
+	if (m_playersAndAnswers.size() == m_playerCount)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool Game::operator==(const std::string gameCode)
