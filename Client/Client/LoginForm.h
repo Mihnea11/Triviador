@@ -6,8 +6,8 @@
 #include <crow.h>
 #include <regex>
 
+#include "User.h"
 #include "Utils.h"
-#include "Player.h"
 #include "MenuForm.h"
 #include "ui_LoginForm.h"
 
@@ -25,7 +25,7 @@ public:
     void LoginUser();
 
 private:
-    Ui::LoginFormClass ui;
+    Ui::LoginFormClass m_ui;
 
     void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
     void WaitForSeconds(int seconds);
@@ -38,6 +38,6 @@ private:
 private slots:
     void RegisterButtonClicked() { RegisterUser(); }
     void LoginButtonClicked() { LoginUser(); }
-    void LoginRegisterButtonClicked() { ToggleWidget(ui.LoginForm, ui.RegisterForm); }
-    void RegisterBackButtonClicked() { ToggleWidget(ui.RegisterForm, ui.LoginForm); }
+    void LoginRegisterButtonClicked() { ToggleWidget(m_ui.LoginForm, m_ui.RegisterForm); }
+    void RegisterBackButtonClicked() { ToggleWidget(m_ui.RegisterForm, m_ui.LoginForm); }
 };

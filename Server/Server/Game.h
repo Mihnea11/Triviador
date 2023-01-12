@@ -10,6 +10,9 @@
 class Game
 {
 public:
+	static int numericalQuestionIndex;
+	static int multipleChoiceQuestionIndex;
+
 	static enum GameState
 	{
 		EMPTY,
@@ -56,4 +59,3 @@ private:
 	std::vector<Question> m_numericalQuestions;
 	std::vector<Question> m_multipleChoiceQuestions;
 };
-

@@ -1089,6 +1089,9 @@ color: rgb(255, 255, 255);</string>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
      </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
     </widget>
     <widget class="QWidget" name="MultipleChoiceQuestion" native="true">
      <property name="geometry">
@@ -1254,11 +1257,11 @@ border-radius: 15px;
      <property name="styleSheet">
       <string notr="true">background-color: rgb(72, 61, 139);</string>
      </property>
-     <widget class="QLineEdit" name="lineEdit">
+     <widget class="QLineEdit" name="NumericalAnswer">
       <property name="geometry">
        <rect>
         <x>195</x>
-        <y>90</y>
+        <y>50</y>
         <width>401</width>
         <height>71</height>
        </rect>
@@ -1280,16 +1283,32 @@ border-radius: 10px;</string>
        <string>Enter your answer</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="NumericalConfirmAnswer">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>150</y>
+        <width>131</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(48, 180, 33);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);
+border: 2px;
+border-radius: 10px;</string>
+      </property>
+      <property name="text">
+       <string>Confirm</string>
+      </property>
+     </widget>
     </widget>
-    <zorder>QuestionText</zorder>
-    <zorder>NumericalQuestion</zorder>
-    <zorder>MultipleChoiceQuestion</zorder>
-    <zorder>TrueFalseQuestion</zorder>
    </widget>
-   <zorder>QuestionDisplay</zorder>
    <zorder>PlayerMap3</zorder>
    <zorder>PlayerMap2</zorder>
    <zorder>PlayerMap4</zorder>
+   <zorder>QuestionDisplay</zorder>
   </widget>
  </widget>
  <resources>

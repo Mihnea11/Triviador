@@ -7,8 +7,9 @@
 #include <crow.h>
 #include <QTimer>
 
-#include "Player.h"
+#include "User.h"
 #include "Utils.h"
+#include "Question.h"
 #include "ui_GameForm.h"
 
 class GameForm : public QMainWindow
@@ -17,7 +18,7 @@ class GameForm : public QMainWindow
 
 public:
 	GameForm(QWidget* parent = nullptr);
-	GameForm(const Player& player, const std::string& gameCode, bool isOwner = false, QWidget* parent = nullptr);
+	GameForm(const User& player, const std::string& gameCode, bool isOwner = false, QWidget* parent = nullptr);
 	~GameForm();
 
 	void SetIsOwner(bool isOwner);
@@ -27,8 +28,8 @@ public:
 	//virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:
-	Ui::GameForm ui;
-	Player m_player;
+	Ui::GameForm m_ui;
+	User m_player;
 	std::string m_gameCode;
 	QList<QLabel*> m_regions;
 	bool m_isOwner;
@@ -53,7 +54,7 @@ private:
 	void WaitForPlayers();
 	void EmptyLabels();
 
-	void DisplayQuestion(bool isNumerical);
+	void DisplayQuestion(bool isNumerical, const Question& question);
 	void BaseSelectionFight();
 
 private slots:

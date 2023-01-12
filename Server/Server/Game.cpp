@@ -1,5 +1,8 @@
 #include "Game.h"
 
+int Game::numericalQuestionIndex = 0;
+int Game::multipleChoiceQuestionIndex = 0;
+
 Game::Game()
 {
 	m_gameCode = std::string();
@@ -62,16 +65,12 @@ std::vector<Question> Game::GetMultipleChoiceQuestions() const
 
 Question Game::SelectNumericalQuestion()
 {
-	static int numericalQuestionIndex = 0;
-
-	return m_numericalQuestions[numericalQuestionIndex++];
+	return m_numericalQuestions[Game::numericalQuestionIndex];
 }
 
 Question Game::SelectMultipleChoiceQuestion()
 {
-	static int multipleChoiceIndex = 0;
-
-	return m_multipleChoiceQuestions[multipleChoiceIndex++];
+	return m_multipleChoiceQuestions[Game::multipleChoiceQuestionIndex];
 }
 
 std::string Game::GetGameCode()

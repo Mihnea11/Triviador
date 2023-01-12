@@ -2,17 +2,17 @@
 
 LoginForm::LoginForm(QWidget* parent): QMainWindow(parent)
 {
-    ui.setupUi(this);
+    m_ui.setupUi(this);
     
-    ui.LoginForm->setVisible(true);
-    ui.RegisterForm->setVisible(false);
-    ui.RegistrationConfirmationForm->setVisible(false);
-    ui.LoggingWait->setVisible(false);
+    m_ui.LoginForm->setVisible(true);
+    m_ui.RegisterForm->setVisible(false);
+    m_ui.RegistrationConfirmationForm->setVisible(false);
+    m_ui.LoggingWait->setVisible(false);
 
-    connect(ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
-    connect(ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
-    connect(ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(LoginRegisterButtonClicked()));
-    connect(ui.RegisterBackButton, SIGNAL(clicked()), this, SLOT(RegisterBackButtonClicked()));
+    connect(m_ui.LoginButton, SIGNAL(clicked()), this, SLOT(LoginButtonClicked()));
+    connect(m_ui.RegisterButton, SIGNAL(clicked()), this, SLOT(RegisterButtonClicked()));
+    connect(m_ui.LoginRegisterButton, SIGNAL(clicked()), this, SLOT(LoginRegisterButtonClicked()));
+    connect(m_ui.RegisterBackButton, SIGNAL(clicked()), this, SLOT(RegisterBackButtonClicked()));
 }
 
 LoginForm::~LoginForm()
@@ -28,28 +28,28 @@ void LoginForm::ToggleWidget(QWidget* disabledForm, QWidget* enabledForm)
 
 void LoginForm::RegisterUser()
 {
-    std::string user = ui.RegisterUsernameField->text().toStdString();
-    std::string email = ui.RegisterEmailField->text().toStdString();
-    std::string password = ui.RegisterPasswordField->text().toStdString();
+    std::string user = m_ui.RegisterUsernameField->text().toStdString();
+    std::string email = m_ui.RegisterEmailField->text().toStdString();
+    std::string password = m_ui.RegisterPasswordField->text().toStdString();
 
     try
     {
         ValidateUserRegister(user, email, password);
 
-        ToggleWidget(ui.RegisterForm, ui.RegistrationConfirmationForm);
+        ToggleWidget(m_ui.RegisterForm, m_ui.RegistrationConfirmationForm);
         WaitForSeconds(3);
-        ToggleWidget(ui.RegistrationConfirmationForm, ui.LoginForm);
+        ToggleWidget(m_ui.RegistrationConfirmationForm, m_ui.LoginForm);
     }
     catch (std::exception exception)
     {
-        ui.RegisterErrorLabel->setText(exception.what());
+        m_ui.RegisterErrorLabel->setText(exception.what());
     }
 }
 
 void LoginForm::LoginUser()
 {
-    std::string username = ui.LoginUsernameField->text().toStdString();
-    std::string password = ui.LoginPasswordField->text().toStdString();
+    std::string username = m_ui.LoginUsernameField->text().toStdString();
+    std::string password = m_ui.LoginPasswordField->text().toStdString();
 
     try
     {
@@ -65,14 +65,14 @@ void LoginForm::LoginUser()
         email = curl_unescape(email.c_str(), email.length());
         imagePath = curl_unescape(imagePath.c_str(), imagePath.length());
 
-        Player user;
+        User user;
         user.SetName(username);
         user.SetPassword(password);
         user.SetEmail(email);
         user.SetImagePath(imagePath);
 
 
-        ToggleWidget(ui.LoginForm, ui.LoggingWait);
+        ToggleWidget(m_ui.LoginForm, m_ui.LoggingWait);
         WaitForSeconds(1);
 
         MenuForm* menu = new MenuForm(std::move(user));
@@ -82,7 +82,7 @@ void LoginForm::LoginUser()
     }
     catch (std::exception exception)
     {
-        ui.LoginErrorLabel->setText(exception.what());
+        m_ui.LoginErrorLabel->setText(exception.what());
     }
 }
 
@@ -102,7 +102,7 @@ void LoginForm::CheckUser(const std::string & user)
         throw std::exception("Username field can't be empty");
     }
 
-    if (ui.RegisterForm->isVisible() == true)
+    if (m_ui.RegisterForm->isVisible() == true)
     {
         if (std::find(user.begin(), user.end(), ' ') != user.end())
         {
@@ -137,9 +137,9 @@ void LoginForm::CheckPassword(const std::string& password)
         throw std::exception("Password field can't be empty");
     }
 
-    if (ui.RegisterForm->isVisible() == true)
+    if (m_ui.RegisterForm->isVisible() == true)
     {
-        if (password != ui.RegisterConfirmPassword->text().toStdString())
+        if (password != m_ui.RegisterConfirmPassword->text().toStdString())
         {
             throw std::exception("Passwords do not match");
         }

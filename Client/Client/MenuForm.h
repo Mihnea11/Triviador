@@ -5,8 +5,8 @@
 #include <QPainter>
 #include <QTimer>
 
+#include "User.h"
 #include "Utils.h"
-#include "Player.h"
 #include "GameForm.h"
 #include "LoginForm.h"
 #include "ui_MenuForm.h"
@@ -17,23 +17,23 @@ class MenuForm : public QMainWindow
 
 public:
 	MenuForm(QWidget* parent = nullptr);
-	MenuForm(const Player& player, QWidget* parent = nullptr);
+	MenuForm(const User& user, QWidget* parent = nullptr);
 	~MenuForm();
 
-	void SetPlayer(const Player& player);
+	void SetUser(const User& user);
 
-	Player GetPlayer();
+	User GetUser();
 
 private:
-	Ui::MenuFormClass ui;
-	Player m_player;
+	Ui::MenuFormClass m_ui;
+	User m_user;
 	std::shared_ptr<QTimer> m_timer;
 
 	void ConnectUi();
 	void LoadPlayerInfo();
-	void UploadImageToLabel(QLabel* label, const Player& player);
+	void UploadImageToLabel(QLabel* label, const User& player);
 	void ToggleWidget(QWidget* disabledForm, QWidget* enabledForm);
-	void DisplayPlayer(const std::string& playerCount, const Player& currentUser);
+	void DisplayUser(const std::string& playerCount, const User& currentUser);
 	void DisplayRoom(const std::string& roomCode);
 	void UpdateRoom();
 	void WaitForSeconds(int seconds);

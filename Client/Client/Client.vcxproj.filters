@@ -46,9 +46,6 @@
     <ClCompile Include="MenuForm.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Class Files</Filter>
-    </ClCompile>
     <ClCompile Include="ServerConnectForm.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
@@ -85,9 +82,6 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -2,13 +2,13 @@
 
 GameForm::GameForm(QWidget* parent)
 {
-	ui.setupUi(this);
+	m_ui.setupUi(this);
 	int playerCount = GetPlayerCount();
 }
 
-GameForm::GameForm(const Player& player, const std::string& gameCode, bool isOwner, QWidget* parent)
+GameForm::GameForm(const User& player, const std::string& gameCode, bool isOwner, QWidget* parent)
 {
-	ui.setupUi(this);
+	m_ui.setupUi(this);
 
 	m_player = player;
 	m_isOwner = isOwner;
@@ -29,7 +29,7 @@ GameForm::GameForm(const Player& player, const std::string& gameCode, bool isOwn
 
 	connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(WaitingForPlayersToJoin()));
 
-	ui.QuestionDisplay->setVisible(false);
+	m_ui.QuestionDisplay->setVisible(false);
 	m_timer->start(100);
 }
 
@@ -104,22 +104,22 @@ void GameForm::LoadPlayerIcons(int playerCount)
 
 void GameForm::DisplayPlayerMap(int playerCount)
 {
-	ui.PlayerMap2->setVisible(false);
-	ui.PlayerMap3->setVisible(false);
-	ui.PlayerMap4->setVisible(false);
+	m_ui.PlayerMap2->setVisible(false);
+	m_ui.PlayerMap3->setVisible(false);
+	m_ui.PlayerMap4->setVisible(false);
 
 	switch (playerCount)
 	{
 	case 2:
-		ui.PlayerMap2->setVisible(true);
+		m_ui.PlayerMap2->setVisible(true);
 		break;
 
 	case 3:
-		ui.PlayerMap3->setVisible(true);
+		m_ui.PlayerMap3->setVisible(true);
 		break;
 
 	case 4:
-		ui.PlayerMap4->setVisible(true);
+		m_ui.PlayerMap4->setVisible(true);
 		break;
 	}
 }
@@ -130,15 +130,15 @@ void GameForm::GetMapRegions(int playerCount)
 	switch (playerCount)
 	{
 	case 2:
-		m_regions = ui.Regions2->findChildren<QLabel*>();
+		m_regions = m_ui.Regions2->findChildren<QLabel*>();
 		break;
 
 	case 3:
-		m_regions = ui.Regions3->findChildren<QLabel*>();
+		m_regions = m_ui.Regions3->findChildren<QLabel*>();
 		break;
 
 	case 4:
-		m_regions = ui.Regions4->findChildren<QLabel*>();
+		m_regions = m_ui.Regions4->findChildren<QLabel*>();
 		break;
 	}
 }
@@ -176,16 +176,18 @@ void GameForm::EmptyLabels()
 	}
 }
 
-void GameForm::DisplayQuestion(bool isNumerical)
+void GameForm::DisplayQuestion(bool isNumerical, const Question& question)
 {
-	ui.QuestionDisplay->setVisible(true);
-	ui.QuestionDisplay->raise();
+	m_ui.QuestionDisplay->setVisible(true);
+	m_ui.QuestionDisplay->raise();
 
 	if (isNumerical == true)
 	{
-		ui.NumericalQuestion->setVisible(true);
-		ui.MultipleChoiceQuestion->setVisible(false);
-		ui.TrueFalseQuestion->setVisible(false);
+		m_ui.NumericalQuestion->setVisible(true);
+		m_ui.MultipleChoiceQuestion->setVisible(false);
+		m_ui.TrueFalseQuestion->setVisible(false);
+
+		m_ui.QuestionText->setText(QString::fromStdString(question.GetText()));
 	}
 	else
 	{
@@ -208,6 +210,14 @@ void GameForm::BaseSelectionFight()
 	}
 	else
 	{
-		DisplayQuestion(true);
+		Question currentQuestion;
+
+		std::string questionText = arguments["Question text"].s();
+		int questionType = arguments["Question type"].i();
+
+		currentQuestion.SetText(questionText);
+		currentQuestion.SetIsNumerical(questionType);
+
+		DisplayQuestion(true, currentQuestion);
 	}
 }
