@@ -1304,6 +1304,27 @@ border-radius: 10px;</string>
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="TimerLabel">
+     <property name="geometry">
+      <rect>
+       <x>555</x>
+       <y>90</y>
+       <width>171</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(55, 47, 107);
+font: 700 20pt &quot;Segoe UI&quot;;
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Time left: 30</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </widget>
    <zorder>PlayerMap3</zorder>
    <zorder>PlayerMap2</zorder>

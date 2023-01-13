@@ -1,13 +1,15 @@
 #include "Game.h"
 
-int Game::numericalQuestionIndex = 0;
-int Game::multipleChoiceQuestionIndex = 0;
-
 Game::Game()
 {
+	m_numericalQuestionIndex = 0;
+	m_multipleChoiceQuestionIndex = 0;
+	m_currentPlayerSelection = 0;
+
 	m_gameCode = std::string();
 	m_playerCount = 0;
-	m_playersAndAnswers = std::unordered_map<std::string, std::string>();
+	m_players = std::vector<std::string>();
+	m_orderedPlayers = std::vector<std::tuple<std::string, double, int>>();
 	m_regions = std::vector<Region>();
 	m_regionsNumber = 0;
 	m_state = EMPTY;
@@ -43,6 +45,11 @@ void Game::SetMultipleChoiceQuestions(const std::vector<Question>& multipleChoic
 	m_multipleChoiceQuestions = multipleChoiceQuestions;
 }
 
+void Game::SetCurrentPlayerSelection(int value)
+{
+	m_currentPlayerSelection = value;
+}
+
 int Game::GetPlayerCount() const
 {
 	return m_playerCount;
@@ -51,6 +58,11 @@ int Game::GetPlayerCount() const
 int Game::GetRegionsCount() const
 {
 	return m_regionsNumber;
+}
+
+int Game::GetCurrentPlayerSelection() const
+{
+	return m_currentPlayerSelection;
 }
 
 std::vector<Question> Game::GetNumericalQuestions() const
@@ -65,12 +77,22 @@ std::vector<Question> Game::GetMultipleChoiceQuestions() const
 
 Question Game::SelectNumericalQuestion()
 {
-	return m_numericalQuestions[Game::numericalQuestionIndex];
+	return m_numericalQuestions[m_numericalQuestionIndex];
 }
 
 Question Game::SelectMultipleChoiceQuestion()
 {
-	return m_multipleChoiceQuestions[Game::multipleChoiceQuestionIndex];
+	return m_multipleChoiceQuestions[m_multipleChoiceQuestionIndex];
+}
+
+void Game::AdvanceNumericalQuestion()
+{
+	m_numericalQuestionIndex++;
+}
+
+void Game::AdvanceMultipleChoiceQuestion()
+{
+	m_multipleChoiceQuestionIndex++;
 }
 
 std::string Game::GetGameCode()
@@ -85,7 +107,70 @@ Game::GameState Game::GetGameState() const
 
 void Game::AddPlayer(const std::string& playerName)
 {
-	m_playersAndAnswers[playerName] = "";
+	m_players.push_back(playerName);
+}
+
+double Game::FindAnswerScore(const std::string& answer)
+{
+	if (answer == "")
+	{
+		return INT_MAX;
+	}
+
+	try
+	{
+		double answerValue = std::stod(answer);
+		double questionValue = std::stod(m_numericalQuestions[m_numericalQuestionIndex].GetAnswer());
+
+		return std::abs(questionValue - answerValue);
+	}
+	catch (std::exception)
+	{
+		if (answer == m_multipleChoiceQuestions[m_multipleChoiceQuestionIndex].GetAnswer())
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+}
+
+void Game::AddPlayerAnswer(const std::string& playerName, double answer, int answerTime)
+{
+	if (m_orderedPlayers.size() == 0)
+	{
+		m_orderedPlayers.push_back(std::make_tuple(playerName, answer, answerTime));
+	}
+	else
+	{
+		int index = 0;
+		for (auto element : m_orderedPlayers)
+		{
+			if (answer < std::get<1>(element))
+			{
+				m_orderedPlayers.insert(m_orderedPlayers.begin() + index, std::make_tuple(playerName, answer, answerTime));
+				return;
+			}
+			else if (answer == std::get<1>(element))
+			{
+				if (answerTime < std::get<2>(element))
+				{
+					m_orderedPlayers.insert(m_orderedPlayers.begin() + index, std::make_tuple(playerName, answer, answerTime));
+					return;
+				}
+				else
+				{
+					m_orderedPlayers.push_back(std::make_tuple(playerName, answer, answerTime));
+					return;
+				}
+			}
+			index++;
+		}
+
+		m_orderedPlayers.push_back(std::make_tuple(playerName, answer, answerTime));
+	}
 }
 
 void Game::ShuffleQuestions()
@@ -97,12 +182,51 @@ void Game::ShuffleQuestions()
 
 bool Game::IsFull()
 {
-	if (m_playersAndAnswers.size() == m_playerCount)
+	if (m_players.size() == m_playerCount)
 	{
 		return true;
 	}
 
 	return false;
+}
+
+bool Game::AllAnswered()
+{
+	if (m_orderedPlayers.size() != m_playerCount)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+std::string Game::CurrentPlayerSelection()
+{
+	return std::get<0>(m_orderedPlayers[m_currentPlayerSelection]);
+}
+
+void Game::AdvancePlayer()
+{
+	m_currentPlayerSelection++;
+}
+
+void Game::ResetCurrentPlayer()
+{
+	m_currentPlayerSelection = 0;
+}
+
+int Game::FindPlayerIndex(const std::string& playerName)
+{
+	int playerIndex = 1;
+	for (auto& player : m_players)
+	{
+		if (player == playerName)
+		{
+			return playerIndex;
+		}
+
+		playerIndex++;
+	}
 }
 
 bool Game::operator==(const std::string gameCode)

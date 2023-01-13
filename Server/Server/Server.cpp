@@ -144,11 +144,22 @@ int main()
         return crow::response(200);
     });
 
+    //Game player index
+    CROW_ROUTE(app, "/Game_<string>_<string>")([&games](std::string gameCode, std::string playerName)
+    {
+        auto game = std::find(games.begin(), games.end(), gameCode);
+
+        return crow::json::wvalue{ {"Player index", game->FindPlayerIndex(playerName)} };
+    });
+
     // Game modifications
     CROW_ROUTE(app, "/Game_<string>")([&games](std::string gameCode)
     {
         auto game = std::find(games.begin(), games.end(), gameCode);
         
+        Question numericalQuestion;
+        Question multipleChoiceQuestion;
+
         switch (game->GetGameState())
         {
         case Game::JOINING:
@@ -159,12 +170,20 @@ int main()
             };
 
         case Game::BASE_FIGHT:
-            auto numericalQuestion = game->SelectNumericalQuestion();
+            numericalQuestion = game->SelectNumericalQuestion();
             return crow::json::wvalue
             {
                 {"Game state", "BASE_FIGHT"},
                 {"Question text", numericalQuestion.GetText()},
                 {"Question type", (int)numericalQuestion.GetIsNumerical()}
+            };
+
+        case Game::BASE_SELECTION:
+            return crow::json::wvalue
+            {
+                {"Game state", "BASE_SELECTION"},
+                {"Current player", game->CurrentPlayerSelection()},
+                {"Region number", game->GetPlayerCount() - game->GetCurrentPlayerSelection()}
             };
         }
     });

@@ -25,12 +25,17 @@ GameForm::GameForm(const User& player, const std::string& gameCode, bool isOwner
 		SendRegionCount();
 	}
 
-	m_timer = std::make_shared<QTimer>(this);
+	m_updateTimer = std::make_shared<QTimer>(this);
+	m_answerTimer = std::make_shared<QTimer>(this);
 
-	connect(m_timer.get(), SIGNAL(timeout()), this, SLOT(WaitingForPlayersToJoin()));
+	connect(m_ui.NumericalConfirmAnswer, SIGNAL(clicked()), this, SLOT(SendNumericalAnswerToServer()));
+
+	connect(m_updateTimer.get(), SIGNAL(timeout()), this, SLOT(UpdateGameState()));
+	connect(m_answerTimer.get(), SIGNAL(timeout()), this, SLOT(UpdateCountdownTimer()));
 
 	m_ui.QuestionDisplay->setVisible(false);
-	m_timer->start(100);
+	
+	m_updateTimer->start(500);
 }
 
 GameForm::~GameForm()
@@ -154,26 +159,93 @@ void GameForm::SendRegionCount()
 	);
 }
 
-void GameForm::WaitForPlayers()
-{
-	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode });
-
-	auto arguments = crow::json::load(response.text);
-	std::string gameState = arguments["Game state"].s();
-
-	if (gameState != "JOINING")
-	{
-		m_timer->stop();
-		BaseSelectionFight();
-	}
-}
-
 void GameForm::EmptyLabels()
 {
 	for (int i = 0; i < m_regions.size(); i++)
 	{
 		m_regions[i]->setPixmap(QPixmap());
 	}
+}
+
+void GameForm::UpdateGame()
+{
+	cpr::Response response = cpr::Get(cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode });
+
+	auto arguments = crow::json::load(response.text);
+	std::string gameState = arguments["Game state"].s();
+
+	if (gameState == "JOINING")
+	{
+
+	}
+	else if (gameState == "BASE_FIGHT")
+	{
+		m_updateTimer->stop();
+		BaseSelectionFight();
+	}
+	else if (gameState == "BASE_SELECTION")
+	{
+		m_ui.QuestionDisplay->setVisible(false);
+	}
+}
+
+void GameForm::UpdateCountdown()
+{
+	std::string digits = "0123456789";
+	std::string timerText = m_ui.TimerLabel->text().toStdString();
+
+	std::size_t start = timerText.find_first_of(digits);
+	std::size_t end = timerText.find_first_not_of(digits, start);
+	std::string timeLeftText = timerText.substr(start, end != std::string::npos ? start - end : end);
+	
+	int timeLeft = std::stoi(timeLeftText);
+	timeLeft -= 1;
+	m_ui.TimerLabel->setText("Time left: " + QString::number(timeLeft));
+
+	if (timeLeft == 0)
+	{
+		m_answerTimer->stop();
+
+		if (m_ui.NumericalQuestion->isVisible() == true)
+		{
+			SendNumericalAnswer();
+		}
+		else
+		{
+			SendChosenAnswer();
+		}
+	}
+}
+
+void GameForm::SendNumericalAnswer()
+{
+	m_answerTimer->stop();
+
+	std::string digits = "0123456789";
+	std::string timerText = m_ui.TimerLabel->text().toStdString();
+
+	std::size_t start = timerText.find_first_of(digits);
+	std::size_t end = timerText.find_first_not_of(digits, start);
+	std::string timeLeftText = timerText.substr(start, end != std::string::npos ? start - end : end);
+
+	int timeLeft = std::stoi(timeLeftText);
+	int answerTime = 10 - timeLeft;
+
+	cpr::Response response = cpr::Put(
+		cpr::Url{ Server::GetUrl() + "/Game_" + m_gameCode },
+		cpr::Payload
+		{
+			{"Player name", m_player.GetName()},
+			{"Answer", m_ui.NumericalAnswer->text().toStdString()},
+			{"Answer time", std::to_string(answerTime)}
+		}
+	);
+
+	m_updateTimer->start(500);
+}
+
+void GameForm::SendChosenAnswer()
+{
 }
 
 void GameForm::DisplayQuestion(bool isNumerical, const Question& question)
@@ -191,8 +263,27 @@ void GameForm::DisplayQuestion(bool isNumerical, const Question& question)
 	}
 	else
 	{
+		if (question.GetIncorrectAnswers().size() != 3)
+		{
+			m_ui.NumericalQuestion->setVisible(false);
+			m_ui.MultipleChoiceQuestion->setVisible(false);
+			m_ui.TrueFalseQuestion->setVisible(true);
 
+			m_ui.QuestionText->setText(QString::fromStdString(question.GetText()));
+		}
+		else
+		{
+			m_ui.NumericalQuestion->setVisible(false);
+			m_ui.MultipleChoiceQuestion->setVisible(true);
+			m_ui.TrueFalseQuestion->setVisible(false);
+
+			m_ui.QuestionText->setText(QString::fromStdString(question.GetText()));
+			//TO DO: load answers
+		}
 	}
+
+	m_ui.TimerLabel->setText("Time left: 10");
+	m_answerTimer->start(1000);
 }
 
 void GameForm::BaseSelectionFight()
@@ -204,20 +295,13 @@ void GameForm::BaseSelectionFight()
 	auto arguments = crow::json::load(response.text);
 	std::string gameState = arguments["Game state"].s();
 
-	if (gameState != "BASE_FIGHT")
-	{
+	Question currentQuestion;
 
-	}
-	else
-	{
-		Question currentQuestion;
+	std::string questionText = arguments["Question text"].s();
+	int questionType = arguments["Question type"].i();
 
-		std::string questionText = arguments["Question text"].s();
-		int questionType = arguments["Question type"].i();
+	currentQuestion.SetText(questionText);
+	currentQuestion.SetIsNumerical(questionType);
 
-		currentQuestion.SetText(questionText);
-		currentQuestion.SetIsNumerical(questionType);
-
-		DisplayQuestion(true, currentQuestion);
-	}
+	DisplayQuestion(true, currentQuestion);
 }

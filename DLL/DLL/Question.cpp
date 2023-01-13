@@ -59,11 +59,3 @@ std::string Question::GetIncorrectAnswers() const
 {
 	return m_incorrectAnswers;
 }
-
-template<> double CompareAnswers<double>(const Question& question, const std::string& userAnswer)
-{
-	double questionAnswerNumerical = std::stod(question.GetAnswer());
-	double userAnswerNumerical = std::stod(userAnswer);
-
-	return std::abs(questionAnswerNumerical - userAnswerNumerical);
-}

@@ -30,9 +30,3 @@ private:
 	std::string m_answer;
 	std::string m_incorrectAnswers;
 };
-
-
-template<class T> T CompareAnswers(const Question& question, const std::string& userAnswer)
-{
-	return question.GetAnswer() == userAnswer;
-}

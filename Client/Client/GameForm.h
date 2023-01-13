@@ -33,7 +33,8 @@ private:
 	std::string m_gameCode;
 	QList<QLabel*> m_regions;
 	bool m_isOwner;
-	std::shared_ptr<QTimer> m_timer;
+	std::shared_ptr<QTimer> m_updateTimer;
+	std::shared_ptr<QTimer> m_answerTimer;
 
 	std::unique_ptr<QPixmap> m_playerOneTower;
 	std::unique_ptr<QPixmap> m_playerTwoTower;
@@ -51,14 +52,20 @@ private:
 	void DisplayPlayerMap(int playerCount);
 	void GetMapRegions(int playerCount);
 	void SendRegionCount();
-	void WaitForPlayers();
 	void EmptyLabels();
+	void UpdateGame();
+	void UpdateCountdown();
+
+	void SendNumericalAnswer();
+	void SendChosenAnswer();
 
 	void DisplayQuestion(bool isNumerical, const Question& question);
 	void BaseSelectionFight();
 
 private slots:
-	void WaitingForPlayersToJoin() { WaitForPlayers(); }
+	void UpdateGameState() { UpdateGame(); }
+	void UpdateCountdownTimer() { UpdateCountdown(); }
+	void SendNumericalAnswerToServer() { SendNumericalAnswer(); }
 
 };
 

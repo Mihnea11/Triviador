@@ -307,7 +307,23 @@ crow::response Database::GameHandler::operator()(const crow::request& request, c
 	}
 	else if (foundGame->GetGameState() == Game::BASE_FIGHT)
 	{
+		auto username = arguments.find("Player name")->second;
+		auto answer = arguments.find("Answer")->second;
+		auto answerTime = arguments.find("Answer time")->second;
 
+		username = curl_unescape(username.c_str(), username.length());
+		answer = curl_unescape(answer.c_str(), answer.length());
+		answerTime = curl_unescape(answerTime.c_str(), answerTime.length());
+
+		double answerScore = foundGame->FindAnswerScore(answer);
+
+		foundGame->AddPlayerAnswer(username, answerScore, std::stoi(answerTime));
+
+		if (foundGame->AllAnswered())
+		{
+			foundGame->ResetCurrentPlayer();
+			foundGame->SetGameState(Game::BASE_SELECTION);
+		}
 	}
 	else if (foundGame->GetGameState() == Game::BASE_SELECTION)
 	{
