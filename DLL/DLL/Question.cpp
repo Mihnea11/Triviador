@@ -59,3 +59,22 @@ std::string Question::GetIncorrectAnswers() const
 {
 	return m_incorrectAnswers;
 }
+
+std::vector<std::string> Question::ShuffleAnswers()
+{
+	std::stringstream ss(m_incorrectAnswers);
+	std::vector<std::string> shuffledAnswers;
+
+	shuffledAnswers.push_back(m_answer);
+
+	while (ss.good())
+	{
+		std::string substr;
+		std::getline(ss, substr, ',');
+		shuffledAnswers.push_back(substr);
+	}
+
+	std::random_shuffle(shuffledAnswers.begin(), shuffledAnswers.end());
+
+	return shuffledAnswers;
+}

@@ -2,6 +2,8 @@
 
 #include <string>
 #include <vector>
+#include <sstream>
+#include <algorithm>
 
 #include "LibDefine.h"
 
@@ -22,6 +24,8 @@ public:
 	std::string GetText() const;
 	std::string GetAnswer() const;
 	std::string GetIncorrectAnswers() const;
+
+	std::vector<std::string> ShuffleAnswers();
 
 private:
 	int m_id;
