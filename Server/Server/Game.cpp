@@ -60,6 +60,21 @@ void Game::SetRegions(const std::vector<Region>& regions)
 	m_regions = regions;
 }
 
+void Game::SetMaxRound(int rounds)
+{
+	m_playedRounds = rounds;
+}
+
+void Game::SetAttacker(const std::string& attacker)
+{
+	m_duelPair.first = attacker;
+}
+
+void Game::SetDefender(const std::string& defender)
+{
+	m_duelPair.second = defender;
+}
+
 int Game::GetPlayerCount() const
 {
 	return m_playerCount;
@@ -80,6 +95,11 @@ int Game::GetSelectedRegions() const
 	return m_selectedRegions;
 }
 
+int Game::GetPlayedRounds() const
+{
+	return m_playedRounds;
+}
+
 std::vector<Question> Game::GetNumericalQuestions() const
 {
 	return m_numericalQuestions;
@@ -93,6 +113,11 @@ std::vector<Question> Game::GetMultipleChoiceQuestions() const
 std::vector<Region> Game::GetRegions() const
 {
 	return m_regions;
+}
+
+std::pair<std::string, std::string> Game::GetDuelPair() const
+{
+	return m_duelPair;
 }
 
 Question Game::SelectNumericalQuestion()
@@ -234,6 +259,21 @@ bool Game::AllAnswered()
 	return true;
 }
 
+bool Game::DuelFinished()
+{
+	if (m_playedRounds == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+std::string Game::CurrentPlayerDuel()
+{
+	return m_players[m_currentPlayerSelection];
+}
+
 std::string Game::CurrentPlayerSelection()
 {
 	return std::get<0>(m_orderedPlayers[m_currentPlayerSelection]);
@@ -242,6 +282,11 @@ std::string Game::CurrentPlayerSelection()
 void Game::AdvancePlayer()
 {
 	m_currentPlayerSelection++;
+}
+
+void Game::AdvanceRoundCount()
+{
+	m_playedRounds--;
 }
 
 void Game::ResetCurrentPlayer()

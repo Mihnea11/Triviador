@@ -35,10 +35,10 @@ int main()
 
     //User information
     CROW_ROUTE(app, "/User_<string>")([&database](std::string userId)
-        {
-            User user = database.get<User>(userId);
+    {
+        User user = database.get<User>(userId);
 
-    crow::json::wvalue userData(
+        crow::json::wvalue userData(
         {
             {"Username", user.GetName()},
             {"Email", user.GetEmail()},
@@ -46,8 +46,8 @@ int main()
             {"Image path", user.GetImagePath()}
         });
 
-    return userData;
-        });
+        return userData;
+    });
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
 
@@ -235,10 +235,11 @@ int main()
                 {"Region count", game->GetSelectedRegions()}
             };
 
-        case Game::DUELS:
+        case Game::CHOOSE_DUEL:
             return crow::json::wvalue
             {
-                {"Game state", "DUELS"}
+                {"Game state", "CHOOSE_DUEL"},
+                {"Current player", game->CurrentPlayerDuel()}
             };
         }
     });

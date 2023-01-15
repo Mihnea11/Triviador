@@ -424,11 +424,15 @@ crow::response Database::GameHandler::operator()(const crow::request& request, c
 		{
 			if (foundGame->GetRegions().size() == foundGame->GetRegionsCount())
 			{
-				foundGame->SetGameState(Game::DUELS);
+				foundGame->SetGameState(Game::CHOOSE_DUEL);
 			}
 		}
 	}
-	else if (foundGame->GetGameState() == Game::DUELS)
+	else if (foundGame->GetGameState() == Game::CHOOSE_DUEL)
+	{
+
+	}
+	else if (foundGame->GetGameState() == Game::DUEL)
 	{
 
 	}

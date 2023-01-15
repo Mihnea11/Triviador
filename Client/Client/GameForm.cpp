@@ -14,6 +14,7 @@ GameForm::GameForm(const User& player, const std::string& gameCode, bool isOwner
 	m_isOwner = isOwner;
 	m_gameCode = gameCode;
 	m_isSelecting = false;
+	m_isFighting = false;
 	m_hasAnswered = false;
 	m_isBase = false;
 	m_selectionCount = 0;
@@ -111,6 +112,10 @@ void GameForm::mousePressEvent(QMouseEvent* event)
 				selectedRegion->setPixmap(m_isBase ? *m_playerFourTower : *m_playerFourFlag);
 				break;
 			}
+			std::string regionScoreName = selectedRegion->objectName().toStdString() + "_score";
+			QLabel* regionScoreText = this->findChild<QLabel*>(QString::fromStdString(regionScoreName));
+
+			regionScoreText->setText(QString::number(m_isBase ? 300 : 100));
 
 			if (m_selectionCount == 0)
 			{
@@ -233,8 +238,26 @@ void GameForm::EmptyLabels()
 	for (int i = 0; i < m_regions.size(); i++)
 	{
 		m_regions[i]->setPixmap(QPixmap());
-		m_regions[i]->setText("");
 	}
+
+	auto map2Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
+	//auto map3Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
+	//auto map4Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
+
+	for (auto& score : map2Scores)
+	{
+		score->setText("");
+	}
+
+	/*for (auto& score : map3Scores)
+	{
+		score->setText("");
+	}*/
+
+	/*for (auto& score : map4Scores)
+	{
+		score->setText("");
+	}*/
 }
 
 void GameForm::UpdateGame()
@@ -335,8 +358,11 @@ void GameForm::UpdateGame()
 
 		UpdateMap();
 	}
-	else if (gameState == "DUELS")
+	else if (gameState == "CHOOSE_DUELS")
 	{
+		UpdateMap();
+
+		m_isSelecting = false;
 		m_ui.QuestionDisplay->setVisible(true);
 		m_updateTimer->stop();
 	}
@@ -355,7 +381,11 @@ void GameForm::UpdateMap()
 		int regionScore = arguments[i]["Region score"].i();
 		int ownerIndex = arguments[i]["Owner index"].i();
 
+		std::string regionScoreName = regionName + "_score";
+
 		QLabel* region = this->findChild<QLabel*>(QString::fromStdString(regionName));
+		QLabel* regionScoreText = this->findChild<QLabel*>(QString::fromStdString(regionScoreName));
+
 		switch (ownerIndex)
 		{
 		case 1:
@@ -371,6 +401,7 @@ void GameForm::UpdateMap()
 			region->setPixmap(regionType == "BASE" ? *m_playerFourTower : *m_playerFourFlag);
 			break;
 		}
+		regionScoreText->setText(QString::number(regionScore));
 	}
 }
 

@@ -35,6 +35,7 @@ private:
 	QList<QLabel*> m_regions;
 	bool m_isOwner;
 	bool m_isSelecting;
+	bool m_isFighting;
 	bool m_hasAnswered;
 	bool m_isBase;
 	int m_selectionCount;
