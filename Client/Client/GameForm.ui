@@ -29,10 +29,10 @@
    <widget class="QWidget" name="PlayerMap2" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>0</x>
       <y>0</y>
-      <width>1201</width>
-      <height>671</height>
+      <width>1281</width>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QLabel" name="Map2">
@@ -239,10 +239,10 @@
    <widget class="QWidget" name="PlayerMap3" native="true">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>0</x>
       <y>0</y>
-      <width>1121</width>
-      <height>681</height>
+      <width>1281</width>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QLabel" name="Map3">
@@ -565,10 +565,10 @@
    <widget class="QWidget" name="PlayerMap4" native="true">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>0</x>
       <y>0</y>
-      <width>1201</width>
-      <height>671</height>
+      <width>1281</width>
+      <height>721</height>
      </rect>
     </property>
     <widget class="QLabel" name="Map4">
@@ -1060,10 +1060,10 @@
    <widget class="QWidget" name="QuestionDisplay" native="true">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>0</x>
       <y>0</y>
-      <width>1211</width>
-      <height>681</height>
+      <width>1281</width>
+      <height>721</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1360,11 +1360,40 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </widget>
-   <zorder>PlayerMap3</zorder>
-   <zorder>PlayerMap2</zorder>
-   <zorder>PlayerMap4</zorder>
-   <zorder>QuestionDisplay</zorder>
-   <zorder>WaitingPlayers</zorder>
+   <widget class="QWidget" name="StartingBaseFight" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1281</width>
+      <height>721</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:reflect, x1:0.988636, y1:0.995, x2:1, y2:0, stop:0 rgba(116, 172, 255, 255), stop:0.251894 rgba(99, 124, 235, 255), stop:0.598485 rgba(109, 86, 216, 255), stop:0.831439 rgba(153, 50, 204, 255));</string>
+    </property>
+    <widget class="QLabel" name="StartingBaseFightLabel">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>250</y>
+       <width>1281</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font: 700 20pt &quot;Segoe UI&quot;;
+background-color: rgb(72, 61, 139);
+color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>Base fight starting</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources>

@@ -61,7 +61,7 @@ private:
 
 	void DisplayQuestion(bool isNumerical, const Question& question);
 	void BaseSelectionFight();
-
+	void WaitForSeconds(int seconds);
 private slots:
 	void UpdateGameState() { UpdateGame(); }
 	void UpdateCountdownTimer() { UpdateCountdown(); }

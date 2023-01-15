@@ -181,6 +181,9 @@ void GameForm::UpdateGame()
 	else if (gameState == "BASE_FIGHT")
 	{
 		m_ui.WaitingPlayers->setVisible(false);
+		m_ui.StartingBaseFight->setVisible(true);
+		WaitForSeconds(1);
+		m_ui.StartingBaseFight->setVisible(false);
 		m_updateTimer->stop();
 		BaseSelectionFight();
 	}
@@ -305,4 +308,12 @@ void GameForm::BaseSelectionFight()
 	currentQuestion.SetIsNumerical(questionType);
 
 	DisplayQuestion(true, currentQuestion);
+}
+void GameForm::WaitForSeconds(int seconds)
+{
+	QTime delayTime = QTime::currentTime().addSecs(seconds);
+	while (QTime::currentTime() < delayTime)
+	{
+		QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+	}
 }
