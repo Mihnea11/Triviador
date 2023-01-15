@@ -144,12 +144,25 @@ int main()
         return crow::response(200);
     });
 
-    //Game player index
-    CROW_ROUTE(app, "/Game_<string>_<string>")([&games](std::string gameCode, std::string playerName)
+    //Game regions
+    CROW_ROUTE(app, "/GameRegions_<string>")([&games](std::string gameCode)
     {
         auto game = std::find(games.begin(), games.end(), gameCode);
 
-        return crow::json::wvalue{ {"Player index", game->FindPlayerIndex(playerName)} };
+        std::vector<crow::json::wvalue> regionsInformation;
+        for (const auto& region : game->GetRegions())
+        {
+            regionsInformation.push_back(crow::json::wvalue
+            {
+                {"Region owner", region.GetOwner()},
+                {"Region name", region.GetName()},
+                {"Region type", region.GetType()},
+                {"Region score", region.GetScore()},
+                {"Owner index", game->FindPlayerIndex(region.GetOwner())}
+            });
+        }
+
+        return crow::json::wvalue(regionsInformation); 
     });
 
     // Game modifications
@@ -179,11 +192,19 @@ int main()
             };
 
         case Game::BASE_SELECTION:
+            game->SetSelectedRegions(1);
             return crow::json::wvalue
             {
                 {"Game state", "BASE_SELECTION"},
                 {"Current player", game->CurrentPlayerSelection()},
-                {"Region number", game->GetPlayerCount() - game->GetCurrentPlayerSelection()}
+                {"Player index", game->FindPlayerIndex(game->CurrentPlayerSelection())},
+                {"Region count", 1}
+            };
+
+        case Game::REGION_FIGHT:
+            return crow::json::wvalue
+            {
+                {"Game state", "REGION_FIGHT"}
             };
         }
     });

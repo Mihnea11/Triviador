@@ -57,17 +57,17 @@
     <widget class="QWidget" name="Regions2" native="true">
      <property name="geometry">
       <rect>
-       <x>160</x>
-       <y>10</y>
-       <width>1001</width>
-       <height>711</height>
+       <x>0</x>
+       <y>0</y>
+       <width>1281</width>
+       <height>721</height>
       </rect>
      </property>
      <widget class="QLabel" name="Region20">
       <property name="geometry">
        <rect>
-        <x>90</x>
-        <y>320</y>
+        <x>260</x>
+        <y>340</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -85,8 +85,8 @@
      <widget class="QLabel" name="Region25">
       <property name="geometry">
        <rect>
-        <x>440</x>
-        <y>430</y>
+        <x>620</x>
+        <y>450</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -104,8 +104,8 @@
      <widget class="QLabel" name="Region26">
       <property name="geometry">
        <rect>
-        <x>270</x>
-        <y>530</y>
+        <x>450</x>
+        <y>560</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -123,8 +123,8 @@
      <widget class="QLabel" name="Region27">
       <property name="geometry">
        <rect>
-        <x>490</x>
-        <y>570</y>
+        <x>650</x>
+        <y>590</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -142,8 +142,8 @@
      <widget class="QLabel" name="Region28">
       <property name="geometry">
        <rect>
-        <x>730</x>
-        <y>480</y>
+        <x>870</x>
+        <y>490</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -161,8 +161,8 @@
      <widget class="QLabel" name="Region210">
       <property name="geometry">
        <rect>
-        <x>660</x>
-        <y>270</y>
+        <x>820</x>
+        <y>280</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -180,8 +180,8 @@
      <widget class="QLabel" name="Region211">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>270</y>
+        <x>540</x>
+        <y>290</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -199,8 +199,8 @@
      <widget class="QLabel" name="Region21">
       <property name="geometry">
        <rect>
-        <x>570</x>
-        <y>70</y>
+        <x>740</x>
+        <y>90</y>
         <width>81</width>
         <height>91</height>
        </rect>
@@ -218,7 +218,7 @@
      <widget class="QLabel" name="Region23">
       <property name="geometry">
        <rect>
-        <x>270</x>
+        <x>420</x>
         <y>100</y>
         <width>81</width>
         <height>91</height>

@@ -50,6 +50,16 @@ void Game::SetCurrentPlayerSelection(int value)
 	m_currentPlayerSelection = value;
 }
 
+void Game::SetSelectedRegions(int value)
+{
+	m_selectedRegions = value;
+}
+
+void Game::SetRegions(const std::vector<Region>& regions)
+{
+	m_regions = regions;
+}
+
 int Game::GetPlayerCount() const
 {
 	return m_playerCount;
@@ -65,6 +75,11 @@ int Game::GetCurrentPlayerSelection() const
 	return m_currentPlayerSelection;
 }
 
+int Game::GetSelectedRegions() const
+{
+	return m_selectedRegions;
+}
+
 std::vector<Question> Game::GetNumericalQuestions() const
 {
 	return m_numericalQuestions;
@@ -73,6 +88,11 @@ std::vector<Question> Game::GetNumericalQuestions() const
 std::vector<Question> Game::GetMultipleChoiceQuestions() const
 {
 	return m_multipleChoiceQuestions;
+}
+
+std::vector<Region> Game::GetRegions() const
+{
+	return m_regions;
 }
 
 Question Game::SelectNumericalQuestion()
@@ -108,6 +128,11 @@ Game::GameState Game::GetGameState() const
 void Game::AddPlayer(const std::string& playerName)
 {
 	m_players.push_back(playerName);
+}
+
+void Game::AddRegion(const Region& region)
+{
+	m_regions.push_back(region);
 }
 
 double Game::FindAnswerScore(const std::string& answer)
@@ -175,9 +200,13 @@ void Game::AddPlayerAnswer(const std::string& playerName, double answer, int ans
 
 void Game::ShuffleQuestions()
 {
-	auto rng = std::default_random_engine{};
-	std::shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions), rng);
-	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
+	std::random_shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions));
+	std::random_shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions));
+}
+
+void Game::SelectRegionCount()
+{
+	m_selectedRegions--;
 }
 
 bool Game::IsFull()

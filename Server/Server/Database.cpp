@@ -327,13 +327,49 @@ crow::response Database::GameHandler::operator()(const crow::request& request, c
 	}
 	else if (foundGame->GetGameState() == Game::BASE_SELECTION)
 	{
+		auto username = arguments.find("Player name")->second;
+		auto regionName = arguments.find("Region name")->second;
 
+		username = curl_unescape(username.c_str(), username.length());
+		regionName = curl_unescape(regionName.c_str(), regionName.length());
+
+		Region currentRegion;
+
+		currentRegion.SetOwner(username);
+		currentRegion.SetName(regionName);
+		currentRegion.SetType("BASE");
+		currentRegion.SetScore(300);
+
+		for (const auto& region : foundGame->GetRegions())
+		{
+			if (region.GetName() == currentRegion.GetName() && region.GetOwner() != "")
+			{
+				return crow::response(403, "Base already selected");
+			}
+		}
+
+		foundGame->AddRegion(currentRegion);
+		foundGame->SelectRegionCount();
+
+		if (foundGame->GetSelectedRegions() == 0)
+		{
+			foundGame->AdvancePlayer();
+		}
+
+		if (foundGame->GetCurrentPlayerSelection() >= foundGame->GetPlayerCount())
+		{
+			foundGame->SetGameState(Game::REGION_FIGHT);
+		}
 	}
-	else if (foundGame->GetGameState() == Game::DUELS)
+	else if (foundGame->GetGameState() == Game::REGION_FIGHT)
 	{
 
 	}
 	else if (foundGame->GetGameState() == Game::REGION_SELECTION)
+	{
+
+	}
+	else if (foundGame->GetGameState() == Game::DUELS)
 	{
 
 	}
