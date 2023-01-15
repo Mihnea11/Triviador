@@ -288,6 +288,9 @@ void GameForm::UpdateGame()
 	else if (gameState == "REGION_FIGHT")
 	{
 		UpdateMap();
+		m_ui.StartingRegionFight->setVisible(true);
+		WaitForSeconds(1);
+		m_ui.StartingRegionFight->setVisible(false);
 		m_updateTimer->stop();
 	}
 }
