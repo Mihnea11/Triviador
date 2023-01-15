@@ -50,6 +50,31 @@ void Game::SetCurrentPlayerSelection(int value)
 	m_currentPlayerSelection = value;
 }
 
+void Game::SetSelectedRegions(int value)
+{
+	m_selectedRegions = value;
+}
+
+void Game::SetRegions(const std::vector<Region>& regions)
+{
+	m_regions = regions;
+}
+
+void Game::SetMaxRound(int rounds)
+{
+	m_playedRounds = rounds;
+}
+
+void Game::SetAttacker(const std::string& attacker)
+{
+	m_duelPair.first = attacker;
+}
+
+void Game::SetDefender(const std::string& defender)
+{
+	m_duelPair.second = defender;
+}
+
 int Game::GetPlayerCount() const
 {
 	return m_playerCount;
@@ -65,6 +90,16 @@ int Game::GetCurrentPlayerSelection() const
 	return m_currentPlayerSelection;
 }
 
+int Game::GetSelectedRegions() const
+{
+	return m_selectedRegions;
+}
+
+int Game::GetPlayedRounds() const
+{
+	return m_playedRounds;
+}
+
 std::vector<Question> Game::GetNumericalQuestions() const
 {
 	return m_numericalQuestions;
@@ -75,6 +110,16 @@ std::vector<Question> Game::GetMultipleChoiceQuestions() const
 	return m_multipleChoiceQuestions;
 }
 
+std::vector<Region> Game::GetRegions() const
+{
+	return m_regions;
+}
+
+std::pair<std::string, std::string> Game::GetDuelPair() const
+{
+	return m_duelPair;
+}
+
 Question Game::SelectNumericalQuestion()
 {
 	return m_numericalQuestions[m_numericalQuestionIndex];
@@ -83,6 +128,11 @@ Question Game::SelectNumericalQuestion()
 Question Game::SelectMultipleChoiceQuestion()
 {
 	return m_multipleChoiceQuestions[m_multipleChoiceQuestionIndex];
+}
+
+void Game::ResetPlayerOrder()
+{
+	m_orderedPlayers.clear();
 }
 
 void Game::AdvanceNumericalQuestion()
@@ -108,6 +158,11 @@ Game::GameState Game::GetGameState() const
 void Game::AddPlayer(const std::string& playerName)
 {
 	m_players.push_back(playerName);
+}
+
+void Game::AddRegion(const Region& region)
+{
+	m_regions.push_back(region);
 }
 
 double Game::FindAnswerScore(const std::string& answer)
@@ -175,9 +230,13 @@ void Game::AddPlayerAnswer(const std::string& playerName, double answer, int ans
 
 void Game::ShuffleQuestions()
 {
-	auto rng = std::default_random_engine{};
-	std::shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions), rng);
-	std::shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions), rng);
+	std::random_shuffle(std::begin(m_numericalQuestions), std::end(m_numericalQuestions));
+	std::random_shuffle(std::begin(m_multipleChoiceQuestions), std::end(m_multipleChoiceQuestions));
+}
+
+void Game::SelectRegionCount()
+{
+	m_selectedRegions--;
 }
 
 bool Game::IsFull()
@@ -200,6 +259,21 @@ bool Game::AllAnswered()
 	return true;
 }
 
+bool Game::DuelFinished()
+{
+	if (m_playedRounds == 0)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+std::string Game::CurrentPlayerDuel()
+{
+	return m_players[m_currentPlayerSelection];
+}
+
 std::string Game::CurrentPlayerSelection()
 {
 	return std::get<0>(m_orderedPlayers[m_currentPlayerSelection]);
@@ -208,6 +282,11 @@ std::string Game::CurrentPlayerSelection()
 void Game::AdvancePlayer()
 {
 	m_currentPlayerSelection++;
+}
+
+void Game::AdvanceRoundCount()
+{
+	m_playedRounds--;
 }
 
 void Game::ResetCurrentPlayer()

@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <cpr/cpr.h>
 #include <QObject>
+#include <cmath>
 #include <crow.h>
 #include <QTimer>
 
@@ -25,7 +26,7 @@ public:
 
 	bool GetIsOwner() const;
 
-	//virtual void mousePressEvent(QMouseEvent* event) override;
+	virtual void mousePressEvent(QMouseEvent* event) override;
 
 private:
 	Ui::GameForm m_ui;
@@ -33,6 +34,12 @@ private:
 	std::string m_gameCode;
 	QList<QLabel*> m_regions;
 	bool m_isOwner;
+	bool m_isSelecting;
+	bool m_isFighting;
+	bool m_hasAnswered;
+	bool m_isBase;
+	int m_selectionCount;
+	int m_playerIndex;
 	std::shared_ptr<QTimer> m_updateTimer;
 	std::shared_ptr<QTimer> m_answerTimer;
 
@@ -54,18 +61,18 @@ private:
 	void SendRegionCount();
 	void EmptyLabels();
 	void UpdateGame();
+	void UpdateMap();
 	void UpdateCountdown();
 
 	void SendNumericalAnswer();
 	void SendChosenAnswer();
 
 	void DisplayQuestion(bool isNumerical, const Question& question);
-	void BaseSelectionFight();
 	void WaitForSeconds(int seconds);
+
 private slots:
 	void UpdateGameState() { UpdateGame(); }
 	void UpdateCountdownTimer() { UpdateCountdown(); }
 	void SendNumericalAnswerToServer() { SendNumericalAnswer(); }
-
 };
 

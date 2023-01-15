@@ -36,10 +36,10 @@ int main()
 
     //User information
     CROW_ROUTE(app, "/User_<string>")([&database](std::string userId)
-        {
-            User user = database.get<User>(userId);
+    {
+        User user = database.get<User>(userId);
 
-    crow::json::wvalue userData(
+        crow::json::wvalue userData(
         {
             {"Username", user.GetName()},
             {"Email", user.GetEmail()},
@@ -47,8 +47,8 @@ int main()
             {"Image path", user.GetImagePath()}
         });
 
-    return userData;
-        });
+        return userData;
+    });
     auto& updateUser = CROW_ROUTE(app, "/User_<string>").methods(crow::HTTPMethod::Post);
     updateUser(Database::UserHandler(database));
 
@@ -145,12 +145,25 @@ int main()
         return crow::response(200);
     });
 
-    //Game player index
-    CROW_ROUTE(app, "/Game_<string>_<string>")([&games](std::string gameCode, std::string playerName)
+    //Game regions
+    CROW_ROUTE(app, "/GameRegions_<string>")([&games](std::string gameCode)
     {
         auto game = std::find(games.begin(), games.end(), gameCode);
 
-        return crow::json::wvalue{ {"Player index", game->FindPlayerIndex(playerName)} };
+        std::vector<crow::json::wvalue> regionsInformation;
+        for (const auto& region : game->GetRegions())
+        {
+            regionsInformation.push_back(crow::json::wvalue
+            {
+                {"Region owner", region.GetOwner()},
+                {"Region name", region.GetName()},
+                {"Region type", region.GetType()},
+                {"Region score", region.GetScore()},
+                {"Owner index", game->FindPlayerIndex(region.GetOwner())}
+            });
+        }
+
+        return crow::json::wvalue(regionsInformation); 
     });
 
     // Game modifications
@@ -180,11 +193,54 @@ int main()
             };
 
         case Game::BASE_SELECTION:
+            if (game->GetSelectedRegions() == 0)
+            {
+                game->SetSelectedRegions(1);
+            }
             return crow::json::wvalue
             {
                 {"Game state", "BASE_SELECTION"},
                 {"Current player", game->CurrentPlayerSelection()},
-                {"Region number", game->GetPlayerCount() - game->GetCurrentPlayerSelection()}
+                {"Player index", game->FindPlayerIndex(game->CurrentPlayerSelection())},
+                {"Region count", game->GetSelectedRegions()}
+            };
+
+        case Game::REGION_FIGHT:
+            numericalQuestion = game->SelectNumericalQuestion();
+            return crow::json::wvalue
+            {
+                {"Game state", "REGION_FIGHT"},
+                {"Question text", numericalQuestion.GetText()},
+                {"Question type", (int)numericalQuestion.GetIsNumerical()}
+            };
+
+        case Game::REGION_SELECTION:
+            if (game->GetSelectedRegions() == 0)
+            {
+                int regionNumber = game->GetPlayerCount() - game->FindPlayerIndex(game->CurrentPlayerSelection()) + 1;
+                int regionsLeft = game->GetRegionsCount() - game->GetRegions().size();
+                if (regionNumber > regionsLeft)
+                {
+                    game->SetSelectedRegions(regionsLeft);
+                }
+                else
+                {
+                    game->SetSelectedRegions(regionNumber);
+                }
+            }
+            return crow::json::wvalue
+            {
+                {"Game state", "REGION_SELECTION"},
+                {"Current player", game->CurrentPlayerSelection()},
+                {"Player index", game->FindPlayerIndex(game->CurrentPlayerSelection())},
+                {"Region count", game->GetSelectedRegions()}
+            };
+
+        case Game::CHOOSE_DUEL:
+            return crow::json::wvalue
+            {
+                {"Game state", "CHOOSE_DUEL"},
+                {"Current player", game->CurrentPlayerDuel()}
             };
         }
     });
