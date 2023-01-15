@@ -176,10 +176,11 @@ void GameForm::UpdateGame()
 
 	if (gameState == "JOINING")
 	{
-
+		m_ui.WaitingPlayers->setVisible(true);
 	}
 	else if (gameState == "BASE_FIGHT")
 	{
+		m_ui.WaitingPlayers->setVisible(false);
 		m_updateTimer->stop();
 		BaseSelectionFight();
 	}
