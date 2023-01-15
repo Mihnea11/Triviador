@@ -241,23 +241,23 @@ void GameForm::EmptyLabels()
 	}
 
 	auto map2Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
-	//auto map3Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
-	//auto map4Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
+	auto map3Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
+	auto map4Scores = m_ui.RegionsScore2->findChildren<QLabel*>();
 
 	for (auto& score : map2Scores)
 	{
 		score->setText("");
 	}
 
-	/*for (auto& score : map3Scores)
+	for (auto& score : map3Scores)
 	{
 		score->setText("");
-	}*/
+	}
 
-	/*for (auto& score : map4Scores)
+	for (auto& score : map4Scores)
 	{
 		score->setText("");
-	}*/
+	}
 }
 
 void GameForm::UpdateGame()
