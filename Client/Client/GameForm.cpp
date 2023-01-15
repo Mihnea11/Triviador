@@ -358,7 +358,7 @@ void GameForm::UpdateGame()
 
 		UpdateMap();
 	}
-	else if (gameState == "CHOOSE_DUELS")
+	else if (gameState == "CHOOSE_DUEL")
 	{
 		UpdateMap();
 
