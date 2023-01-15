@@ -2340,6 +2340,57 @@ color: rgb(255, 255, 255);</string>
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>590</y>
+       <width>151</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/correctAnswer.png);
+background-color: rgb(72, 61, 139);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_2">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>580</y>
+       <width>121</width>
+       <height>121</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/fiftyFifty.png);
+background-color: rgb(72, 61, 139);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_3">
+     <property name="geometry">
+      <rect>
+       <x>830</x>
+       <y>610</y>
+       <width>121</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">image: url(:/newPrefix/numericalChoices.png);
+background-color: rgb(72, 61, 139);</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="WaitingPlayers" native="true">
     <property name="geometry">
@@ -2478,13 +2529,13 @@ color: rgb(255, 255, 255);</string>
     </widget>
    </widget>
    <zorder>PlayerMap2</zorder>
-   <zorder>QuestionDisplay</zorder>
    <zorder>WaitingPlayers</zorder>
    <zorder>StartingBaseFight</zorder>
    <zorder>StartingRegionFight</zorder>
    <zorder>StartingDuels</zorder>
    <zorder>PlayerMap3</zorder>
    <zorder>PlayerMap4</zorder>
+   <zorder>QuestionDisplay</zorder>
   </widget>
  </widget>
  <resources>

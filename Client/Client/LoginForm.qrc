@@ -1,6 +1,9 @@
 <RCC>
   <qresource prefix="newPrefix">
     <file>Castle icon.png</file>
+    <file>correctAnswer.png</file>
+    <file>fiftyFifty.png</file>
+    <file>numericalChoices.png</file>
     <file>2PlayerMap.png</file>
     <file>3PlayerMap.png</file>
     <file>4PlayerMap.png</file>
