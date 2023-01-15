@@ -3,6 +3,7 @@
 
 #include "Game.h"
 #include "Room.h"
+#include "GameLog.h"
 #include "Database.h"
 #include "Utilities.h"
 
@@ -189,6 +190,43 @@ int main()
     });
     auto& gameHandler = CROW_ROUTE(app, "/Game_<string>").methods(crow::HTTPMethod::Put);
     gameHandler(Database::GameHandler(games));
+
+    // TODO GIVE NAME
+    CROW_ROUTE(app, "/GameLog_<string>")([&database](std::string playerName)
+    {
+            std::vector<GameLog> allGames = database.get_all<GameLog>();
+            std::vector<GameLog> lastFiveGames;
+            std::vector<crow::json::wvalue> jsonGames;
+            
+            for (int i = allGames.size(); i > 0; i--)
+            {
+                if (allGames[i].GetPlayerOne() == playerName || allGames[i].GetPlayerTwo() == playerName
+                    || allGames[i].GetPlayerThree() == playerName || allGames[i].GetPlayerFour() == playerName)
+                {
+                    lastFiveGames.push_back(allGames[i]);
+                }
+                if (lastFiveGames.size() == 5)
+                {
+                    break;
+                }
+            }
+
+            for (auto it : lastFiveGames)
+            {
+                jsonGames.push_back(crow::json::wvalue
+                    {
+                        {"Player1", it.GetPlayerOne()},
+                        {"Player2", it.GetPlayerTwo()},
+                        {"Player3", it.GetPlayerThree()},
+                        {"Player4", it.GetPlayerFour()},
+                        {"Game result", it.GetGameResult()},
+                        {"Game date", it.GetGameDate()}
+                    }
+                );
+            }
+
+            return crow::json::wvalue(jsonGames);
+    });
 
     app.port(18080).multithreaded().run();
     return 0;

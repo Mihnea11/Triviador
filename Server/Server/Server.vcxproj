@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameLog.cpp" />
     <ClCompile Include="Region.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Server.cpp" />
@@ -149,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="Database.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameLog.h" />
     <ClInclude Include="Region.h" />
     <ClInclude Include="Room.h" />
     <ClInclude Include="Utilities.h" />

@@ -36,6 +36,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Class Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameLog.cpp">
+      <Filter>Class Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utilities.h">
@@ -51,6 +54,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Region.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameLog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

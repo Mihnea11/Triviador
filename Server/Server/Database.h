@@ -7,6 +7,7 @@
 #include "User.h"
 #include "Room.h"
 #include "Game.h"
+#include "GameLog.h"
 #include "Question.h"
 #include "Utilities.h"
 
@@ -32,6 +33,16 @@ namespace Database
 				sql::make_column("Text", &Question::SetText, &Question::GetText),
 				sql::make_column("Answer", &Question::SetAnswer, &Question::GetAnswer),
 				sql::make_column("Incorrect answers", &Question::SetIncorrectAnswers, &Question::GetIncorrectAnswers)
+			),
+			sql::make_table(
+				"GameHistory",
+				sql::make_column("Id", &GameLog::SetId, &GameLog::GetId, sql::autoincrement(), sql::primary_key()),
+				sql::make_column("Player1", &GameLog::SetPlayerOne, &GameLog::GetPlayerOne),
+				sql::make_column("Player2", &GameLog::SetPlayerTwo, &GameLog::GetPlayerTwo),
+				sql::make_column("Player3", &GameLog::SetPlayerThree, &GameLog::GetPlayerThree),
+				sql::make_column("Player4", &GameLog::SetPlayerFour, &GameLog::GetPlayerFour),
+				sql::make_column("Game result", &GameLog::SetGameResult, &GameLog::GetGameResult),
+				sql::make_column("Game date", &GameLog::SetGameDate, &GameLog::GetGameDate)
 			)
 		);
 	}
