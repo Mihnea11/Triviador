@@ -105,6 +105,11 @@ Question Game::SelectMultipleChoiceQuestion()
 	return m_multipleChoiceQuestions[m_multipleChoiceQuestionIndex];
 }
 
+void Game::ResetPlayerOrder()
+{
+	m_orderedPlayers.clear();
+}
+
 void Game::AdvanceNumericalQuestion()
 {
 	m_numericalQuestionIndex++;

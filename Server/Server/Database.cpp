@@ -321,6 +321,7 @@ crow::response Database::GameHandler::operator()(const crow::request& request, c
 
 		if (foundGame->AllAnswered())
 		{
+			foundGame->AdvanceNumericalQuestion();
 			foundGame->ResetCurrentPlayer();
 			foundGame->SetGameState(Game::BASE_SELECTION);
 		}
@@ -358,16 +359,74 @@ crow::response Database::GameHandler::operator()(const crow::request& request, c
 
 		if (foundGame->GetCurrentPlayerSelection() >= foundGame->GetPlayerCount())
 		{
+			foundGame->ResetPlayerOrder();
 			foundGame->SetGameState(Game::REGION_FIGHT);
 		}
 	}
 	else if (foundGame->GetGameState() == Game::REGION_FIGHT)
 	{
+		auto username = arguments.find("Player name")->second;
+		auto answer = arguments.find("Answer")->second;
+		auto answerTime = arguments.find("Answer time")->second;
 
+		username = curl_unescape(username.c_str(), username.length());
+		answer = curl_unescape(answer.c_str(), answer.length());
+		answerTime = curl_unescape(answerTime.c_str(), answerTime.length());
+
+		double answerScore = foundGame->FindAnswerScore(answer);
+
+		foundGame->AddPlayerAnswer(username, answerScore, std::stoi(answerTime));
+
+		if (foundGame->AllAnswered())
+		{
+			foundGame->AdvanceNumericalQuestion();
+			foundGame->ResetCurrentPlayer();
+			foundGame->SetGameState(Game::REGION_SELECTION);
+		}
 	}
 	else if (foundGame->GetGameState() == Game::REGION_SELECTION)
 	{
+		auto username = arguments.find("Player name")->second;
+		auto regionName = arguments.find("Region name")->second;
 
+		username = curl_unescape(username.c_str(), username.length());
+		regionName = curl_unescape(regionName.c_str(), regionName.length());
+
+		Region currentRegion;
+
+		currentRegion.SetOwner(username);
+		currentRegion.SetName(regionName);
+		currentRegion.SetType("REGION");
+		currentRegion.SetScore(100);
+
+		for (const auto& region : foundGame->GetRegions())
+		{
+			if (region.GetName() == currentRegion.GetName() && region.GetOwner() != "")
+			{
+				return crow::response(403, "Region already selected");
+			}
+		}
+
+		foundGame->AddRegion(currentRegion);
+		foundGame->SelectRegionCount();
+
+		if (foundGame->GetSelectedRegions() == 0)
+		{
+			foundGame->AdvancePlayer();
+		}
+
+		if (foundGame->GetCurrentPlayerSelection() >= foundGame->GetPlayerCount())
+		{
+			foundGame->ResetPlayerOrder();
+			foundGame->SetGameState(Game::REGION_FIGHT);
+		}
+		else
+		{
+			if (foundGame->GetRegions().size() == foundGame->GetRegionsCount())
+			{
+				foundGame->SetGameState(Game::DUELS);
+			}
+		}
 	}
 	else if (foundGame->GetGameState() == Game::DUELS)
 	{

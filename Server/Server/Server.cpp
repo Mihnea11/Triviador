@@ -192,19 +192,53 @@ int main()
             };
 
         case Game::BASE_SELECTION:
-            game->SetSelectedRegions(1);
+            if (game->GetSelectedRegions() == 0)
+            {
+                game->SetSelectedRegions(1);
+            }
             return crow::json::wvalue
             {
                 {"Game state", "BASE_SELECTION"},
                 {"Current player", game->CurrentPlayerSelection()},
                 {"Player index", game->FindPlayerIndex(game->CurrentPlayerSelection())},
-                {"Region count", 1}
+                {"Region count", game->GetSelectedRegions()}
             };
 
         case Game::REGION_FIGHT:
+            numericalQuestion = game->SelectNumericalQuestion();
             return crow::json::wvalue
             {
-                {"Game state", "REGION_FIGHT"}
+                {"Game state", "REGION_FIGHT"},
+                {"Question text", numericalQuestion.GetText()},
+                {"Question type", (int)numericalQuestion.GetIsNumerical()}
+            };
+
+        case Game::REGION_SELECTION:
+            if (game->GetSelectedRegions() == 0)
+            {
+                int regionNumber = game->GetPlayerCount() - game->FindPlayerIndex(game->CurrentPlayerSelection()) + 1;
+                int regionsLeft = game->GetRegionsCount() - game->GetRegions().size();
+                if (regionNumber > regionsLeft)
+                {
+                    game->SetSelectedRegions(regionsLeft);
+                }
+                else
+                {
+                    game->SetSelectedRegions(regionNumber);
+                }
+            }
+            return crow::json::wvalue
+            {
+                {"Game state", "REGION_SELECTION"},
+                {"Current player", game->CurrentPlayerSelection()},
+                {"Player index", game->FindPlayerIndex(game->CurrentPlayerSelection())},
+                {"Region count", game->GetSelectedRegions()}
+            };
+
+        case Game::DUELS:
+            return crow::json::wvalue
+            {
+                {"Game state", "DUELS"}
             };
         }
     });

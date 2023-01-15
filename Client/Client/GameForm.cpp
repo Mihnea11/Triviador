@@ -40,6 +40,10 @@ GameForm::GameForm(const User& player, const std::string& gameCode, bool isOwner
 	connect(m_answerTimer.get(), SIGNAL(timeout()), this, SLOT(UpdateCountdownTimer()));
 
 	m_ui.QuestionDisplay->setVisible(false);
+	m_ui.StartingDuels->setVisible(false);
+	m_ui.StartingBaseFight->setVisible(false);
+	m_ui.StartingRegionFight->setVisible(false);
+	m_ui.WaitingPlayers->setVisible(false);
 
 	m_updateTimer->start(500);
 }
@@ -229,6 +233,7 @@ void GameForm::EmptyLabels()
 	for (int i = 0; i < m_regions.size(); i++)
 	{
 		m_regions[i]->setPixmap(QPixmap());
+		m_regions[i]->setText("");
 	}
 }
 
@@ -242,6 +247,7 @@ void GameForm::UpdateGame()
 	if (gameState == "JOINING")
 	{
 		m_ui.WaitingPlayers->setVisible(true);
+		WaitForSeconds(1);
 	}
 	else if (gameState == "BASE_FIGHT")
 	{
@@ -266,6 +272,7 @@ void GameForm::UpdateGame()
 	}
 	else if (gameState == "BASE_SELECTION")
 	{
+		m_hasAnswered = false;
 		m_isBase = true;
 		m_ui.QuestionDisplay->setVisible(false);
 
@@ -291,6 +298,46 @@ void GameForm::UpdateGame()
 		m_ui.StartingRegionFight->setVisible(true);
 		WaitForSeconds(1);
 		m_ui.StartingRegionFight->setVisible(false);
+		
+		if (m_hasAnswered == false)
+		{
+			m_updateTimer->stop();
+			Question currentQuestion;
+
+			std::string questionText = arguments["Question text"].s();
+			int questionType = arguments["Question type"].i();
+
+			currentQuestion.SetText(questionText);
+			currentQuestion.SetIsNumerical(questionType);
+
+			DisplayQuestion(currentQuestion.GetIsNumerical(), currentQuestion);
+		}
+	}
+	else if (gameState == "REGION_SELECTION")
+	{
+		m_hasAnswered = false;
+		m_isBase = false;
+		m_ui.QuestionDisplay->setVisible(false);
+
+		std::string username = arguments["Current player"].s();
+		m_selectionCount = arguments["Region count"].i();
+		m_playerIndex = arguments["Player index"].i();
+
+		if (username == m_player.GetName())
+		{
+			m_updateTimer->stop();
+			m_isSelecting = true;
+		}
+		else
+		{
+			m_isSelecting = false;
+		}
+
+		UpdateMap();
+	}
+	else if (gameState == "DUELS")
+	{
+		m_ui.QuestionDisplay->setVisible(true);
 		m_updateTimer->stop();
 	}
 }

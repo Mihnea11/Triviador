@@ -47,6 +47,7 @@ public:
 
 	Question SelectNumericalQuestion();
 	Question SelectMultipleChoiceQuestion();
+	void ResetPlayerOrder();
 	void ShuffleQuestions();
 	void SelectRegionCount();
 	void AdvanceNumericalQuestion();
